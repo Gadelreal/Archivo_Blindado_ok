@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Archivo Blindado - Refractor</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="site-wrapper">
+        <app-header></app-header>
+
+        <div class="mural-wrapper">
+            <div class="container mural-content">
+                
+                <section class="hero">
+                    <div class="hero-left">
+                        <div class="hero-date">1998 • 2000</div>
+                        <!-- Vector REFRACTOR heading instead of text -->
+                        <img src="./images/Vector.svg" alt="REFRACTOR" class="hero-logo-img">
+                        <p class="hero-desc">Presentación breve y flamígera. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        <download-dropdown></download-dropdown>
+                    </div>
+                </section>
+
+                <section class="pub-grid">
+                    <pub-card number="01" date="Febrero 1998" articles="12" image="./images/Test_cover.png" datetime="1998-02"></pub-card>
+                    <pub-card number="01" date="Febrero 1998" articles="12" datetime="1998-02"></pub-card>
+                    <pub-card number="01" date="Febrero 1998" articles="12" datetime="1998-02"></pub-card>
+                    <pub-card number="01" date="Febrero 1998" articles="12" datetime="1998-02"></pub-card>
+                    <pub-card number="01" date="Febrero 1998" articles="12" datetime="1998-02"></pub-card>
+                    <pub-card number="01" date="Febrero 1998" articles="12" datetime="1998-02"></pub-card>
+                    <pub-card number="01" date="Febrero 1998" articles="12" datetime="1998-02"></pub-card>
+                    <pub-card number="01" date="Febrero 1998" articles="12" datetime="1998-02"></pub-card>
+                </section>
+            </div>
+        </div>
+
+        <app-quote 
+            text="Todo pasa, la nada quedará, la nada creadora. Los refractarios vamos a por el todo porque no aspiramos a nada." 
+            highlight="¡Para otros la revolución!"
+            text-post="Para nosotros la gimnasia revolucionaria. El futuro se ve tan negro que nadie duda que será nuestro."
+            author="Victor Nero">
+        </app-quote>
+
+        <app-footer></app-footer>
+    </div> <!-- End site-wrapper -->
+    <script src="./js/components.js"></script>
+</body>
+</html>
