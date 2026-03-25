@@ -253,10 +253,13 @@ app-header.scrolled .logo-img { height: 36px; }
 }
 .pub-hover-icon {
   position: absolute; bottom: 0; right: 0;
-  width: 60px; height: 60px; opacity: 0;
+  width: 60px; height: 60px; opacity: 1;
   transition: opacity 0.15s ease-in-out; pointer-events: none;
 }
-.pub-card:hover .pub-hover-icon { opacity: 1; }
+@media (hover: hover) {
+  .pub-hover-icon { opacity: 0; }
+  .pub-card:hover .pub-hover-icon { opacity: 1; }
+}
 
 .pub-info {
   margin-top: 24px; padding-left: 16px; position: relative;
