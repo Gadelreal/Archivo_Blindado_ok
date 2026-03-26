@@ -1,5 +1,18 @@
 class AppHeader extends HTMLElement {
     connectedCallback() {
+        this.render();
+        
+        const scrollHandler = () => {
+            if (window.scrollY > 20) {
+                this.classList.add('scrolled');
+            } else {
+                this.classList.remove('scrolled');
+            }
+        };
+        window.addEventListener('scroll', scrollHandler);
+    }
+
+    render() {
         this.innerHTML = `
         <header class="navbar">
             <div class="nav-container">
@@ -20,16 +33,36 @@ class AppHeader extends HTMLElement {
                 </button>
             </div>
         </header>
+        <div class="tablet-menu-overlay"></div>
+        <div class="tablet-menu-bg">
+            <nav class="tablet-nav-content">
+                <img src="./images/Ilustration_navigation.svg" class="tablet-nav-illu" alt="">
+                <a href="#" class="active">REFRACTOR</a>
+                <a href="#">FIRMAS</a>
+                <a href="#">ARTEFACTOS</a>
+                <a href="#">EL ARCHIVO BLINDADO</a>
+            </nav>
+        </div>
+        <img src="./images/Masking Tape_01_tablet.png" alt="" class="tape-01">
+        <img src="./images/Masking Tape_02_tablet.png" alt="" class="tape-02">
+        <img src="./images/Movil_Masking Tape - 02.png" alt="" class="tape-02-mobile">
+        <img src="./images/Masking Tape_03_tablet.png" alt="" class="tape-03">
         `;
-        
-        const scrollHandler = () => {
-            if (window.scrollY > 20) {
-                this.classList.add('scrolled');
+
+        const menuBtn = this.querySelector('.menu-btn');
+        const menuImg = this.querySelector('.menu-img');
+
+        menuBtn.addEventListener('click', () => {
+            const isOpen = this.classList.toggle('is-menu-open');
+            menuImg.src = isOpen ? './images/ico_close.svg' : './images/ico_menu.svg';
+            
+            // Prevent scrolling when menu is open
+            if (isOpen) {
+                document.body.style.overflow = 'hidden';
             } else {
-                this.classList.remove('scrolled');
+                document.body.style.overflow = '';
             }
-        };
-        window.addEventListener('scroll', scrollHandler);
+        });
     }
 }
 
