@@ -47,6 +47,7 @@ class AppHeader extends HTMLElement {
         <img src="./images/Masking Tape_02_tablet.png" alt="" class="tape-02">
         <img src="./images/Movil_Masking Tape - 02.png" alt="" class="tape-02-mobile">
         <img src="./images/Masking Tape_03_tablet.png" alt="" class="tape-03">
+        <img src="./images/Movil_Masking Tape - button.png" alt="" class="tape-03-mobile">
         `;
 
         const menuBtn = this.querySelector('.menu-btn');
