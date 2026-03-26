@@ -150,8 +150,7 @@ app-header.scrolled .logo-img { height: 36px; }
 .tape-01,
 .tape-02,
 .tape-02-mobile,
-.tape-03,
-.tape-03-mobile {
+.tape-03 {
   display: none;
 }
 
@@ -467,15 +466,14 @@ cite {
 
   /* Mobile Navigation Adjustments */
   .tablet-menu-bg {
-    left: 0;
-    right: 0;
+    left: 24px;
+    right: 24px;
     top: 100px;
     height: calc(100vh - 100px - 64px);
-    padding: 0 0 64px 0;
   }
 
   .tablet-nav-content {
-    padding: 0;
+    padding: 0 24px;
   }
 
   .tablet-nav-content a {
@@ -497,25 +495,7 @@ cite {
   }
 
   .tape-03 {
-    display: none;
-  }
-
-  .tape-03-mobile {
-    display: block;
-    position: fixed;
     bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 100;
-    width: auto;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-  }
-
-  app-header.is-menu-open .tape-03-mobile {
-    opacity: 1;
-    visibility: visible;
   }
 
   .tape-02-mobile {
