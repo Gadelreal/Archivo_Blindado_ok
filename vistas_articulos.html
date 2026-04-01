@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualización de Artículos - El Archivo Blindado</title>
+    <link rel="stylesheet" href="./styles.css?v=5">
+    <style>
+        .test-viewer {
+            padding: 80px 0;
+            background-color: #0c0d16;
+            color: #fff;
+        }
+        .article-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid var(--bg-red);
+            padding: 40px;
+            margin-bottom: 60px;
+        }
+        .article-meta {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 16px;
+            font-family: var(--font-nav);
+            text-transform: uppercase;
+        }
+        .article-title {
+            font-size: 32px;
+            font-family: var(--font-nav);
+            margin-bottom: 24px;
+            color: var(--bg-red);
+            text-transform: uppercase;
+        }
+        .article-body {
+            font-size: 18px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+        .article-body strong { color: var(--bg-red); }
+        .article-body blockquote {
+            background: rgba(207, 5, 17, 0.1);
+            padding: 20px;
+            margin: 20px 0;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="site-wrapper">
+        <app-header></app-header>
+
+        <main class="test-viewer">
+            <div class="container">
+                <h1 style="font-family: var(--font-nav); margin-bottom: 60px; text-align: center;">VISUALIZACIÓN DE CONTENIDO (PÁGINA 1)</h1>
+
+                <!-- ARTÍCULO 1 -->
+                <article class="article-card">
+                    <div class="article-meta">A_R_01_01_la_idea_es_la_accion | Victor Nero | Madrid, 1997 | Precio: 400 pts.</div>
+                    <h2 class="article-title">LA IDEA ES LA ACCIÓN</h2>
+                    <div class="article-body">
+Durmientes, insomnes, muertos y vivos de ocho ciudades y tres continentes mantuvieron el asedio en Madrid el 20 de noviembre de 1997, aniversario de la muerte de Buenaventura Durruti.
+
+En pie de guerra desde el principio de los tiempos, los refractarios seguimos siendo los grandes derrotados de las páginas de los manuales de historia. Nosotros mismos, muchas veces, nos hemos borrado de los mapas Pero jamás hemos sido vencidos Nunca firmaremos la paz. Nadie logrará borraros de la faz de la tierra.
+
+<strong>La Idea es la Acción y la Acción no da tregua</strong>
+
+La <strong>Idea</strong> es negra. Las ideologías son turbias.
+La <strong>Idea</strong> es turbulenta. Las ideologías están estancadas.
+La <strong>Idea</strong> es una. Las ideologías son demasiadas.
+La <strong>Idea</strong> es pura. Las ideologías son infecciosas.
+La <strong>Idea</strong> siempre engendra nuevos partidarios. Las ideologías sólo engendran partidos políticos.
+La <strong>Idea</strong> es potente, la política es la prepotencia organizada.
+
+Los refractarios somos los portadores de la idea, oscuros por naturaleza, nocturnos por vocación, alevosos por obligación; somos, siempre lo fuimos, los Negros de la Nada.
+
+Todo pasa, la nada quedará, la nada creadora. Los refractarios vamos a por el todo porque no aspiramos a nada. ¡Para otros la revolución! Para nosotros la gimnasia revolucionaria El futuro se ve tan negro que nadie dudaría que será nuestro.
+
+Este invierno va a ser muy largo Al frente, hermanos anarquistas. ¡A Zaragoza! ¡En cada boda real un Mateo Morral virtual!
+
+<em>por los refractarios</em>
+<strong>Victor Nero</strong>
+                    </div>
+                </article>
+
+                <!-- ARTÍCULO 2 -->
+                <article class="article-card">
+                    <div class="article-meta">A_R_01_02_actuemos_como_espectros_del_lenguaje | Luis Falcón | Madrid</div>
+                    <h2 class="article-title">ACTUEMOS COMO ESPECTROS DEL LENGUAJE</h2>
+                    <div class="article-body">
+Como escribió Guy Debord hace diez años en <em>Comentarios sobre la sociedad del espectáculo</em>, el cambio de mayor importancia en todo lo que ha sucedido en los últimos años reside en la misma continuidad del espectáculo. La unificación sustancial del espectáculo concentrado (las llamadas democracias populares del este) y espectáculo difuso (las democracias occidentales) en el espectáculo integrado, es tan evidente, que la marea socialdemócrata levantó la fiebre quejosa de un pensamiento único indiferenciado sobre la supuesta extensión planetaria triunfante de la mancha liberal, de esa nueva lengua del fetichismo de la mercancía a quien tan gustosamente se había ofrecido casi desde sus orígenes.
+
+Esta vieja maniobra de camuflaje pretende soslayar que el único pensamiento único indiferenciado que existe es el de la sociedad del espectáculo. «El reinado autónomo de la economía mercantil que ha alcanzado un estatus de soberanía irresponsable así como el conjunto de nuevas técnicas de gobierno correspondientes a ese reinado», según Debord. Las ideologías que concurren y se enfrentan con la gestión del espectáculo, las de la mancha y la muesca, son como siempre han sido, el último refugio de los granujas. «Allá donde reina el espectáculo, las únicas fuerzas organizadas son aquellas que desean el espectáculo».
+
+El espectáculo es el capital en un grado tal de acumulación que se transforma en imagen. No sólo expropia la actividad productiva del hombre, sino su misma naturaleza lingüística, aquel <em>logos</em> con el que un fragmento de Heráclito caracterizaba la Razón Común de todos los hombres. «Pero cuando aparece el peligro / ahí crece también el poder de salvación». Eso es lo que ocurre también con la asfixiante aniquilación del espectáculo. Al mismo tiempo que nos enajena incluso nuestra naturaleza comunicativa, nos muestra que ese es el único terreno donde podemos combatirlo. Lo imprescindible: actuar como espectros del lenguaje.
+
+<strong>¡QUE EL ENEMIGO NO PUEDA NOMBRARTE NUNCA!</strong>
+
+<em>LUIS FALCÓN</em>
+                    </div>
+                </article>
+
+                <!-- ARTÍCULO 3 -->
+                <article class="article-card">
+                    <div class="article-meta">A_R_01_03_a_zaragoza | J. García Gasso | Barcelona, 1936</div>
+                    <h2 class="article-title">¡A ZARAGOZA!</h2>
+                    <div class="article-body">
+<em>inscripción para la columna confederal y anarquista «Los Aguiluchos»</em>
+
+Camaradas: Quien esto escribe tiene pocas letras, pero le sobra corazón.
+
+Las milicias que han puesto rumbo al Frente de Aragón son el orgullo de Madrid. Los jóvenes madrileños alistados en las Milicias quieren marchar al frente ¡A Zaragoza!, en cuya ciudad no debe quedar un rastro fascista.
+
+<strong>J. García Gasso</strong>
+Presidente del Comité de Guerra de la Columna «Los Aguiluchos».
+<em>Barcelona, 28 de agosto de 1936.</em>
+                    </div>
+                </article>
+
+            </div>
+        </main>
+
+        <app-footer></app-footer>
+    </div>
+    <script src="./js/components.js"></script>
+</body>
+</html>
