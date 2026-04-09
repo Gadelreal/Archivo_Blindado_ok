@@ -133,10 +133,13 @@ class PublicationCard extends HTMLElement {
 
 class DownloadDropdown extends HTMLElement {
     connectedCallback() {
+        const text = this.getAttribute('text') || 'Descargar Refractor';
+        const btnClass = this.getAttribute('btn-class') || 'btn-download';
+
         this.innerHTML = `
         <div class="download-wrapper" id="downloadWrapper">
-            <button class="btn-download" id="downloadBtn">
-                Descargar Refractor
+            <button class="${btnClass}" id="downloadBtn">
+                ${text}
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chevron-icon">
                     <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>

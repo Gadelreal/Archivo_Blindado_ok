@@ -7,21 +7,21 @@
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 400;
-  src: url('./fonts/OpenSans-1.ttf') format('truetype');
+  src: url('./fonts/OpenSans-Regular.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 600;
-  src: url('./fonts/OpenSans-2.ttf') format('truetype');
+  src: url('./fonts/OpenSans-SemiBold.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 800;
-  src: url('./fonts/OpenSans-3.ttf') format('truetype');
+  src: url('./fonts/OpenSans-ExtraBold.ttf') format('truetype');
 }
 
 @font-face {
@@ -40,7 +40,7 @@
 
 :root {
   --bg-white: #FFFFFF;
-  --bg-red: #CF0511;
+  --bg-red: #E30613;
   --bg-red-dark: #7D030A;
   --bg-black: #000000;
   --bg-subfooter: #111322;
@@ -49,7 +49,7 @@
   --text-main: #121926;
   --text-inverse: #FFFFFF;
   --text-nav: #111322;
-  --text-active: #CF0511;
+  --text-active: #E30613;
 
   --font-base: "Open Sans", sans-serif;
   --font-nav: "Roboto Condensed", sans-serif;
@@ -575,11 +575,11 @@ app-header.is-menu-open .tape-02-mobile {
 }
 
 /* DROPDOWN OPEN STATE */
-.download-wrapper.is-open .btn-download {
+.download-wrapper.is-open button {
   color: var(--text-active);
 }
 
-.download-wrapper.is-open .btn-download .chevron-icon {
+.download-wrapper.is-open button .chevron-icon {
   color: var(--text-active);
   transform: rotate(180deg);
 }
@@ -596,11 +596,13 @@ app-header.is-menu-open .tape-02-mobile {
 
 /* HOVER EFFECTS (Desktop) */
 @media (hover: hover) {
-  .download-wrapper:hover .btn-download {
+  .download-wrapper:hover button,
+  .download-wrapper.is-open button {
     color: var(--text-active);
   }
 
-  .download-wrapper:hover .btn-download .chevron-icon {
+  .download-wrapper:hover button .chevron-icon,
+  .download-wrapper.is-open button .chevron-icon {
     color: var(--text-active);
     transform: rotate(180deg);
   }
@@ -1197,7 +1199,7 @@ app-header.is-menu-open .tape-02-mobile {
 
 .ficha-title {
   font-family: 'Open Sans', sans-serif;
-  font-weight: 900 !important; /* Mapeado al máximo peso (Black/800 de OpenSans-3.ttf) */
+  font-weight: 900 !important; /* Mapeado al máximo peso (Black/800 de OpenSans-ExtraBold.ttf) */
   font-stretch: 100%; /* Width 100 */
   color: var(--bg-black);
   margin: 0;
@@ -1210,8 +1212,7 @@ app-header.is-menu-open .tape-02-mobile {
   font-size: 14px;
   font-weight: 400;
   color: #667085;
-  margin-top: 6px;
-  /* Reduced from 12px to 6px as requested */
+  margin-top: 2px;
 }
 
 .ficha-actions-row {
@@ -1222,42 +1223,59 @@ app-header.is-menu-open .tape-02-mobile {
 
 .btn-ficha-outline,
 .btn-ficha-red {
-  height: 44px;
-  padding: 0 20px;
-  font-family: var(--font-base);
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  border-radius: 0;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  transition: all 0.3s ease;
-}
-
-.btn-ficha-outline {
-  background: transparent;
+  background: var(--bg-white);
   color: var(--bg-black);
-  border: 1px solid var(--bg-black);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 0;
+  border: 1px solid #D5D7DA;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: var(--font-base);
 }
 
-.btn-ficha-outline:hover {
-  background: #F2F4F7;
+/* .btn-ficha-outline uses base style from common block */
+
+.btn-ficha-outline:hover,
+.download-wrapper:hover .btn-ficha-outline,
+.download-wrapper.is-open .btn-ficha-outline {
   color: var(--text-active);
+  background: var(--bg-white);
 }
 
 .btn-ficha-red {
   background: var(--bg-red);
   color: var(--text-inverse);
-  border: none;
+  border-color: var(--bg-red);
 }
 
-.btn-ficha-red:hover {
-  background: var(--bg-red-dark);
+.btn-ficha-red:hover,
+.download-wrapper:hover .btn-ficha-red,
+.download-wrapper.is-open .btn-ficha-red {
+  background: var(--bg-black);
+  border-color: var(--bg-black);
+  color: var(--text-inverse) !important;
+}
+
+.btn-ficha-red .chevron-icon {
+  color: var(--text-inverse) !important;
+}
+
+.btn-icon {
+  width: 20px;
+  height: 20px;
+  display: block;
 }
 
 .btn-icon-chevron {
   margin-left: 4px;
+  width: 12px;
+  height: 12px;
 }
 
 /* Page Previews */
@@ -1268,37 +1286,47 @@ app-header.is-menu-open .tape-02-mobile {
 }
 
 .page-preview-box {
-  width: 56px;
-  height: 56px;
+  width: 68px;
+  height: 88px;
   border: 1px solid #D5D7DA;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
   cursor: pointer;
   background: #FFFFFF;
+  position: relative;
+  transition: all 0.2s ease;
 }
 
+/* Border stays consistent on hover as requested */
+
 .preview-num {
+  position: absolute;
+  top: 6px;
+  left: 6px;
   font-family: var(--font-base);
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--bg-black);
+  font-size: 12px;
+  font-weight: 400;
+  color: #000000;
+  line-height: 1;
 }
 
 .preview-icon {
-  width: 14px;
-  height: 14px;
-  stroke: #98A2B3;
+  width: 20px;
+  height: 20px;
+  color: #717680;
+}
+
+.page-preview-box:hover .preview-icon,
+.page-preview-box:hover .preview-num,
+.page-preview-box.active .preview-icon,
+.page-preview-box.active .preview-num {
+  color: var(--bg-red);
 }
 
 .page-preview-box.active {
+  border: 2px solid var(--bg-red);
   background: #F9FAFB;
-}
-
-.page-preview-box.active .preview-icon {
-  stroke: var(--bg-red);
 }
 
 /* Bottom Metadata */
