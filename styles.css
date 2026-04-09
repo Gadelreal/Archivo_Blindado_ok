@@ -1053,6 +1053,10 @@ app-header.is-menu-open .tape-02-mobile {
   transform: rotate(180deg);
 }
 
+issue-selector {
+  display: block;
+}
+
 .hero-nav-icon {
   width: 18px;
   height: 18px;
