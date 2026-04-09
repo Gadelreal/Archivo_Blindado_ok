@@ -196,8 +196,45 @@ class AppQuote extends HTMLElement {
     }
 }
 
+class IssueSelector extends HTMLElement {
+    connectedCallback() {
+        const current = this.getAttribute('current') || '01';
+        let options = '';
+        for (let i = 1; i <= 8; i++) {
+            const num = i.toString().padStart(2, '0');
+            // In a real app, this would link to the actual page. For now, dummy links.
+            options += `<a href="./ficha_numero.html" class="dropdown-item issue-item">${num}</a>`;
+        }
+
+        this.innerHTML = `
+        <div class="download-wrapper issue-selector-wrapper" id="issueWrapper">
+            <div class="hero-nav-selector hero-nav-item" id="issueBtn">
+                <span>${current}</span>
+                <img src="./images/ico_chevron-down.svg" alt="" class="hero-nav-chevron">
+            </div>
+            <div class="dropdown-menu issue-dropdown">
+                ${options}
+            </div>
+        </div>
+        `;
+
+        const btn = this.querySelector('#issueBtn');
+        const wrapper = this.querySelector('#issueWrapper');
+        
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            wrapper.classList.toggle('is-open');
+        });
+
+        document.addEventListener('click', () => {
+            wrapper.classList.remove('is-open');
+        });
+    }
+}
+
 customElements.define('app-header', AppHeader);
 customElements.define('app-footer', AppFooter);
 customElements.define('pub-card', PublicationCard);
 customElements.define('download-dropdown', DownloadDropdown);
+customElements.define('issue-selector', IssueSelector);
 customElements.define('app-quote', AppQuote);

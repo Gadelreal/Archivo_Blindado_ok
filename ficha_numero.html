@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>El Archivo Blindado - Ficha de Número</title>
-    <link rel="stylesheet" href="./styles.css?v=3">
+    <link rel="stylesheet" href="./styles.css?v=6">
 </head>
 <body>
     <div class="site-wrapper">
@@ -20,9 +20,9 @@
 
                 <div class="hero-nav">
                     <!-- Botón Independiente: Flecha -->
-                    <button class="hero-nav-btn hero-nav-item">
+                    <a href="./index.html" class="hero-nav-btn hero-nav-item">
                         <img src="./images/ico_arrow-narrow-left.svg" alt="" class="hero-nav-icon">
-                    </button>
+                    </a>
 
                     <!-- Grupo de 2 Botones: Anterior y Siguiente -->
                     <div class="hero-nav-group">
@@ -31,10 +31,7 @@
                     </div>
 
                     <!-- Botón Independiente: Selector -->
-                    <div class="hero-nav-selector hero-nav-item">
-                        <span>1</span>
-                        <img src="./images/ico_chevron-down.svg" alt="" class="hero-nav-chevron">
-                    </div>
+                    <issue-selector current="01"></issue-selector>
                 </div>
             </section>
 

@@ -972,7 +972,8 @@ app-header.is-menu-open .tape-02-mobile {
   align-items: center;
   gap: 8px;
   /* Space between independent buttons/groups */
-  z-index: 10;
+  z-index: 100;
+  pointer-events: auto;
 }
 
 /* Independent blocks and button groups - Secondary Style */
@@ -997,8 +998,8 @@ app-header.is-menu-open .tape-02-mobile {
   gap: 8px;
   background: transparent;
   border: none;
-  padding: 0 16px;
-  /* Reduced from 24px */
+  padding: 0 12px;
+  /* Reduced from 16px */
   color: var(--bg-black);
   font-family: var(--font-base);
   font-size: 14px;
@@ -1023,7 +1024,7 @@ app-header.is-menu-open .tape-02-mobile {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 0 16px;
+  padding: 0 12px;
   font-size: 14px;
   /* Reduced from 16px */
   font-weight: 600;
@@ -1034,25 +1035,48 @@ app-header.is-menu-open .tape-02-mobile {
 }
 
 /* Hover State: Match "Descargar Refractor" (Black to Red text) */
-.hero-nav-btn:hover,
-.hero-nav-selector:hover {
-  color: var(--text-active);
-  background: var(--bg-white);
-  /* Keep background white */
+.hero-nav .hero-nav-item:hover,
+.hero-nav .hero-nav-selector:hover,
+.hero-nav .hero-nav-btn:hover {
+  color: var(--text-active) !important;
 }
 
 /* Match Icon color to Red on hover */
 .hero-nav-btn:hover .hero-nav-icon,
-.hero-nav-selector:hover .hero-nav-chevron {
-  /* Red filter for #CF0511 */
+.hero-nav-selector:hover .hero-nav-chevron,
+.issue-selector-wrapper.is-open .hero-nav-chevron {
+  /* Red filter for #E30613 approx */
   filter: invert(12%) sepia(95%) saturate(7400%) hue-rotate(352deg) brightness(85%) contrast(116%);
+}
+
+.issue-selector-wrapper.is-open .hero-nav-chevron {
+  transform: rotate(180deg);
 }
 
 .hero-nav-icon {
   width: 18px;
-  /* Slightly smaller for 40px buttons */
   height: 18px;
   filter: brightness(0);
+}
+
+/* Issue Selector Specific Dropdown Styles */
+.issue-dropdown {
+  width: 80px !important;
+  min-width: 80px;
+  right: 0;
+  left: auto;
+}
+
+.issue-item {
+  justify-content: center;
+  font-weight: 600;
+  color: var(--bg-black);
+  padding: 4px 0 !important;
+}
+
+.issue-item:hover {
+  color: var(--text-active);
+  background: #F9FAFB;
 }
 
 .hero-nav-chevron {
@@ -1133,10 +1157,12 @@ app-header.is-menu-open .tape-02-mobile {
   /* El fondo gris empieza donde termina el Hero */
   border-bottom: 1px solid #E9EAEB;
   padding-bottom: 72px;
+  pointer-events: none;
 }
 
 .container-ficha {
   padding: 0 93px;
+  pointer-events: auto;
 }
 
 .ficha-row {
