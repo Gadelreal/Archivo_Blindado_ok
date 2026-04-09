@@ -146,7 +146,7 @@ body {
 app-header {
   display: block;
   width: 100%;
-  z-index: 100;
+  z-index: 2000;
   position: sticky;
   top: 0;
 }
@@ -972,7 +972,7 @@ app-header.is-menu-open .tape-02-mobile {
   align-items: center;
   gap: 8px;
   /* Space between independent buttons/groups */
-  z-index: 100;
+  z-index: 50;
   pointer-events: auto;
 }
 
@@ -1065,10 +1065,10 @@ issue-selector {
 
 /* Issue Selector Specific Dropdown Styles */
 .issue-dropdown {
-  width: 80px !important;
-  min-width: 80px;
+  width: 100% !important;
+  min-width: unset !important;
   right: 0;
-  left: auto;
+  left: 0;
 }
 
 .issue-item {
@@ -1159,7 +1159,7 @@ issue-selector {
   /* Recuperamos la superposición sobre el Hero */
   background: linear-gradient(to bottom, transparent 198px, #FAFAFA 198px);
   /* El fondo gris empieza donde termina el Hero */
-  border-bottom: 1px solid #E9EAEB;
+  border-bottom: 1px solid #F2F4F7 !important;
   padding-bottom: 72px;
   pointer-events: none;
 }
@@ -1173,7 +1173,7 @@ issue-selector {
   display: flex;
   align-items: flex-end;
   /* Aligns data block with the base of the image as requested */
-  gap: 64px;
+  gap: 40px;
 }
 
 /* Cover Image (Left side) */
@@ -1490,6 +1490,190 @@ issue-selector {
   color: #475467;
   max-width: 800px;
   line-height: 24px;
+}
+
+/* =========================================================================
+   7. SECTION ARTÍCULOS
+   ========================================================================= */
+
+.section-articulos {
+  padding: 120px 0 64px 0;
+  background-color: var(--bg-white);
+}
+
+.container-articulos {
+  padding: 0 93px;
+}
+
+.articulos-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 32px;
+}
+
+.articulos-title {
+  font-family: var(--font-primary);
+  font-size: 24px;
+  font-weight: 700;
+  color: #101828;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.articulos-meta {
+  font-size: 16px;
+  color: #667085;
+  margin: 0;
+}
+
+.author-tags-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.author-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border: 1px solid #D0D5DD;
+  font-size: 11px;
+  color: #344054;
+  background: var(--bg-white);
+}
+
+.tag-num {
+  color: #98A2B3;
+  font-weight: 500;
+}
+
+/* ARTICULOS CONTENT STYLES */
+.pub-article {
+  max-width: 800px;
+  margin: 0; 
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+
+.art-title {
+  font-family: var(--font-primary);
+  font-size: 40px;
+  font-weight: 800;
+  color: #101828;
+  margin-bottom: 8px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.art-subtitle {
+  font-family: var(--font-primary);
+  font-size: 20px;
+  font-weight: 700;
+  color: #E30613;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+}
+
+.art-paragraph {
+  font-family: var(--font-base);
+  font-size: 16px;
+  line-height: 24px;
+  color: #101828;
+  margin-bottom: 24px;
+}
+
+.art-paragraph strong {
+  font-weight: 700;
+}
+
+.art-signature {
+  margin-top: 48px;
+  border-top: 0; /* No visible border in image */
+}
+
+.art-signature p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  color: #101828;
+}
+
+.art-signature-intro {
+  font-style: italic;
+  color: #667085;
+}
+
+.art-signature-name {
+  font-weight: 700;
+  display: block;
+  margin-top: 4px;
+}
+
+.art-tag-footer {
+  margin-top: 40px;
+}
+
+.articles-separator {
+  height: 0;
+}
+
+/* ACCORDION */
+.accordion-wrapper {
+  width: 100%;
+}
+
+.accordion-trigger {
+  width: calc(100% + 186px);
+  margin-left: -93px;
+  padding: 20px 93px;
+  background-color: #F9FAFB;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  border-top: 1px solid #E9EAEB;
+  border-bottom: 1px solid #E9EAEB;
+  transition: background-color 0.2s ease;
+}
+
+.accordion-trigger:hover {
+  background-color: #F2F4F7;
+}
+
+.accordion-trigger-text {
+  font-family: var(--font-base);
+  font-size: 16px;
+  color: #344054;
+  font-weight: 500;
+}
+
+.accordion-icon-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.accordion-arrow {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+  filter: brightness(0) saturate(100%) invert(23%) sepia(19%) saturate(601%) hue-rotate(182deg) brightness(92%) contrast(89%); /* Matches #344054 approx */
+}
+
+.accordion-wrapper.is-open .accordion-arrow {
+  transform: rotate(180deg);
+}
+
+.accordion-body {
+  display: none;
+  padding: 40px 0;
+}
+
+.accordion-wrapper.is-open .accordion-body {
+  display: block;
 }
 
 /* =========================================================================

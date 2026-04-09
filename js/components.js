@@ -232,9 +232,38 @@ class IssueSelector extends HTMLElement {
     }
 }
 
+class AppAccordion extends HTMLElement {
+    connectedCallback() {
+        const title = this.getAttribute('title') || '';
+        const innerContent = this.innerHTML;
+        
+        this.innerHTML = `
+        <div class="accordion-wrapper is-open">
+            <div class="accordion-trigger">
+                <span class="accordion-trigger-text">${title}</span>
+                <div class="accordion-icon-box">
+                    <img src="./images/ico_arrow-narrow-down.svg" class="accordion-arrow" alt="">
+                </div>
+            </div>
+            <div class="accordion-body">
+                ${innerContent}
+            </div>
+        </div>
+        `;
+
+        const trigger = this.querySelector('.accordion-trigger');
+        const wrapper = this.querySelector('.accordion-wrapper');
+        
+        trigger.addEventListener('click', () => {
+            wrapper.classList.toggle('is-open');
+        });
+    }
+}
+
 customElements.define('app-header', AppHeader);
 customElements.define('app-footer', AppFooter);
 customElements.define('pub-card', PublicationCard);
 customElements.define('download-dropdown', DownloadDropdown);
 customElements.define('issue-selector', IssueSelector);
+customElements.define('app-accordion', AppAccordion);
 customElements.define('app-quote', AppQuote);
