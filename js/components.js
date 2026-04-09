@@ -16,7 +16,7 @@ class AppHeader extends HTMLElement {
         this.innerHTML = `
         <header class="navbar">
             <div class="nav-container">
-                <a href="#" class="logo">
+                <a href="./index.html" class="logo">
                     <img src="./images/Logo.svg" alt="El Archivo Blindado Logo" class="logo-img">
                 </a>
                 <nav class="nav-links">

@@ -40,7 +40,7 @@
 
 :root {
   --bg-white: #FFFFFF;
-  --bg-red: #E30613;
+  --bg-red: #CF0511;
   --bg-red-dark: #7D030A;
   --bg-black: #000000;
   --bg-subfooter: #111322;
@@ -1017,7 +1017,7 @@ app-header.is-menu-open .tape-02-mobile {
 }
 
 .hero-nav-btn:hover {
-  background-color: #F8F9FA;
+  background-color: transparent;
 }
 
 .hero-nav-selector {
@@ -1681,87 +1681,120 @@ issue-selector {
    ========================================================================= */
 
 .section-minificha {
-  padding: 60px 0;
+  padding: 40px 0;
   background-color: #F9FAFB;
-  border-top: 1px solid #D5D7DA;
+  border-top: 1px solid #E9EAEB;
+  border-bottom: 1px solid #E9EAEB;
 }
 
 .container-minificha {
   padding: 0 93px;
 }
 
-.minificha-card {
+.minificha-row {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: flex-end;
+}
+
+.minificha-left {
+  display: flex;
+  align-items: flex-end;
   gap: 32px;
-  padding: 32px;
-  background: white;
-  border: 1px solid #D5D7DA;
-  border-radius: 0;
 }
 
-.minificha-image {
-  flex: 0 0 100px;
+.minificha-image-box {
+  position: relative;
+  width: 132px;
+  flex: 0 0 132px;
+  cursor: pointer;
 }
 
-.minificha-image img {
+.minificha-img {
   width: 100%;
   height: auto;
-  border: 1px solid #EAECF0;
+  display: block;
+  border: 1px solid #D5D7DA;
 }
 
-.minificha-body {
-  flex: 1;
+.minificha-zoom {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.minificha-image-box:hover .minificha-zoom {
+  opacity: 1;
+}
+
+.minificha-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .minificha-title {
-  font-family: var(--font-base);
-  font-size: 20px;
+  font-family: var(--font-primary);
+  font-size: 32px;
   font-weight: 800;
-  color: var(--bg-black);
+  color: #101828;
   margin: 0;
 }
 
-.minificha-date {
-  font-family: var(--font-base);
-  font-size: 16px;
-  font-weight: 600;
-  color: #667085;
-  margin-top: 4px;
+.minificha-btns {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.minificha-actions {
-  flex: 0 0 auto;
+.minificha-right .hero-nav {
+  position: static;
+  background: transparent;
+  padding: 0;
+  border: none;
+  box-shadow: none;
 }
 
-/* ADDITIONAL RESPONSIVE FOR ARTICULOS/MINIFICHA */
+/* RESPONSIVE MINIFICHA */
 @media (max-width: 1024px) {
-
-  .container-articulos,
   .container-minificha {
     padding: 0 40px;
   }
 }
 
-@media (max-width: 768px) {
-
-  .container-articulos,
-  .container-minificha {
-    padding: 0 24px;
-  }
-
-  .minificha-card {
+@media (max-width: 900px) {
+  .minificha-row {
     flex-direction: column;
-    text-align: center;
-    gap: 20px;
+    gap: 40px;
+    align-items: flex-start;
   }
-
-  .minificha-actions {
+  
+  .minificha-right {
     width: 100%;
   }
 
-  .minificha-actions button {
+  .minificha-right .hero-nav {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  .minificha-left {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .minificha-btns {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .minificha-btns button, .minificha-btns a {
     width: 100%;
   }
 }
