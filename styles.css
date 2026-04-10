@@ -53,6 +53,7 @@
 
   --font-base: "Open Sans", sans-serif;
   --font-nav: "Roboto Condensed", sans-serif;
+  --font-primary: "Open Sans", sans-serif;
 
   --container-px: 32px;
   --grid-gap: 64px;
@@ -89,6 +90,14 @@ body {
   background-color: var(--bg-white);
   position: relative;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+  overflow: visible !important; /* Critical for position: sticky */
+}
+
+.site-content {
+  display: block;
+  width: 100%;
+  overflow: visible !important;
+  position: relative; /* Parity with mural-wrapper */
 }
 
 .container {
@@ -146,9 +155,14 @@ body {
 app-header {
   display: block;
   width: 100%;
-  z-index: 2000;
-  position: sticky;
-  top: 0;
+  z-index: 9999; /* Absolute priority */
+  position: -webkit-sticky;
+  position: sticky !important;
+  top: 0 !important;
+  background-color: var(--bg-white);
+  -webkit-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
+  will-change: transform;
 }
 
 .navbar {
@@ -655,6 +669,7 @@ app-header.is-menu-open .tape-02-mobile {
   .navbar {
     padding: 0 32px;
     border-top-width: 8px;
+    background-color: var(--bg-white);
   }
 
   .logo-img {
@@ -937,7 +952,7 @@ app-header.is-menu-open .tape-02-mobile {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 151px 93px;
+  padding: 151px 80px;
 }
 
 .hero-brand {
@@ -967,7 +982,7 @@ app-header.is-menu-open .tape-02-mobile {
 .hero-nav {
   position: absolute;
   bottom: 28px;
-  right: 93px;
+  right: 80px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -1094,21 +1109,24 @@ issue-selector {
 
 @media (max-width: 1024px) {
   .hero-ficha {
-    padding: 100px 40px;
-    height: 500px;
+    padding: 150px 32px 100px 32px; /* Increased top padding to match index.html and prevent header overlap */
+    height: auto; /* Allow content to dictate height if needed */
+    min-height: 500px;
+    background-image: url('./images/Page_Background_3.png');
   }
 
   .hero-nav {
-    right: 40px;
+    right: 32px;
   }
 }
 
 @media (max-width: 768px) {
   .hero-ficha {
-    padding: 80px 24px;
-    height: 450px;
-    background-image: url('./images/Page_Background.png');
-    /* Often mobile background is simpler */
+    padding: 140px 32px 80px 32px;
+    height: auto;
+    min-height: 450px;
+    background-image: url('./images/Page_Background_3.png');
+    /* Updated for consistency with tablet */
   }
 
   .hero-logo-img {
@@ -1120,31 +1138,13 @@ issue-selector {
   }
 
   .hero-nav {
-    bottom: 60px;
-    right: 24px;
-    height: 40px;
+    bottom: 28px;
+    right: 32px;
+    height: 48px;
   }
 
-  .hero-nav-btn,
-  .hero-nav-selector {
-    padding: 0 12px;
-    font-size: 14px;
-  }
-
-  /* Specific Mobile Masking Tape requested */
-  .hero-ficha::before {
-    content: "";
-    position: absolute;
-    top: 75px;
-    right: 0;
-    width: 150px;
-    /* Adjust based on asset */
-    height: 80px;
-    background-image: url('./images/Movil_Masking Tape - 02.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: right top;
-    z-index: 4;
+  .hero-nav-group {
+    display: none;
   }
 }
 
@@ -1165,7 +1165,7 @@ issue-selector {
 }
 
 .container-ficha {
-  padding: 0 93px;
+  padding: 0 80px;
   pointer-events: auto;
 }
 
@@ -1227,15 +1227,6 @@ issue-selector {
   text-align: left;
 }
 
-.ficha-title {
-  font-family: 'Open Sans', sans-serif;
-  font-weight: 900 !important; /* Mapeado al máximo peso (Black/800 de OpenSans-ExtraBold.ttf) */
-  font-stretch: 100%; /* Width 100 */
-  color: var(--bg-black);
-  margin: 0;
-  line-height: normal;
-  text-transform: uppercase;
-}
 
 .ficha-subtitle {
   font-family: var(--font-base);
@@ -1359,31 +1350,19 @@ issue-selector {
   background: #F9FAFB;
 }
 
-/* Bottom Metadata */
-.ficha-bottom-meta {
-  margin-top: 16px;
-  font-family: var(--font-base);
-  font-size: 14px;
-  font-weight: 400;
-  color: #667085;
-}
-
 /* RESPONSIVE ADAPTATIONS */
 @media (max-width: 1024px) {
   .container-ficha {
-    padding: 0 40px;
+    padding: 0 32px;
   }
 
   .section-ficha {
-    margin-top: -120px;
+    margin-top: -198px;
+    background: linear-gradient(to bottom, transparent 198px, #FAFAFA 198px);
   }
 
   .ficha-col-image {
-    flex: 0 0 300px;
-  }
-
-  .ficha-title {
-    font-size: 40px;
+    flex: 0 0 382px;
   }
 
   .ficha-col-info {
@@ -1391,7 +1370,7 @@ issue-selector {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .ficha-row {
     flex-direction: column;
     align-items: center;
@@ -1416,11 +1395,12 @@ issue-selector {
   }
 
   .section-ficha {
-    margin-top: -60px;
+    margin-top: -198px;
+    background: linear-gradient(to bottom, transparent 198px, #FAFAFA 198px);
   }
 
   .container-ficha {
-    padding: 0 24px;
+    padding: 0 32px;
   }
 }
 
@@ -1435,7 +1415,7 @@ issue-selector {
 }
 
 .container-articulos {
-  padding: 0 93px;
+  padding: 0 80px;
 }
 
 .section-label {
@@ -1502,7 +1482,7 @@ issue-selector {
 }
 
 .container-articulos {
-  padding: 0 93px;
+  padding: 0 80px;
 }
 
 .articulos-header {
@@ -1626,9 +1606,9 @@ issue-selector {
 }
 
 .accordion-trigger {
-  width: calc(100% + 186px);
-  margin-left: -93px;
-  padding: 20px 93px;
+  width: calc(100% + 160px);
+  margin-left: -80px;
+  padding: 20px 80px;
   background-color: #F9FAFB;
   display: flex;
   justify-content: space-between;
@@ -1637,6 +1617,14 @@ issue-selector {
   border-top: 1px solid #E9EAEB;
   border-bottom: 1px solid #E9EAEB;
   transition: background-color 0.2s ease;
+}
+
+@media (max-width: 1024px) {
+  .accordion-trigger {
+    width: calc(100% + 64px);
+    margin-left: -32px;
+    padding: 20px 32px;
+  }
 }
 
 .accordion-trigger:hover {
@@ -1688,7 +1676,7 @@ issue-selector {
 }
 
 .container-minificha {
-  padding: 0 93px;
+  padding: 0 80px;
 }
 
 .minificha-row {
@@ -1761,8 +1749,9 @@ issue-selector {
 
 /* RESPONSIVE MINIFICHA */
 @media (max-width: 1024px) {
-  .container-minificha {
-    padding: 0 40px;
+  .container-minificha,
+  .container-articulos {
+    padding: 0 32px;
   }
 }
 
