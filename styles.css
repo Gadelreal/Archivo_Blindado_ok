@@ -90,14 +90,16 @@ body {
   background-color: var(--bg-white);
   position: relative;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
-  overflow: visible !important; /* Critical for position: sticky */
+  overflow: visible !important;
+  /* Critical for position: sticky */
 }
 
 .site-content {
   display: block;
   width: 100%;
   overflow: visible !important;
-  position: relative; /* Parity with mural-wrapper */
+  position: relative;
+  /* Parity with mural-wrapper */
 }
 
 .container {
@@ -155,13 +157,14 @@ body {
 app-header {
   display: block;
   width: 100%;
-  z-index: 9999; /* Absolute priority */
+  z-index: 9999;
+  /* Absolute priority */
   position: -webkit-sticky;
   position: sticky !important;
   top: 0 !important;
   background-color: var(--bg-white);
-  -webkit-transform: translate3d(0,0,0);
-  transform: translate3d(0,0,0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
   will-change: transform;
 }
 
@@ -610,6 +613,7 @@ app-header.is-menu-open .tape-02-mobile {
 
 /* HOVER EFFECTS (Desktop) */
 @media (hover: hover) {
+
   .download-wrapper:hover button,
   .download-wrapper.is-open button {
     color: var(--text-active);
@@ -1131,8 +1135,10 @@ issue-selector {
 
 @media (max-width: 1024px) {
   .hero-ficha {
-    padding: 150px 32px 100px 32px; /* Increased top padding to match index.html and prevent header overlap */
-    height: auto; /* Allow content to dictate height if needed */
+    padding: 150px 32px 100px 32px;
+    /* Increased top padding to match index.html and prevent header overlap */
+    height: auto;
+    /* Allow content to dictate height if needed */
     min-height: 500px;
     background-image: url('./images/Page_Background_3.png');
   }
@@ -1565,7 +1571,7 @@ issue-selector {
 /* ARTICULOS CONTENT STYLES */
 .pub-article {
   max-width: 800px;
-  margin: 0; 
+  margin: 0;
   padding-top: 64px;
   padding-bottom: 64px;
 }
@@ -1603,7 +1609,8 @@ issue-selector {
 
 .art-signature {
   margin-top: 48px;
-  border-top: 0; /* No visible border in image */
+  border-top: 0;
+  /* No visible border in image */
 }
 
 .art-signature p {
@@ -1680,7 +1687,8 @@ issue-selector {
   width: 20px;
   height: 20px;
   transition: transform 0.3s ease;
-  filter: brightness(0) saturate(100%) invert(23%) sepia(19%) saturate(601%) hue-rotate(182deg) brightness(92%) contrast(89%); /* Matches #344054 approx */
+  filter: brightness(0) saturate(100%) invert(23%) sepia(19%) saturate(601%) hue-rotate(182deg) brightness(92%) contrast(89%);
+  /* Matches #344054 approx */
 }
 
 .accordion-wrapper.is-open .accordion-arrow {
@@ -1781,6 +1789,7 @@ issue-selector {
 
 /* RESPONSIVE MINIFICHA */
 @media (max-width: 1024px) {
+
   .container-minificha,
   .container-articulos {
     padding: 0 32px;
@@ -1793,7 +1802,7 @@ issue-selector {
     gap: 40px;
     align-items: flex-start;
   }
-  
+
   .minificha-right {
     width: 100%;
   }
@@ -1809,13 +1818,14 @@ issue-selector {
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .minificha-btns {
     flex-direction: column;
     width: 100%;
   }
-  
-  .minificha-btns button, .minificha-btns a {
+
+  .minificha-btns button,
+  .minificha-btns a {
     width: 100%;
   }
 }
@@ -1886,6 +1896,28 @@ issue-selector {
 .pdf-nav-btn:hover {
   opacity: 1;
   transform: translateY(-50%) scale(1.1);
+}
+
+.pdf-top-close-btn {
+  position: absolute;
+  top: 32px;
+  right: 32px;
+  background: transparent;
+  border: none;
+  color: var(--bg-white);
+  padding: 8px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: all 0.2s ease;
+  z-index: 10003;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pdf-top-close-btn:hover {
+  opacity: 1;
+  transform: scale(1.1);
 }
 
 .pdf-nav-left {
@@ -1968,7 +2000,7 @@ issue-selector {
   .pdf-canvas-container {
     padding: 16px 8px;
   }
-  
+
   .pdf-floating-toolbar {
     width: max-content;
     bottom: 24px;
@@ -1978,15 +2010,15 @@ issue-selector {
     border-radius: 40px;
     box-sizing: border-box;
   }
-  
+
   .pdf-page-info {
     font-size: 14px;
   }
-  
+
   .pdf-icon-btn {
     padding: 6px;
   }
-  
+
   .pdf-icon-btn svg {
     width: 20px;
     height: 20px;
@@ -1995,7 +2027,7 @@ issue-selector {
   .pdf-toolbar-divider {
     height: 24px;
   }
-  
+
   .pdf-xtra-tools {
     position: absolute;
     bottom: calc(100% + 12px);
@@ -2008,28 +2040,28 @@ issue-selector {
     gap: 8px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   }
-  
+
   .pdf-xtra-tools.is-open {
     display: flex;
   }
-  
+
   .pdf-overflow-btn {
     display: none;
   }
-  
+
   .pdf-nav-btn {
     padding: 4px;
   }
-  
+
   .pdf-nav-btn svg {
     width: 24px;
     height: 24px;
   }
-  
+
   .pdf-nav-left {
     left: 4px;
   }
-  
+
   .pdf-nav-right {
     right: 4px;
   }

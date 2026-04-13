@@ -285,6 +285,10 @@ class PdfViewer extends HTMLElement {
         this.innerHTML = `
             <div class="pdf-modal-overlay" id="pdfModal">
                 
+                <button id="top_close_pdf" class="pdf-top-close-btn" aria-label="Cerrar visor">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+
                 <button id="prev" class="pdf-nav-btn pdf-nav-left" aria-label="Anterior">
                     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
                 </button>
@@ -397,6 +401,7 @@ class PdfViewer extends HTMLElement {
         this.querySelector('#print_pdf').addEventListener('click', () => this.onPrint());
         this.querySelector('#download_pdf').addEventListener('click', () => this.onDownload());
         this.querySelector('#close_pdf').addEventListener('click', () => this.close());
+        this.querySelector('#top_close_pdf').addEventListener('click', () => this.close());
         
         // Overflow menu toggle
         this.xtraToolsMenu = this.querySelector('#pdfXtraTools');
