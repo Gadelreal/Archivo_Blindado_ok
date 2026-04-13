@@ -2034,3 +2034,26 @@ issue-selector {
     right: 4px;
   }
 }
+
+/* ERROR HANDLING */
+.pdf-error-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: var(--bg-white);
+  z-index: 10000;
+  max-width: 80%;
+}
+
+.pdf-error-message {
+  background: rgba(227, 6, 19, 0.1);
+  border: 1px solid var(--bg-red);
+  padding: 24px 32px;
+  border-radius: 8px;
+  font-family: var(--font-base);
+  font-weight: 500;
+  line-height: 1.4;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}

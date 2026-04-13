@@ -294,6 +294,11 @@ class PdfViewer extends HTMLElement {
 
                 <div class="pdf-canvas-container" id="canvasContainer">
                     <canvas id="pdf_canvas"></canvas>
+                    <div id="pdfError" class="pdf-error-container" style="display: none;">
+                        <div class="pdf-error-message">
+                            Error al cargar el documento. Por favor, inténtelo de nuevo más tarde o contacte con soporte.
+                        </div>
+                    </div>
                 </div>
 
                 <div class="pdf-floating-toolbar">
@@ -343,7 +348,14 @@ class PdfViewer extends HTMLElement {
         this.canvas = this.querySelector('#pdf_canvas');
         this.ctx = this.canvas.getContext('2d');
         this.canvasContainer = this.querySelector('#canvasContainer');
+        this.errorContainer = this.querySelector('#pdfError');
         
+        this._keyHandler = (e) => {
+            if (!this.modal.classList.contains('is-open')) return;
+            if (e.key === 'Escape') this.close();
+            if (e.key === 'ArrowRight') this.onNextPage();
+            if (e.key === 'ArrowLeft') this.onPrevPage();
+        };
         // --- Drag / Panning logic ---
         let isDragging = false;
         let startX, startY, scrollLeft, scrollTop;
@@ -405,6 +417,10 @@ class PdfViewer extends HTMLElement {
         this.adjustToolbar = () => {
              if (!this.modal.classList.contains('is-open')) return;
              
+             // Reset scale on major resize (orientation change)
+             this.initialScaleCalculated = false;
+             if (this.pdfDoc) this.queueRenderPage(this.pageNum);
+
              const toolbar = this.querySelector('.pdf-floating-toolbar');
              // Mover todos los items del cajón a la barra primero para calcular el ancho real
              while(this.xtraToolsMenu.children.length > 0) {
@@ -538,6 +554,12 @@ class PdfViewer extends HTMLElement {
     open(url) {
         this.currentPdfUrl = url;
         this.modal.classList.add('is-open');
+        this.errorContainer.style.display = 'none';
+        this.canvas.style.display = 'block';
+        this.initialScaleCalculated = false; // Forzar recalibrado al abrir
+
+        window.addEventListener('keydown', this._keyHandler);
+
         this.lockedScrollY = window.scrollY;
         document.body.style.position = 'fixed';
         document.body.style.top = `-${this.lockedScrollY}px`;
@@ -562,11 +584,15 @@ class PdfViewer extends HTMLElement {
             setTimeout(() => this.adjustToolbar(), 50); // Validar ancho de botonera
         }).catch((error) => {
             console.error('Error cargando el PDF:', error);
+            this.errorContainer.style.display = 'block';
+            this.canvas.style.display = 'none';
         });
     }
 
     close() {
         this.modal.classList.remove('is-open');
+        window.removeEventListener('keydown', this._keyHandler);
+
         document.body.style.position = '';
         document.body.style.top = '';
         document.body.style.width = '';
