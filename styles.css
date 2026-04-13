@@ -1858,19 +1858,21 @@ issue-selector {
 
 .pdf-canvas-container {
   flex: 1;
-  overflow: auto;
+  overflow: hidden; /* Changed from auto to hidden for custom panning */
   display: flex;
   justify-content: center;
   align-items: flex-start;
   padding: 40px;
+  position: relative;
+  touch-action: none; /* Prevent browser handling of gestures */
 }
 
 #pdf_canvas {
   margin: 0 auto;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
   background-color: var(--bg-white);
-  max-width: 100%;
-  height: auto;
+  /* Removed max-width: 100% and height: auto to allow scaling beyond viewport */
+  display: block;
 }
 
 /* =========================================================================

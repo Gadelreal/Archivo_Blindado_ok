@@ -367,38 +367,46 @@ class PdfViewer extends HTMLElement {
             if (e.key === 'ArrowRight') this.onNextPage();
             if (e.key === 'ArrowLeft') this.onPrevPage();
         };
-        // --- Drag / Panning logic ---
+
+        // --- Drag / Panning logic (Free Movement) ---
         let isDragging = false;
-        let startX, startY, scrollLeft, scrollTop;
+        let startX, startY;
+        this.currentX = 0;
+        this.currentY = 0;
         this.canvasContainer.style.cursor = 'grab';
 
-        this.canvasContainer.addEventListener('mousedown', (e) => {
+        const startPan = (clientX, clientY) => {
             isDragging = true;
             this.canvasContainer.style.cursor = 'grabbing';
-            startX = e.pageX - this.canvasContainer.offsetLeft;
-            startY = e.pageY - this.canvasContainer.offsetTop;
-            scrollLeft = this.canvasContainer.scrollLeft;
-            scrollTop = this.canvasContainer.scrollTop;
-        });
-        this.canvasContainer.addEventListener('mouseleave', () => {
-            isDragging = false;
-            this.canvasContainer.style.cursor = 'grab';
-        });
-        this.canvasContainer.addEventListener('mouseup', () => {
-            isDragging = false;
-            this.canvasContainer.style.cursor = 'grab';
-        });
-        this.canvasContainer.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
-            e.preventDefault();
-            const x = e.pageX - this.canvasContainer.offsetLeft;
-            const y = e.pageY - this.canvasContainer.offsetTop;
-            this.canvasContainer.scrollLeft = scrollLeft - (x - startX);
-            this.canvasContainer.scrollTop = scrollTop - (y - startY);
-        });
-        // ----------------------------
+            this.canvas.style.pointerEvents = 'none'; // Prevent canvas events during drag
+            this.canvas.style.transition = 'none';    // Instant movement
+            startX = clientX - this.currentX;
+            startY = clientY - this.currentY;
+        };
 
-        
+        const movePan = (clientX, clientY) => {
+            if (!isDragging) return;
+            this.currentX = clientX - startX;
+            this.currentY = clientY - startY;
+            this.applyTransform();
+        };
+
+        const endPan = () => {
+            if (!isDragging) return;
+            isDragging = false;
+            this.canvasContainer.style.cursor = 'grab';
+            this.canvas.style.pointerEvents = '';
+        };
+
+        this.canvasContainer.addEventListener('mousedown', (e) => {
+            if (e.button !== 0) return; // Only left click
+            startPan(e.clientX, e.clientY);
+        });
+        window.addEventListener('mousemove', (e) => movePan(e.clientX, e.clientY));
+        window.addEventListener('mouseup', endPan);
+        // Remove mouseleave from container, window level is safer
+
+        // --- Viewport Event Listeners ---
         this.querySelector('#prev').addEventListener('click', () => this.onPrevPage());
         this.querySelector('#next').addEventListener('click', () => this.onNextPage());
         this.querySelector('#zoom_in').addEventListener('click', () => this.onZoomIn());
@@ -419,85 +427,58 @@ class PdfViewer extends HTMLElement {
             this.xtraToolsMenu.classList.toggle('is-open');
         });
         
-        // Cierra el menu si clicas en cualquier lugar que no sea el menu o boton
         this.modal.addEventListener('click', (e) => {
             if (!this.xtraToolsMenu.contains(e.target) && !this.overflowBtn.contains(e.target)) {
                 this.xtraToolsMenu.classList.remove('is-open');
             }
         });
         
-        // --- Dynamic Toolbar Resize Logic ---
         this.adjustToolbar = () => {
              if (!this.modal.classList.contains('is-open')) return;
-             
-             // Reset scale on major resize (orientation change)
              this.initialScaleCalculated = false;
              if (this.pdfDoc) this.queueRenderPage(this.pageNum);
 
              const toolbar = this.querySelector('.pdf-floating-toolbar');
-             // Mover todos los items del cajón a la barra primero para calcular el ancho real
              while(this.xtraToolsMenu.children.length > 0) {
                  toolbar.insertBefore(this.xtraToolsMenu.firstElementChild, this.overflowBtn);
              }
-             
              this.overflowBtn.style.display = 'none';
              this.xtraToolsMenu.classList.remove('is-open');
-             
              const safeW = window.innerWidth - 32; 
-             
-             // Escanear priority-items de atras hacia adelante si no caben
              let cand = this.overflowBtn.previousElementSibling;
              while(cand && cand.classList.contains('priority-item') && toolbar.offsetWidth > safeW) {
                  this.xtraToolsMenu.prepend(cand);
                  cand = this.overflowBtn.previousElementSibling;
              }
-
-             // Solo mostrar el botón de puntos si realmente hay algo dentro del menú
              if (this.xtraToolsMenu.children.length > 0) {
                  this.overflowBtn.style.display = 'inline-flex';
              }
         };
         
         window.addEventListener('resize', this.adjustToolbar);
-
+ 
         // --- Touch Support for Panning ---
         this.canvasContainer.addEventListener('touchstart', (e) => {
             if (e.touches.length !== 1) return;
-            isDragging = true;
             const touch = e.touches[0];
-            startX = touch.pageX - this.canvasContainer.offsetLeft;
-            startY = touch.pageY - this.canvasContainer.offsetTop;
-            scrollLeft = this.canvasContainer.scrollLeft;
-            scrollTop = this.canvasContainer.scrollTop;
-        }, { passive: false });
-
+            startPan(touch.clientX, touch.clientY);
+        }, { passive: true });
+ 
         this.canvasContainer.addEventListener('touchmove', (e) => {
             if (!isDragging || e.touches.length !== 1) return;
             const touch = e.touches[0];
-            const x = touch.pageX - this.canvasContainer.offsetLeft;
-            const y = touch.pageY - this.canvasContainer.offsetTop;
-            const walkX = x - startX;
-            const walkY = y - startY;
-            this.canvasContainer.scrollLeft = scrollLeft - walkX;
-            this.canvasContainer.scrollTop = scrollTop - walkY;
-            e.preventDefault();
+            movePan(touch.clientX, touch.clientY);
+            if (this.scale > 1.2) e.preventDefault();
         }, { passive: false });
-
-        this.canvasContainer.addEventListener('touchend', () => {
-            isDragging = false;
-        });
+ 
+        this.canvasContainer.addEventListener('touchend', endPan);
 
         // --- Wheel Zoom Support ---
         this.canvasContainer.addEventListener('wheel', (e) => {
-            // Solo actuar si el modal está abierto
             if (!this.modal.classList.contains('is-open')) return;
-            
             e.preventDefault();
-            if (e.deltaY < 0) {
-                this.onZoomIn();
-            } else {
-                this.onZoomOut();
-            }
+            if (e.deltaY < 0) this.onZoomIn();
+            else this.onZoomOut();
         }, { passive: false });
     }
 
@@ -593,7 +574,7 @@ class PdfViewer extends HTMLElement {
             this.querySelector('#page_count').textContent = this.pdfDoc.numPages;
             this.pageNum = 1;
             this.initialScaleCalculated = false;
-            this.renderPage(this.pageNum);
+            this.renderPage(this.pageNum, true); // Reset position on open
             setTimeout(() => this.adjustToolbar(), 50); // Validar ancho de botonera
         }).catch((error) => {
             console.error('Error cargando el PDF:', error);
@@ -616,9 +597,21 @@ class PdfViewer extends HTMLElement {
         });
     }
 
-    renderPage(num) {
+    applyTransform() {
+        if (this.canvas) {
+            this.canvas.style.transform = `translate(${this.currentX}px, ${this.currentY}px)`;
+        }
+    }
+
+    resetPosition() {
+        this.currentX = 0;
+        this.currentY = 0;
+        this.applyTransform();
+    }
+
+    renderPage(num, resetPos = false) {
         this.pageRendering = true;
-        
+        if (resetPos) this.resetPosition();
         this.pdfDoc.getPage(num).then((page) => {
             // Calcular escalado inicial para móviles y tablets
             if (!this.initialScaleCalculated) {
@@ -656,7 +649,7 @@ class PdfViewer extends HTMLElement {
                 this.pageRendering = false;
                 this.renderTask = null;
                 if (this.pageNumPending !== null) {
-                    this.renderPage(this.pageNumPending);
+                    this.renderPage(this.pageNumPending, true); // Reset position on page switch
                     this.pageNumPending = null;
                 }
             }).catch(err => {
@@ -675,24 +668,24 @@ class PdfViewer extends HTMLElement {
         if (display) display.textContent = `${percent}%`;
     }
 
-    queueRenderPage(num) {
+    queueRenderPage(num, resetPos = false) {
         if (this.pageRendering) {
             this.pageNumPending = num;
         } else {
-            this.renderPage(num);
+            this.renderPage(num, resetPos);
         }
     }
 
     onPrevPage() {
         if (this.pageNum <= 1) return;
         this.pageNum--;
-        this.queueRenderPage(this.pageNum);
+        this.queueRenderPage(this.pageNum, true); // Reset pos on page change
     }
 
     onNextPage() {
         if (this.pageNum >= this.pdfDoc.numPages) return;
         this.pageNum++;
-        this.queueRenderPage(this.pageNum);
+        this.queueRenderPage(this.pageNum, true); // Reset pos on page change
     }
 
     onZoomIn() {
@@ -709,7 +702,7 @@ class PdfViewer extends HTMLElement {
     onZoomReset() {
         this.scale = 1.0;
         this.initialScaleCalculated = true; // Evitar que el ajuste automático de ancho lo pise
-        this.queueRenderPage(this.pageNum);
+        this.queueRenderPage(this.pageNum, true); // Reset pos on zoom reset
     }
 }
 
