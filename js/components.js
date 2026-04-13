@@ -267,3 +267,145 @@ customElements.define('download-dropdown', DownloadDropdown);
 customElements.define('issue-selector', IssueSelector);
 customElements.define('app-accordion', AppAccordion);
 customElements.define('app-quote', AppQuote);
+
+class PdfViewer extends HTMLElement {
+    constructor() {
+        super();
+        this.pdfDoc = null;
+        this.pageNum = 1;
+        this.pageRendering = false;
+        this.pageNumPending = null;
+        this.scale = 1.0;
+        this.canvas = null;
+        this.ctx = null;
+    }
+
+    connectedCallback() {
+        this.innerHTML = `
+            <div class="pdf-modal-overlay" id="pdfModal">
+                <div class="pdf-toolbar">
+                    <div class="pdf-toolbar-left">
+                        <span class="pdf-page-info">Página <span id="page_num">0</span> de <span id="page_count">0</span></span>
+                    </div>
+                    <div class="pdf-toolbar-center">
+                        <button id="prev" class="pdf-btn">
+                            Anterior
+                        </button>
+                        <button id="next" class="pdf-btn">
+                            Siguiente
+                        </button>
+                    </div>
+                    <div class="pdf-toolbar-right">
+                        <button id="zoom_out" class="pdf-btn">-</button>
+                        <button id="zoom_in" class="pdf-btn">+</button>
+                        <button id="close_pdf" class="pdf-btn close-btn">
+                            Cerrar
+                        </button>
+                    </div>
+                </div>
+                <div class="pdf-canvas-container">
+                    <canvas id="the-canvas"></canvas>
+                </div>
+            </div>
+        `;
+
+        this.modal = this.querySelector('#pdfModal');
+        this.canvas = this.querySelector('#the-canvas');
+        this.ctx = this.canvas.getContext('2d');
+        
+        this.querySelector('#prev').addEventListener('click', () => this.onPrevPage());
+        this.querySelector('#next').addEventListener('click', () => this.onNextPage());
+        this.querySelector('#zoom_in').addEventListener('click', () => this.onZoomIn());
+        this.querySelector('#zoom_out').addEventListener('click', () => this.onZoomOut());
+        this.querySelector('#close_pdf').addEventListener('click', () => this.close());
+    }
+
+    open(url) {
+        this.modal.classList.add('is-open');
+        document.body.style.overflow = 'hidden'; 
+        
+        if (typeof pdfjsLib === 'undefined') {
+            console.error('PDF.js no está cargado correctamente');
+            return;
+        }
+
+        // Configuración oficial del worker
+        pdfjsLib.GlobalWorkerOptions.workerSrc = './js/vendor/pdf.worker.min.js';
+
+        const loadingTask = pdfjsLib.getDocument(url);
+        loadingTask.promise.then((pdfDoc_) => {
+            this.pdfDoc = pdfDoc_;
+            this.querySelector('#page_count').textContent = this.pdfDoc.numPages;
+            this.pageNum = 1;
+            this.scale = 1.0; 
+            this.renderPage(this.pageNum);
+        }).catch((error) => {
+            console.error('Error cargando el PDF:', error);
+            this.querySelector('.pdf-page-info').innerHTML = `<span style="color:red">Error: ${error.message} - ¿Acaso estás abriendo el archivo en local sin un servidor HTTP (Live Server)?</span>`;
+        });
+    }
+
+    close() {
+        this.modal.classList.remove('is-open');
+        document.body.style.overflow = '';
+    }
+
+    renderPage(num) {
+        this.pageRendering = true;
+        
+        this.pdfDoc.getPage(num).then((page) => {
+            const viewport = page.getViewport({scale: this.scale});
+            this.canvas.height = viewport.height;
+            this.canvas.width = viewport.width;
+
+            const renderContext = {
+                canvasContext: this.ctx,
+                viewport: viewport
+            };
+            const renderTask = page.render(renderContext);
+
+            renderTask.promise.then(() => {
+                this.pageRendering = false;
+                if (this.pageNumPending !== null) {
+                    this.renderPage(this.pageNumPending);
+                    this.pageNumPending = null;
+                }
+            });
+        });
+
+        this.querySelector('#page_num').textContent = num;
+    }
+
+    queueRenderPage(num) {
+        if (this.pageRendering) {
+            this.pageNumPending = num;
+        } else {
+            this.renderPage(num);
+        }
+    }
+
+    onPrevPage() {
+        if (this.pageNum <= 1) return;
+        this.pageNum--;
+        this.queueRenderPage(this.pageNum);
+    }
+
+    onNextPage() {
+        if (this.pageNum >= this.pdfDoc.numPages) return;
+        this.pageNum++;
+        this.queueRenderPage(this.pageNum);
+    }
+
+    onZoomIn() {
+        this.scale += 0.2;
+        this.queueRenderPage(this.pageNum);
+    }
+
+    onZoomOut() {
+        if (this.scale <= 0.4) return;
+        this.scale -= 0.2;
+        this.queueRenderPage(this.pageNum);
+    }
+}
+
+customElements.define('pdf-viewer', PdfViewer);

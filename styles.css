@@ -1819,3 +1819,112 @@ issue-selector {
     width: 100%;
   }
 }
+
+/* =========================================================================
+   10. PDF VIEWER COMPONENT
+   ========================================================================= */
+
+.pdf-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100dvh;
+  background-color: var(--bg-body);
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.pdf-modal-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.pdf-toolbar {
+  height: 64px;
+  background-color: var(--bg-white);
+  border-bottom: 1px solid #D5D7DA;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
+  flex-shrink: 0;
+}
+
+.pdf-toolbar-left,
+.pdf-toolbar-center,
+.pdf-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.pdf-toolbar-center {
+  flex: 1;
+  justify-content: center;
+}
+
+.pdf-page-info {
+  font-family: var(--font-base);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.pdf-btn {
+  background: transparent;
+  border: 1px solid #D5D7DA;
+  color: var(--text-main);
+  font-family: var(--font-base);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pdf-btn:hover {
+  background-color: #F9FAFB;
+}
+
+.close-btn {
+  border: none;
+  background: var(--bg-red);
+  color: var(--bg-white);
+}
+
+.close-btn:hover {
+  background: var(--bg-black);
+}
+
+.pdf-canvas-container {
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Permite scroll natural */
+  padding: 32px;
+  background-color: #F2F4F7;
+}
+
+#the-canvas {
+  margin: 0 auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  background-color: var(--bg-white);
+}
+
+@media (max-width: 768px) {
+  .pdf-toolbar {
+    padding: 0 16px;
+  }
+  .pdf-btn {
+    padding: 8px;
+  }
+}

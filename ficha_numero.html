@@ -317,6 +317,31 @@
         <app-footer></app-footer>
     </div> <!-- End site-wrapper -->
 
+    <pdf-viewer></pdf-viewer>
+
+    <script src="./js/vendor/pdf.min.js"></script>
     <script src="./js/components.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const viewer = document.querySelector('pdf-viewer');
+            const targetPdf = './pdf/P_R_01_01.pdf';
+
+            // Minificha image (big thumbnail left column)
+            const mainThumb = document.querySelector('.pub-card-ficha');
+            if (mainThumb) {
+                mainThumb.addEventListener('click', () => {
+                    viewer.open(targetPdf);
+                });
+            }
+
+            // "Ver detalle" button
+            const btnDetail = document.querySelector('.btn-ficha-outline');
+            if (btnDetail) {
+                btnDetail.addEventListener('click', () => {
+                    viewer.open(targetPdf);
+                });
+            }
+        });
+    </script>
 </body>
 </html>
