@@ -1946,6 +1946,15 @@ issue-selector {
   z-index: 10002;
 }
 
+.pdf-zoom-info {
+  font-family: var(--font-base);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main);
+  min-width: 45px;
+  text-align: center;
+}
+
 .pdf-page-info {
   font-family: var(--font-base);
   font-size: 14px;

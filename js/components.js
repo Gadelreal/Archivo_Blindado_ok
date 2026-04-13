@@ -312,11 +312,18 @@ class PdfViewer extends HTMLElement {
                     
 
 
+                    <button id="zoom_out" class="pdf-icon-btn priority-item" aria-label="Alejar">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                    </button>
+                    
+                    <span id="zoom_percent" class="pdf-zoom-info priority-item">100%</span>
+
                     <button id="zoom_in" class="pdf-icon-btn priority-item" aria-label="Acercar">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
                     </button>
-                    <button id="zoom_out" class="pdf-icon-btn priority-item" aria-label="Alejar">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+
+                    <button id="zoom_reset" class="pdf-icon-btn priority-item" aria-label="Restablecer zoom">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
                     </button>
                     
                     <button id="fullscreen_pdf" class="pdf-icon-btn priority-item" aria-label="Pantalla completa">
@@ -396,6 +403,7 @@ class PdfViewer extends HTMLElement {
         this.querySelector('#next').addEventListener('click', () => this.onNextPage());
         this.querySelector('#zoom_in').addEventListener('click', () => this.onZoomIn());
         this.querySelector('#zoom_out').addEventListener('click', () => this.onZoomOut());
+        this.querySelector('#zoom_reset').addEventListener('click', () => this.onZoomReset());
         this.querySelector('#fullscreen_pdf').addEventListener('click', () => this.toggleFullscreen());
         this.querySelector('#share_pdf').addEventListener('click', () => this.onShare());
         this.querySelector('#print_pdf').addEventListener('click', () => this.onPrint());
@@ -658,6 +666,13 @@ class PdfViewer extends HTMLElement {
         });
 
         this.querySelector('#page_num').textContent = num;
+        this.updateZoomDisplay();
+    }
+
+    updateZoomDisplay() {
+        const percent = Math.round(this.scale * 100);
+        const display = this.querySelector('#zoom_percent');
+        if (display) display.textContent = `${percent}%`;
     }
 
     queueRenderPage(num) {
@@ -688,6 +703,12 @@ class PdfViewer extends HTMLElement {
     onZoomOut() {
         if (this.scale <= 0.4) return;
         this.scale -= 0.2;
+        this.queueRenderPage(this.pageNum);
+    }
+
+    onZoomReset() {
+        this.scale = 1.0;
+        this.initialScaleCalculated = true; // Evitar que el ajuste automático de ancho lo pise
         this.queueRenderPage(this.pageNum);
     }
 }
