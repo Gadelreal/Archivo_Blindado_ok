@@ -285,14 +285,14 @@ class PdfViewer extends HTMLElement {
         this.innerHTML = `
             <div class="pdf-modal-overlay" id="pdfModal">
                 
-                <button id="top_close_pdf" class="pdf-top-close-btn" aria-label="Cerrar visor">
+                <button id="top_close_pdf" class="pdf-top-close-btn" aria-label="Cerrar visor" data-tooltip="Cerrar visor">
                     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
 
-                <button id="prev" class="pdf-nav-btn pdf-nav-left" aria-label="Anterior">
+                <button id="prev" class="pdf-nav-btn pdf-nav-left" aria-label="Anterior" data-tooltip="Anterior">
                     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
                 </button>
-                <button id="next" class="pdf-nav-btn pdf-nav-right" aria-label="Siguiente">
+                <button id="next" class="pdf-nav-btn pdf-nav-right" aria-label="Siguiente" data-tooltip="Siguiente">
                     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </button>
 
@@ -312,42 +312,42 @@ class PdfViewer extends HTMLElement {
                     
 
 
-                    <button id="zoom_out" class="pdf-icon-btn priority-item" aria-label="Alejar">
+                    <button id="zoom_out" class="pdf-icon-btn priority-item" aria-label="Alejar" data-tooltip="Alejar">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg>
                     </button>
                     
-                    <span id="zoom_percent" class="pdf-zoom-info priority-item">100%</span>
+                    <span id="zoom_percent" class="pdf-zoom-info priority-item" data-tooltip="Zoom actual">100%</span>
 
-                    <button id="zoom_in" class="pdf-icon-btn priority-item" aria-label="Acercar">
+                    <button id="zoom_in" class="pdf-icon-btn priority-item" aria-label="Acercar" data-tooltip="Acercar">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
                     </button>
 
-                    <button id="zoom_reset" class="pdf-icon-btn priority-item" aria-label="Restablecer zoom">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    <button id="zoom_reset" class="pdf-icon-btn priority-item" aria-label="Restablecer zoom" data-tooltip="Restablecer zoom">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path></svg>
                     </button>
                     
-                    <button id="fullscreen_pdf" class="pdf-icon-btn priority-item" aria-label="Pantalla completa">
+                    <button id="fullscreen_pdf" class="pdf-icon-btn priority-item" aria-label="Pantalla completa" data-tooltip="Pantalla completa">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
                     </button>
                     
-                    <button id="share_pdf" class="pdf-icon-btn priority-item" aria-label="Compartir">
+                    <button id="share_pdf" class="pdf-icon-btn priority-item" aria-label="Compartir" data-tooltip="Compartir">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
                     </button>
                     
-                    <button id="print_pdf" class="pdf-icon-btn priority-item" aria-label="Imprimir">
+                    <button id="print_pdf" class="pdf-icon-btn priority-item" aria-label="Imprimir" data-tooltip="Imprimir">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                     </button>
 
-                    <button id="download_pdf" class="pdf-icon-btn priority-item" aria-label="Descargar PDF">
+                    <button id="download_pdf" class="pdf-icon-btn priority-item" aria-label="Descargar PDF" data-tooltip="Descargar PDF">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                     </button>
                     
-                    <button id="overflow_pdf_btn" class="pdf-icon-btn pdf-overflow-btn" aria-label="Más opciones" style="display: none;">
+                    <button id="overflow_pdf_btn" class="pdf-icon-btn pdf-overflow-btn" aria-label="Más opciones" data-tooltip="Más opciones" style="display: none;">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1.5"></circle><circle cx="19" cy="12" r="1.5"></circle><circle cx="5" cy="12" r="1.5"></circle></svg>
                     </button>
                     <div class="pdf-xtra-tools" id="pdfXtraTools"></div>
                     
-                    <button id="close_pdf" class="pdf-icon-btn close-btn" aria-label="Cerrar visor">
+                    <button id="close_pdf" class="pdf-icon-btn close-btn" aria-label="Cerrar visor" data-tooltip="Cerrar visor">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                     </button>
                 </div>

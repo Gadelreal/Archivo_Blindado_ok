@@ -2098,3 +2098,67 @@ issue-selector {
   line-height: 1.4;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
+
+/* CUSTOM TOOLTIPS (Desktop only) */
+@media (hover: hover) {
+  .pdf-floating-toolbar [data-tooltip] {
+    position: relative;
+  }
+
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background-color: #1a1a1a;
+    color: #ffffff;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-family: var(--font-base);
+    font-weight: 600;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 10010;
+    pointer-events: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  [data-tooltip]:hover::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+  
+  /* Top close adjustment to show below */
+  .pdf-top-close-btn[data-tooltip]::after {
+    bottom: auto;
+    top: calc(100% + 8px);
+    transform: translateX(-50%) translateY(-4px);
+  }
+  .pdf-top-close-btn[data-tooltip]:hover::after {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Nav buttons adjustments */
+  .pdf-nav-left[data-tooltip]::after {
+    left: 0;
+    transform: translateY(4px);
+  }
+  .pdf-nav-left[data-tooltip]:hover::after {
+    transform: translateY(0);
+  }
+
+  .pdf-nav-right[data-tooltip]::after {
+    left: auto;
+    right: 0;
+    transform: translateY(4px);
+  }
+  .pdf-nav-right[data-tooltip]:hover::after {
+    transform: translateY(0);
+  }
+}
