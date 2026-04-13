@@ -1959,22 +1959,49 @@ issue-selector {
    ========================================================================= */
 @media (max-width: 768px) {
   .pdf-canvas-container {
-    padding: 16px;
+    padding: 16px 8px;
   }
   
   .pdf-floating-toolbar {
+    width: 90%;
     bottom: 16px;
     padding: 6px 12px;
-    gap: 12px;
+    gap: 8px;
+    justify-content: center;
+    border-radius: 20px;
+  }
+  
+  .pdf-page-info {
+    font-size: 12px;
+  }
+  
+  .pdf-icon-btn {
+    padding: 4px;
+  }
+  
+  .pdf-icon-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .pdf-toolbar-divider {
+    height: 16px;
   }
   
   .pdf-nav-btn {
-    padding: 8px;
+    padding: 4px;
   }
+  
+  .pdf-nav-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+  
   .pdf-nav-left {
-    left: 8px;
+    left: 4px;
   }
+  
   .pdf-nav-right {
-    right: 8px;
+    right: 4px;
   }
 }

@@ -300,12 +300,7 @@ class PdfViewer extends HTMLElement {
                         <span id="page_num">0</span>/<span id="page_count">0</span>
                     </div>
                     
-                    <button class="pdf-icon-btn pdf-disabled" aria-label="Lista">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
-                    </button>
-                    <button class="pdf-icon-btn pdf-disabled" aria-label="Cuadrícula">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-                    </button>
+
 
                     <button id="zoom_in" class="pdf-icon-btn" aria-label="Acercar">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
@@ -322,16 +317,12 @@ class PdfViewer extends HTMLElement {
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
                     </button>
                     
-                    <button class="pdf-icon-btn pdf-disabled" aria-label="Buscar">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                    </button>
-
                     <button id="print_pdf" class="pdf-icon-btn" aria-label="Imprimir">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                     </button>
 
-                    <button id="download_pdf" class="pdf-icon-btn" aria-label="Descargar / Opciones">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1.5"></circle><circle cx="19" cy="12" r="1.5"></circle><circle cx="5" cy="12" r="1.5"></circle></svg>
+                    <button id="download_pdf" class="pdf-icon-btn" aria-label="Descargar PDF">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                     </button>
                     
                     <button id="close_pdf" class="pdf-icon-btn close-btn" aria-label="Cerrar visor">
@@ -345,6 +336,39 @@ class PdfViewer extends HTMLElement {
         this.modal = this.querySelector('#pdfModal');
         this.canvas = this.querySelector('#pdf_canvas');
         this.ctx = this.canvas.getContext('2d');
+        this.canvasContainer = this.querySelector('#canvasContainer');
+        
+        // --- Drag / Panning logic ---
+        let isDragging = false;
+        let startX, startY, scrollLeft, scrollTop;
+        this.canvasContainer.style.cursor = 'grab';
+
+        this.canvasContainer.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            this.canvasContainer.style.cursor = 'grabbing';
+            startX = e.pageX - this.canvasContainer.offsetLeft;
+            startY = e.pageY - this.canvasContainer.offsetTop;
+            scrollLeft = this.canvasContainer.scrollLeft;
+            scrollTop = this.canvasContainer.scrollTop;
+        });
+        this.canvasContainer.addEventListener('mouseleave', () => {
+            isDragging = false;
+            this.canvasContainer.style.cursor = 'grab';
+        });
+        this.canvasContainer.addEventListener('mouseup', () => {
+            isDragging = false;
+            this.canvasContainer.style.cursor = 'grab';
+        });
+        this.canvasContainer.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            const x = e.pageX - this.canvasContainer.offsetLeft;
+            const y = e.pageY - this.canvasContainer.offsetTop;
+            this.canvasContainer.scrollLeft = scrollLeft - (x - startX);
+            this.canvasContainer.scrollTop = scrollTop - (y - startY);
+        });
+        // ----------------------------
+
         
         this.querySelector('#prev').addEventListener('click', () => this.onPrevPage());
         this.querySelector('#next').addEventListener('click', () => this.onNextPage());
@@ -432,7 +456,7 @@ class PdfViewer extends HTMLElement {
             this.pdfDoc = pdfDoc_;
             this.querySelector('#page_count').textContent = this.pdfDoc.numPages;
             this.pageNum = 1;
-            this.scale = 1.0; 
+            this.initialScaleCalculated = false;
             this.renderPage(this.pageNum);
         }).catch((error) => {
             console.error('Error cargando el PDF:', error);
@@ -448,6 +472,19 @@ class PdfViewer extends HTMLElement {
         this.pageRendering = true;
         
         this.pdfDoc.getPage(num).then((page) => {
+            // Calcular escalado inicial para móviles y tablets
+            if (!this.initialScaleCalculated) {
+                const unscaledViewport = page.getViewport({scale: 1.0});
+                // Margen seguro considerando los padding
+                const safeWidth = this.canvasContainer.clientWidth - 40; 
+                if (safeWidth > 0 && safeWidth < unscaledViewport.width) {
+                     this.scale = safeWidth / unscaledViewport.width;
+                } else {
+                     this.scale = 1.0;
+                }
+                this.initialScaleCalculated = true;
+            }
+
             const viewport = page.getViewport({scale: this.scale});
             this.canvas.height = viewport.height;
             this.canvas.width = viewport.width;
