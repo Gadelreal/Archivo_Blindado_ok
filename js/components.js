@@ -278,6 +278,7 @@ class PdfViewer extends HTMLElement {
         this.scale = 1.0;
         this.canvas = null;
         this.ctx = null;
+        this.renderTask = null;
     }
 
     connectedCallback() {
@@ -302,28 +303,33 @@ class PdfViewer extends HTMLElement {
                     
 
 
-                    <button id="zoom_in" class="pdf-icon-btn" aria-label="Acercar">
+                    <button id="zoom_in" class="pdf-icon-btn priority-item" aria-label="Acercar">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
                     </button>
-                    <button id="zoom_out" class="pdf-icon-btn" aria-label="Alejar">
+                    <button id="zoom_out" class="pdf-icon-btn priority-item" aria-label="Alejar">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg>
                     </button>
                     
-                    <button id="fullscreen_pdf" class="pdf-icon-btn" aria-label="Pantalla completa">
+                    <button id="fullscreen_pdf" class="pdf-icon-btn priority-item" aria-label="Pantalla completa">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
                     </button>
                     
-                    <button id="share_pdf" class="pdf-icon-btn" aria-label="Compartir">
+                    <button id="share_pdf" class="pdf-icon-btn priority-item" aria-label="Compartir">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
                     </button>
                     
-                    <button id="print_pdf" class="pdf-icon-btn" aria-label="Imprimir">
+                    <button id="print_pdf" class="pdf-icon-btn priority-item" aria-label="Imprimir">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                     </button>
 
-                    <button id="download_pdf" class="pdf-icon-btn" aria-label="Descargar PDF">
+                    <button id="download_pdf" class="pdf-icon-btn priority-item" aria-label="Descargar PDF">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                     </button>
+                    
+                    <button id="overflow_pdf_btn" class="pdf-icon-btn pdf-overflow-btn" aria-label="Más opciones" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1.5"></circle><circle cx="19" cy="12" r="1.5"></circle><circle cx="5" cy="12" r="1.5"></circle></svg>
+                    </button>
+                    <div class="pdf-xtra-tools" id="pdfXtraTools"></div>
                     
                     <button id="close_pdf" class="pdf-icon-btn close-btn" aria-label="Cerrar visor">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -379,6 +385,84 @@ class PdfViewer extends HTMLElement {
         this.querySelector('#print_pdf').addEventListener('click', () => this.onPrint());
         this.querySelector('#download_pdf').addEventListener('click', () => this.onDownload());
         this.querySelector('#close_pdf').addEventListener('click', () => this.close());
+        
+        // Overflow menu toggle
+        this.xtraToolsMenu = this.querySelector('#pdfXtraTools');
+        this.overflowBtn = this.querySelector('#overflow_pdf_btn');
+        this.overflowBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.xtraToolsMenu.classList.toggle('is-open');
+        });
+        
+        // Cierra el menu si clicas en cualquier lugar que no sea el menu o boton
+        this.modal.addEventListener('click', (e) => {
+            if (!this.xtraToolsMenu.contains(e.target) && !this.overflowBtn.contains(e.target)) {
+                this.xtraToolsMenu.classList.remove('is-open');
+            }
+        });
+        
+        // --- Dynamic Toolbar Resize Logic ---
+        this.adjustToolbar = () => {
+             if (!this.modal.classList.contains('is-open')) return;
+             
+             const toolbar = this.querySelector('.pdf-floating-toolbar');
+             // Mover todos los items del cajón a la barra primero para calcular el ancho real
+             while(this.xtraToolsMenu.children.length > 0) {
+                 toolbar.insertBefore(this.xtraToolsMenu.firstElementChild, this.overflowBtn);
+             }
+             
+             this.overflowBtn.style.display = 'none';
+             this.xtraToolsMenu.classList.remove('is-open');
+             
+             const safeW = window.innerWidth - 32; 
+             
+             // Escanear priority-items de atras hacia adelante si no caben
+             let cand = this.overflowBtn.previousElementSibling;
+             while(cand && cand.classList.contains('priority-item') && toolbar.offsetWidth > safeW) {
+                 this.xtraToolsMenu.prepend(cand);
+                 cand = this.overflowBtn.previousElementSibling;
+             }
+
+             // Solo mostrar el botón de puntos si realmente hay algo dentro del menú
+             if (this.xtraToolsMenu.children.length > 0) {
+                 this.overflowBtn.style.display = 'inline-flex';
+             }
+        };
+        
+        window.addEventListener('resize', this.adjustToolbar);
+
+        // --- Touch Support for Panning ---
+        this.canvasContainer.addEventListener('touchstart', (e) => {
+            if (e.touches.length !== 1) return;
+            isDragging = true;
+            const touch = e.touches[0];
+            startX = touch.pageX - this.canvasContainer.offsetLeft;
+            startY = touch.pageY - this.canvasContainer.offsetTop;
+            scrollLeft = this.canvasContainer.scrollLeft;
+            scrollTop = this.canvasContainer.scrollTop;
+        }, { passive: false });
+
+        this.canvasContainer.addEventListener('touchmove', (e) => {
+            if (!isDragging || e.touches.length !== 1) return;
+            const touch = e.touches[0];
+            const x = touch.pageX - this.canvasContainer.offsetLeft;
+            const y = touch.pageY - this.canvasContainer.offsetTop;
+            const walkX = x - startX;
+            const walkY = y - startY;
+            this.canvasContainer.scrollLeft = scrollLeft - walkX;
+            this.canvasContainer.scrollTop = scrollTop - walkY;
+            e.preventDefault();
+        }, { passive: false });
+
+        this.canvasContainer.addEventListener('touchend', () => {
+            isDragging = false;
+        });
+    }
+
+    disconnectedCallback() {
+        if (this.adjustToolbar) {
+            window.removeEventListener('resize', this.adjustToolbar);
+        }
     }
 
     toggleFullscreen() {
@@ -441,6 +525,10 @@ class PdfViewer extends HTMLElement {
     open(url) {
         this.currentPdfUrl = url;
         this.modal.classList.add('is-open');
+        this.lockedScrollY = window.scrollY;
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${this.lockedScrollY}px`;
+        document.body.style.width = '100%';
         document.body.style.overflow = 'hidden'; 
         
         if (typeof pdfjsLib === 'undefined') {
@@ -458,6 +546,7 @@ class PdfViewer extends HTMLElement {
             this.pageNum = 1;
             this.initialScaleCalculated = false;
             this.renderPage(this.pageNum);
+            setTimeout(() => this.adjustToolbar(), 50); // Validar ancho de botonera
         }).catch((error) => {
             console.error('Error cargando el PDF:', error);
         });
@@ -465,7 +554,14 @@ class PdfViewer extends HTMLElement {
 
     close() {
         this.modal.classList.remove('is-open');
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
         document.body.style.overflow = '';
+        window.scrollTo({
+            top: this.lockedScrollY,
+            behavior: 'instant'
+        });
     }
 
     renderPage(num) {
@@ -475,14 +571,23 @@ class PdfViewer extends HTMLElement {
             // Calcular escalado inicial para móviles y tablets
             if (!this.initialScaleCalculated) {
                 const unscaledViewport = page.getViewport({scale: 1.0});
-                // Margen seguro considerando los padding
-                const safeWidth = this.canvasContainer.clientWidth - 40; 
+                // Intentamos capturar el width, si es 0 (layout aún no propagado), usamos window
+                let safeWidth = this.canvasContainer.clientWidth - 40; 
+                if (!safeWidth || safeWidth <= 0) {
+                    safeWidth = window.innerWidth - 40;
+                }
+                
                 if (safeWidth > 0 && safeWidth < unscaledViewport.width) {
                      this.scale = safeWidth / unscaledViewport.width;
                 } else {
                      this.scale = 1.0;
                 }
                 this.initialScaleCalculated = true;
+            }
+
+            // Cancelar tarea previa si existe
+            if (this.renderTask) {
+                this.renderTask.cancel();
             }
 
             const viewport = page.getViewport({scale: this.scale});
@@ -493,14 +598,18 @@ class PdfViewer extends HTMLElement {
                 canvasContext: this.ctx,
                 viewport: viewport
             };
-            const renderTask = page.render(renderContext);
+            this.renderTask = page.render(renderContext);
 
-            renderTask.promise.then(() => {
+            this.renderTask.promise.then(() => {
                 this.pageRendering = false;
+                this.renderTask = null;
                 if (this.pageNumPending !== null) {
                     this.renderPage(this.pageNumPending);
                     this.pageNumPending = null;
                 }
+            }).catch(err => {
+                if (err.name === 'RenderingCancelledException') return;
+                console.error(err);
             });
         });
 

@@ -1826,12 +1826,13 @@ issue-selector {
 
 .pdf-modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100dvh;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
   background-color: #1a1a1a;
-  z-index: 10000;
+  z-index: 99999;
   display: flex;
   justify-content: center;
   align-items: stretch;
@@ -1944,6 +1945,12 @@ issue-selector {
   background-color: #F3F4F6;
 }
 
+.pdf-xtra-tools {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 .pdf-disabled {
   opacity: 0.3;
   pointer-events: none;
@@ -1963,29 +1970,51 @@ issue-selector {
   }
   
   .pdf-floating-toolbar {
-    width: 90%;
-    bottom: 16px;
-    padding: 6px 12px;
-    gap: 8px;
+    width: max-content;
+    bottom: 24px;
+    padding: 8px 16px;
+    gap: 12px;
     justify-content: center;
-    border-radius: 20px;
+    border-radius: 40px;
+    box-sizing: border-box;
   }
   
   .pdf-page-info {
-    font-size: 12px;
+    font-size: 14px;
   }
   
   .pdf-icon-btn {
-    padding: 4px;
+    padding: 6px;
   }
   
   .pdf-icon-btn svg {
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
   }
 
   .pdf-toolbar-divider {
-    height: 16px;
+    height: 24px;
+  }
+  
+  .pdf-xtra-tools {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    right: 32px;
+    background-color: var(--bg-white);
+    border-radius: 12px;
+    padding: 8px;
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+  
+  .pdf-xtra-tools.is-open {
+    display: flex;
+  }
+  
+  .pdf-overflow-btn {
+    display: none;
   }
   
   .pdf-nav-btn {
