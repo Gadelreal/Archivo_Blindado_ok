@@ -326,7 +326,7 @@
             const viewer = document.querySelector('pdf-viewer');
             const targetPdf = './pdf/P_R_01_01.pdf';
 
-            // Minificha image (big thumbnail left column)
+            // Main Ficha Thumbnail
             const mainThumb = document.querySelector('.pub-card-ficha');
             if (mainThumb) {
                 mainThumb.addEventListener('click', () => {
@@ -334,13 +334,31 @@
                 });
             }
 
-            // "Ver detalle" button
-            const btnDetail = document.querySelector('.btn-ficha-outline');
-            if (btnDetail) {
-                btnDetail.addEventListener('click', () => {
+            // Minificha Thumbnail
+            const miniThumb = document.querySelector('.minificha-image-box');
+            if (miniThumb) {
+                miniThumb.addEventListener('click', () => {
                     viewer.open(targetPdf);
                 });
             }
+
+            // All "Ver detalle" buttons (Main and Minificha)
+            const detailButtons = document.querySelectorAll('.btn-ficha-outline');
+            detailButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    viewer.open(targetPdf);
+                });
+            });
+
+            // Page Preview small thumbnails (1, 2)
+            const pagePreviews = document.querySelectorAll('.page-preview-box');
+            pagePreviews.forEach(box => {
+                box.addEventListener('click', () => {
+                    // In the future we could read the page number from .preview-num
+                    // but for now, we just open the PDF.
+                    viewer.open(targetPdf);
+                });
+            });
         });
     </script>
 </body>

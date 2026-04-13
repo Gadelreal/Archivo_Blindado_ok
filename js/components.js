@@ -457,6 +457,19 @@ class PdfViewer extends HTMLElement {
         this.canvasContainer.addEventListener('touchend', () => {
             isDragging = false;
         });
+
+        // --- Wheel Zoom Support ---
+        this.canvasContainer.addEventListener('wheel', (e) => {
+            // Solo actuar si el modal está abierto
+            if (!this.modal.classList.contains('is-open')) return;
+            
+            e.preventDefault();
+            if (e.deltaY < 0) {
+                this.onZoomIn();
+            } else {
+                this.onZoomOut();
+            }
+        }, { passive: false });
     }
 
     disconnectedCallback() {
