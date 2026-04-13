@@ -831,6 +831,10 @@ app-header.is-menu-open .tape-02-mobile {
     padding: 0 32px;
     text-align: left;
   }
+
+  .footer-sep {
+    display: none;
+  }
 }
 
 /* MOBILE INTERFACE (Max-Width: 768px) */
@@ -923,6 +927,24 @@ app-header.is-menu-open .tape-02-mobile {
   .footer-bottom .text-left {
     padding: 0 32px;
     text-align: left;
+  }
+
+  .articulos-header {
+    flex-direction: column;
+    align-items: flex-start !important;
+    text-align: left !important;
+    gap: 24px;
+    width: 100%;
+  }
+
+  .articulos-header-left,
+  .articulos-header-right {
+    width: 100%;
+    text-align: left !important;
+  }
+
+  .author-tags-row {
+    justify-content: flex-start !important;
   }
 }
 
@@ -1138,12 +1160,6 @@ issue-selector {
   }
 
   .hero-nav {
-    bottom: 28px;
-    right: 32px;
-    height: 48px;
-  }
-
-  .hero-nav-group {
     display: none;
   }
 }
@@ -1258,6 +1274,7 @@ issue-selector {
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   font-family: var(--font-base);
+  white-space: nowrap;
 }
 
 /* .btn-ficha-outline uses base style from common block */
@@ -1350,6 +1367,13 @@ issue-selector {
   background: #F9FAFB;
 }
 
+.ficha-bottom-meta {
+  font-family: var(--font-base);
+  font-size: 14px;
+  color: #667085;
+  margin-top: 12px;
+}
+
 /* RESPONSIVE ADAPTATIONS */
 @media (max-width: 1024px) {
   .container-ficha {
@@ -1367,6 +1391,14 @@ issue-selector {
 
   .ficha-col-info {
     padding-top: 20px;
+  }
+
+  .pub-hover-icon-ficha {
+    opacity: 1;
+  }
+
+  .btn-ficha-outline .btn-text {
+    display: none;
   }
 }
 
