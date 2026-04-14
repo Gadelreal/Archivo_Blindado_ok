@@ -13,6 +13,11 @@ class AppHeader extends HTMLElement {
     }
 
     render() {
+        const path = window.location.pathname;
+        const page = path.split("/").pop() || 'index.html';
+        
+        const isActive = (p) => page === p ? 'active' : '';
+
         this.innerHTML = `
         <header class="navbar">
             <div class="nav-container">
@@ -20,9 +25,9 @@ class AppHeader extends HTMLElement {
                     <img src="./images/Logo.svg" alt="El Archivo Blindado Logo" class="logo-img">
                 </a>
                 <nav class="nav-links">
-                    <a href="#" class="active">REFRACTOR</a>
+                    <a href="./index.html" class="${isActive('index.html')}">REFRACTOR</a>
                     <span class="dot">•</span>
-                    <a href="#">FIRMAS</a>
+                    <a href="./firmas.html" class="${isActive('firmas.html')}">FIRMAS</a>
                     <span class="dot">•</span>
                     <a href="#">ARTEFACTOS</a>
                     <span class="dot">•</span>
@@ -37,8 +42,8 @@ class AppHeader extends HTMLElement {
         <div class="tablet-menu-bg">
             <nav class="tablet-nav-content">
                 <img src="./images/Ilustration_navigation.svg" class="tablet-nav-illu" alt="">
-                <a href="#" class="active">REFRACTOR</a>
-                <a href="#">FIRMAS</a>
+                <a href="./index.html" class="${isActive('index.html')}">REFRACTOR</a>
+                <a href="./firmas.html" class="${isActive('firmas.html')}">FIRMAS</a>
                 <a href="#">ARTEFACTOS</a>
                 <a href="#">EL ARCHIVO BLINDADO</a>
             </nav>
