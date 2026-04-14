@@ -2223,20 +2223,24 @@ issue-selector {
 
 .page-firmas .section-filters {
     background-color: #F9FAFB;
-    padding: 64px 80px 40px 80px;
+    height: 240px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 80px;
     border-bottom: 1px solid #EAECF0;
 }
 
 .page-firmas .filters-container {
-    max-width: 1440px;
-    margin: 0 auto;
+    width: 100%;
 }
 
 .page-firmas .filters-row {
     display: flex;
-    gap: 24px;
+    gap: 12px;
     align-items: flex-end;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
     flex-wrap: wrap;
 }
 
