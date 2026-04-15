@@ -159,13 +159,30 @@
             }
 
             function populateNumbers() {
-                const numbers = [...new Set(allArticulos.map(a => a.numero))].sort();
+                issueDropdown.innerHTML = '';
+                
+                // Add "Todos" option
+                const todosDiv = document.createElement('div');
+                todosDiv.className = 'dropdown-item option-issue';
+                todosDiv.dataset.value = 'todos';
+                todosDiv.textContent = 'Todos';
+                todosDiv.onclick = () => selectIssue('todos');
+                if (selectedIssue === 'todos') todosDiv.classList.add('selected');
+                issueDropdown.appendChild(todosDiv);
+
+                let filteredForNumbers = allArticulos;
+                if (selectedAuthorId) {
+                    filteredForNumbers = allArticulos.filter(a => a.autor_id === selectedAuthorId);
+                }
+
+                const numbers = [...new Set(filteredForNumbers.map(a => a.numero))].sort();
                 numbers.forEach(n => {
                     const div = document.createElement('div');
                     div.className = 'dropdown-item option-issue';
                     div.dataset.value = n;
                     div.textContent = n;
                     div.onclick = () => selectIssue(n);
+                    if (selectedIssue === n) div.classList.add('selected');
                     issueDropdown.appendChild(div);
                 });
             }
@@ -203,6 +220,10 @@
                 authorSearchWrapper.classList.remove('is-open');
                 btnVerArticulos.disabled = false;
                 
+                selectedIssue = 'todos';
+                populateNumbers();
+                selectIssue('todos');
+
                 const options = authorDropdown.querySelectorAll('.dropdown-option');
                 options.forEach(opt => {
                     if (opt.dataset.id === id) opt.classList.add('selected');
