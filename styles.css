@@ -1585,7 +1585,7 @@ issue-selector {
 .author-tag-wrapper {
   margin-top: 16px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 .author-tags-row {
