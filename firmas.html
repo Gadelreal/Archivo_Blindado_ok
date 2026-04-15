@@ -318,11 +318,22 @@
                     let articlesHtml = '';
 
                     arts.forEach((art, i) => {
+                        let bodyContent = art.contenido;
+                        let subtitleHtml = '';
+                        
+                        const paragraphs = bodyContent.split('\n\n').filter(p => p.trim());
+                        if (paragraphs.length > 0 && paragraphs[0].startsWith('*') && paragraphs[0].endsWith('*')) {
+                            const subtitleText = paragraphs.shift().replace(/^\*|\*$/g, '');
+                            subtitleHtml = `<h4 class="art-subtitle">${subtitleText}</h4>`;
+                            bodyContent = paragraphs.join('\n\n');
+                        }
+
                         articlesHtml += `
                             <article class="pub-article">
                                 <h3 class="art-title">${art.titulo}</h3>
+                                ${subtitleHtml}
                                 <div class="art-body">
-                                    ${art.contenido.split('\n\n').map(p => {
+                                    ${bodyContent.split('\n\n').map(p => {
                                         const cleanP = p.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                                                         .replace(/\*(.*?)\*/g, '<em>$1</em>');
                                         return `<p class="art-paragraph">${cleanP}</p>`;
@@ -333,7 +344,7 @@
                                     <p class="art-signature-name"><strong>${author.nombre}${art.lugar_fecha_publicacion ? `, ${art.lugar_fecha_publicacion.split(',')[0].trim()}` : ''}</strong></p>
                                     <p class="art-signature-date">${art.lugar_fecha_publicacion && art.lugar_fecha_publicacion.includes(',') ? art.lugar_fecha_publicacion.split(',')[1].trim() : ''}</p>
                                 </div>
-                                <div class="art-tag-footer" style="padding-top: 32px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                                <div class="art-tag-footer">
                                     <div class="author-tag">Refractor ${art.numero}</div>
                                     <div class="author-tag">${author.nombre}</div>
                                     <button class="btn-text-red btn-ver-pdf" data-url="${pdfUrl}">

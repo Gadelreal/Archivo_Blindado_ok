@@ -1678,8 +1678,12 @@ issue-selector {
 }
 
 .art-tag-footer {
-  margin-top: 40px;
+  margin-top: 32px;
   border-top: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .articles-separator {
