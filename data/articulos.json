@@ -31,5 +31,27 @@
     "titulo": "¡A ZARAGOZA!",
     "lugar_fecha_publicacion": "Barcelona, 28 de agosto de 1936",
     "contenido": "*inscripción para la columna confederal y anarquista «Los Aguiluchos»*\n\nCamaradas: Quien esto escribe tiene pocas letras, pero le sobra corazón.\n\nLas milicias que han puesto rumbo al Frente de Aragón son el orgullo de Madrid. Los jóvenes madrileños alistados en las Milicias quieren marchar al frente ¡A Zaragoza!, en cuya ciudad no debe quedar un rastro fascista.\n\n**J. García Gasso**\nPresidente del Comité de Guerra de la Columna «Los Aguiluchos».\n*Barcelona, 28 de agosto de 1936.*"
+  },
+  {
+    "id": "SIM_02_Gasso",
+    "numero": "02",
+    "pagina": "4",
+    "orden_en_pagina": 1,
+    "autor": "J. García Gasso",
+    "autor_id": "AU_J_Garcia_Gasso",
+    "titulo": "SIMULACIÓN: ARTÍCULO EN NÚMERO 02",
+    "lugar_fecha_publicacion": "Barcelona, 15 de marzo de 1937",
+    "contenido": "Este es un artículo de simulación para comprobar el diseño del listado por autor.\n\nContenido de prueba para J. García Gasso."
+  },
+  {
+    "id": "SIM_03_Gasso",
+    "numero": "03",
+    "pagina": "12",
+    "orden_en_pagina": 1,
+    "autor": "J. García Gasso",
+    "autor_id": "AU_J_Garcia_Gasso",
+    "titulo": "SIMULACIÓN: ARTÍCULO EN NÚMERO 03",
+    "lugar_fecha_publicacion": "Barcelona, 20 de mayo de 1937",
+    "contenido": "Segunda simulación para comprobar la agrupación por números en la página de firmas."
   }
 ]
