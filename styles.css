@@ -1563,7 +1563,9 @@ issue-selector {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 32px;
+  margin-bottom: 48px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid #EAECF0;
 }
 
 .articulos-title {
@@ -2426,13 +2428,14 @@ issue-selector {
 .page-firmas .section-results {
     padding: 0 80px;
     min-height: 0;
-    margin-top: 200px;
+    margin-top: 120px;
 }
 
 .page-firmas .articulos-title {
-    font-size: 48px;
-    letter-spacing: -0.02em;
-    margin-bottom: 8px;
+    font-size: 32px;
+    font-weight: 800;
+    color: #000000;
+    margin-bottom: 4px;
 }
 
 
