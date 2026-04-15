@@ -193,7 +193,7 @@ class AppQuote extends HTMLElement {
                         ${highlight ? `<span class="highlight">${highlight}</span>` : ''} 
                         ${textPost}
                     </p>
-                    ${author ? `<cite>${author}</cite>` : ''}
+                    ${author ? `<div class="author-tag-wrapper"><div class="author-tag">${author}</div></div>` : ''}
                 </blockquote>
             </div>
         </section>

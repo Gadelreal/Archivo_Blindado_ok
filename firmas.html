@@ -275,13 +275,17 @@
                     filtered = filtered.filter(a => a.numero === selectedIssue);
                 }
 
+                const resultsSection = document.querySelector('.section-results');
+
                 if (filtered.length === 0) {
                     resultsContainer.innerHTML = '';
                     resultsEmpty.style.display = 'block';
+                    resultsSection.classList.add('has-results');
                     return;
                 }
 
                 resultsEmpty.style.display = 'none';
+                resultsSection.classList.add('has-results');
                 const author = allAutores.find(a => a.id === selectedAuthorId);
                 const issues = [...new Set(filtered.map(a => a.numero))].sort();
                 
