@@ -252,6 +252,7 @@ download-dropdown {
 .btn-download,
 .btn-ficha-outline,
 .btn-ficha-red,
+.btn-text-red,
 .hero-nav-btn {
   display: inline-flex;
   align-items: center;
@@ -273,6 +274,19 @@ download-dropdown {
   font-size: 16px;
   padding: 12px 24px;
   border: 1px solid #D5D7DA;
+}
+
+.btn-text-red {
+  background: none;
+  border: none;
+  color: var(--bg-red);
+  font-size: 16px;
+  font-weight: 600;
+  padding: 0;
+}
+
+.btn-text-red:hover {
+  opacity: 0.8;
 }
 
 .btn-download .chevron-icon {
@@ -1578,11 +1592,13 @@ issue-selector {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 4px 8px;
+  padding: 8px 16px;
   border: 1px solid #D0D5DD;
-  font-size: 11px;
-  color: #344054;
+  font-size: 14px;
+  color: #475467;
   background: var(--bg-white);
+  font-family: var(--font-base);
+  font-weight: 400;
 }
 
 .tag-num {
@@ -1651,10 +1667,18 @@ issue-selector {
   font-weight: 700;
   display: block;
   margin-top: 4px;
+  font-size: 18px !important;
+}
+
+.art-signature-date {
+  color: #475467;
+  font-size: 18px !important;
+  margin-top: 4px !important;
 }
 
 .art-tag-footer {
   margin-top: 40px;
+  border-top: 0;
 }
 
 .articles-separator {
@@ -2402,7 +2426,15 @@ issue-selector {
 .page-firmas .section-results {
     padding: 0 80px;
     min-height: 0;
+    margin-top: 200px;
 }
+
+.page-firmas .articulos-title {
+    font-size: 48px;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+}
+
 
 .page-firmas .results-container {
     max-width: 1440px;
@@ -2431,7 +2463,12 @@ issue-selector {
     }
     .page-firmas .section-results {
         padding: 30px 32px 60px 32px;
+        margin-top: 100px;
     }
+    .page-firmas .articulos-title {
+        font-size: 32px;
+    }
+
     .page-firmas .search-wrapper {
         width: 100%;
     }

@@ -289,16 +289,7 @@
                     accordion.setAttribute('title', `${key} | ${arts.length} artículos`);
                     if (index === 0) accordion.setAttribute('open', '');
 
-                    let articlesHtml = `
-                        <div class="accordion-top-actions" style="padding: 0 24px 16px 24px;">
-                            <button class="btn-ficha-outline btn-ver-pdf" data-url="${pdfUrl}" style="padding: 10px 20px; font-size: 14px; display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                                Ver página en PDF
-                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M17.5 17.5L13.875 13.875M9.16667 6.66667V11.6667M6.66667 9.16667H11.6667M15.8333 9.16667C15.8333 12.8486 12.8486 15.8333 9.16667 15.8333C5.48477 15.8333 2.5 12.8486 2.5 9.16667C2.5 5.48477 5.48477 2.5 9.16667 2.5C12.8486 2.5 15.8333 5.48477 15.8333 9.16667Z" stroke="currentColor" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </button>
-                        </div>
-                    `;
+                    let articlesHtml = '';
 
                     arts.forEach((art, i) => {
                         articlesHtml += `
@@ -313,10 +304,18 @@
                                 </div>
                                 <div class="art-signature">
                                     <p class="art-signature-intro">por los refractarios,</p>
-                                    <p class="art-signature-name">${author.nombre}, ${art.lugar_fecha_publicacion}</p>
+                                    <p class="art-signature-name"><strong>${author.nombre}${art.lugar_fecha_publicacion ? `, ${art.lugar_fecha_publicacion.split(',')[0].trim()}` : ''}</strong></p>
+                                    <p class="art-signature-date">${art.lugar_fecha_publicacion && art.lugar_fecha_publicacion.includes(',') ? art.lugar_fecha_publicacion.split(',')[1].trim() : ''}</p>
                                 </div>
-                                <div class="art-tag-footer" style="padding-bottom: 0;">
+                                <div class="art-tag-footer" style="padding-top: 32px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                                    <div class="author-tag">Refractor ${art.numero}</div>
                                     <div class="author-tag">${author.nombre}</div>
+                                    <button class="btn-text-red btn-ver-pdf" data-url="${pdfUrl}">
+                                        Ver artículo en PDF 
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                        </svg>
+                                    </button>
                                 </div>
                             </article>
                             ${i < arts.length - 1 ? '<div class="articles-separator"></div>' : ''}
@@ -326,10 +325,12 @@
                     accordion.innerHTML = articlesHtml;
                     resultsContainer.appendChild(accordion);
 
-                    const btnPdf = accordion.querySelector('.btn-ver-pdf');
-                    btnPdf.addEventListener('click', (e) => {
-                        const viewer = document.querySelector('pdf-viewer');
-                        viewer.open(e.currentTarget.dataset.url);
+                    const btnsPdf = accordion.querySelectorAll('.btn-ver-pdf');
+                    btnsPdf.forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const viewer = document.querySelector('pdf-viewer');
+                            viewer.open(e.currentTarget.dataset.url);
+                        });
                     });
                 });
 
