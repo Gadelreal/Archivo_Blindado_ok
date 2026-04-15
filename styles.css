@@ -1563,9 +1563,7 @@ issue-selector {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 48px;
-  padding-bottom: 32px;
-  border-bottom: 1px solid #EAECF0;
+  margin-bottom: 32px;
 }
 
 .articulos-title {

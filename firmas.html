@@ -130,7 +130,8 @@
                     populateNumbers();
                     renderFeatured();
                     
-                    heroSubtitle.textContent = `Firmas | ${allAutores.length} firmas`;
+                    const firmasText = allAutores.length === 1 ? 'firma' : 'firmas';
+                    heroSubtitle.textContent = `Firmas | ${allAutores.length} ${firmasText}`;
                 } catch (error) {
                     console.error('Error loading data:', error);
                 }
@@ -262,12 +263,15 @@
                 resultsEmpty.style.display = 'none';
                 const author = allAutores.find(a => a.id === selectedAuthorId);
                 const issues = [...new Set(filtered.map(a => a.numero))].sort();
+                
+                const issuesText = issues.length === 1 ? 'número' : 'números';
+                const articlesText = filtered.length === 1 ? 'artículo' : 'artículos';
 
                 resultsContainer.innerHTML = `
                     <div class="articulos-header">
                         <div class="articulos-header-left">
                             <h2 class="articulos-title">${author.nombre.toUpperCase()}</h2>
-                            <p class="articulos-meta">${issues.length} números | ${filtered.length} artículos</p>
+                            <p class="articulos-meta">${issues.length} ${issuesText} | ${filtered.length} ${articlesText}</p>
                         </div>
                     </div>
                 `;
@@ -285,8 +289,9 @@
                     const pdfId = `P_R_${firstArt.numero}_${firstArt.pagina.toString().padStart(2, '0')}`;
                     const pdfUrl = `./pdf/${pdfId}.pdf`;
 
+                    const artsText = arts.length === 1 ? 'artículo' : 'artículos';
                     const accordion = document.createElement('app-accordion');
-                    accordion.setAttribute('title', `${key} | ${arts.length} artículos`);
+                    accordion.setAttribute('title', `${key} | ${arts.length} ${artsText}`);
                     if (index === 0) accordion.setAttribute('open', '');
 
                     let articlesHtml = '';

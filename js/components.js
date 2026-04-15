@@ -128,7 +128,7 @@ class PublicationCard extends HTMLElement {
                     <h2 class="pub-issue">${number}</h2>
                     <div class="pub-meta">
                         <time datetime="${datetime}">${date}</time>
-                        <span>${articles} artículos</span>
+                        <span>${articles} ${parseInt(articles) === 1 ? 'artículo' : 'artículos'}</span>
                     </div>
                 </div>
             </a>
