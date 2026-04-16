@@ -126,9 +126,12 @@ body {
   max-width: 800px;
 }
 
-.hero-date {
+.hero-date,
+.hero-text,
+.hero-subtitle {
   font-size: 24px;
   color: var(--text-inverse);
+  margin-top: 12px;
   margin-bottom: 0;
 }
 
@@ -1038,12 +1041,13 @@ app-header.is-menu-open .tape-02-mobile {
   /* Zero gap to text below, matching home hero metric */
 }
 
+.hero-ficha .hero-subtitle,
 .hero-ficha .hero-date {
   font-family: var(--font-base);
   font-size: 24px;
   font-weight: 400;
   color: #FFFFFF;
-  margin-top: 0;
+  margin-top: 12px;
   line-height: normal;
   /* Matching home hero behavior */
   letter-spacing: -0.01em;
@@ -2273,7 +2277,7 @@ issue-selector {
     font-weight: 400;
     color: var(--text-inverse);
     font-family: var(--font-base);
-    margin-top: 0;
+    margin-top: 12px;
     line-height: normal;
 }
 
@@ -2488,7 +2492,8 @@ issue-selector {
         width: 300px;
     }
     .page-firmas .section-filters {
-        padding: 40px 32px 30px 32px;
+        height: auto;
+        padding: 68px 32px; /* Balanced padding to match vertical rhythm */
     }
     .page-firmas .section-results {
         padding: 30px 32px 60px 32px;
@@ -2503,16 +2508,43 @@ issue-selector {
         margin-top: 60px;
     }
 
+    .page-firmas .filters-row {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: flex-end;
+        gap: 12px;
+        margin-bottom: 24px;
+    }
+
+    .page-firmas .filter-group {
+        flex: 1;
+    }
+
     .page-firmas .search-wrapper {
         width: 100%;
     }
-    .page-firmas .filters-row {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 16px;
+
+    .page-firmas .custom-dropdown-container {
+        width: 100%;
+        min-width: 160px;
     }
+
     .page-firmas .selector-trigger {
         width: 100%;
+    }
+
+    .page-firmas .btn-ficha-red {
+        width: auto;
+        white-space: nowrap;
+        flex: 0 0 auto;
+    }
+
+    .page-firmas .results-container {
+        padding: 0;
+    }
+
+    .pub-article {
+        max-width: 100%;
     }
 }
 
