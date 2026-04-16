@@ -259,6 +259,7 @@ download-dropdown {
 .hero-nav-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   font-weight: 600;
   text-decoration: none;
@@ -1353,9 +1354,10 @@ issue-selector {
 
 .btn-ficha-red:not(:disabled):hover,
 .download-wrapper:hover .btn-ficha-red:not(:disabled),
-.download-wrapper.is-open .btn-ficha-red:not(:disabled) {
-  background: var(--bg-black);
-  border-color: var(--bg-black);
+.download-wrapper.is-open .btn-ficha-red:not(:disabled),
+.btn-ficha-red:not(:disabled):active {
+  background: var(--bg-red-dark);
+  border-color: var(--bg-red-dark);
   color: var(--text-inverse) !important;
 }
 
@@ -1458,6 +1460,10 @@ issue-selector {
 
   .btn-ficha-outline .btn-text {
     display: none;
+  }
+
+  .container-articulos {
+    padding: 0;
   }
 }
 
@@ -1874,7 +1880,11 @@ issue-selector {
 
   .container-minificha,
   .container-articulos {
-    padding: 0 32px;
+    padding: 0;
+  }
+
+  .section-minificha {
+    padding: 40px 32px;
   }
 }
 
