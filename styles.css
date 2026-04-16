@@ -280,7 +280,7 @@ download-dropdown {
   background: none;
   border: none;
   color: var(--bg-red);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   padding: 0;
 }
@@ -657,6 +657,19 @@ app-header.is-menu-open .tape-02-mobile {
   }
 
   .download-wrapper:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  /* Disable hover open for sections that should only open on click/focus */
+  .section-filters .download-wrapper:hover .dropdown-menu {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+  }
+
+  .section-filters .download-wrapper.is-open .dropdown-menu {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
@@ -1483,9 +1496,15 @@ issue-selector {
    ========================================================================= */
 
 .section-articulos {
-  padding: 80px 0;
+  padding: 120px 0 64px 0;
   background-color: var(--bg-white);
   border-top: 1px solid #D5D7DA;
+}
+
+@media (max-width: 1024px) {
+  .section-articulos {
+    padding: 90px 32px 64px 32px;
+  }
 }
 
 .container-articulos {
@@ -1546,14 +1565,7 @@ issue-selector {
   line-height: 24px;
 }
 
-/* =========================================================================
-   7. SECTION ARTÍCULOS
-   ========================================================================= */
 
-.section-articulos {
-  padding: 120px 0 64px 0;
-  background-color: var(--bg-white);
-}
 
 .container-articulos {
   padding: 0 80px;
@@ -1567,10 +1579,14 @@ issue-selector {
   margin-bottom: 32px;
 }
 
+.section-articulos .articulos-header {
+  margin-top: 0;
+}
+
 .articulos-title {
   font-family: var(--font-primary);
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 32px; /* Matched to page-firmas */
+  font-weight: 800;
   color: #101828;
   margin-bottom: 4px;
   text-transform: uppercase;
@@ -1609,6 +1625,7 @@ issue-selector {
   font-weight: 600;
   border-radius: 4px;
   transition: all 0.2s ease;
+  cursor: pointer;
 }
 
 .tag-num,
@@ -2330,6 +2347,7 @@ issue-selector {
     background-color: white;
     outline: none;
     transition: border-color 0.2s;
+    cursor: pointer;
 }
 
 .page-firmas .search-input:focus {

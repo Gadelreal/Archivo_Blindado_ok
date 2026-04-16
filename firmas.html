@@ -314,9 +314,8 @@
                     const pdfId = `P_R_${firstArt.numero}_${firstArt.pagina.toString().padStart(2, '0')}`;
                     const pdfUrl = `./pdf/${pdfId}.pdf`;
 
-                    const artsText = arts.length === 1 ? 'artículo' : 'artículos';
                     const accordion = document.createElement('app-accordion');
-                    accordion.setAttribute('title', `${key} | ${arts.length} ${artsText}`);
+                    accordion.setAttribute('title', key);
                     if (index === 0) accordion.setAttribute('open', '');
 
                     let articlesHtml = '';
@@ -353,7 +352,7 @@
                                     <div class="author-tag">${author.nombre}</div>
                                     <button class="btn-text-red btn-ver-pdf" data-url="${pdfUrl}">
                                         Ver artículo en PDF 
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                                         </svg>
                                     </button>
