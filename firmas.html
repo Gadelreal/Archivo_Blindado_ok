@@ -315,7 +315,7 @@
                     const pdfUrl = `./pdf/${pdfId}.pdf`;
 
                     const accordion = document.createElement('app-accordion');
-                    accordion.setAttribute('title', key);
+                    accordion.setAttribute('header-text', key);
                     if (index === 0) accordion.setAttribute('open', '');
 
                     let articlesHtml = '';

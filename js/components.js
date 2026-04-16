@@ -239,7 +239,7 @@ class IssueSelector extends HTMLElement {
 
 class AppAccordion extends HTMLElement {
     connectedCallback() {
-        const title = this.getAttribute('title') || '';
+        const title = this.getAttribute('header-text') || '';
         const innerContent = this.innerHTML;
         
         this.innerHTML = `

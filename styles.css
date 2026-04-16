@@ -1635,6 +1635,11 @@ issue-selector {
   font-weight: 600;
   border-radius: 4px;
   transition: all 0.2s ease;
+  cursor: default;
+}
+
+.author-tag.is-interactive,
+a .author-tag {
   cursor: pointer;
 }
 

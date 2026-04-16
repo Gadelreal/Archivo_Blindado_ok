@@ -103,7 +103,7 @@
                             </div>
                         </div>
                     </div>
-                    <app-accordion title="REFRACTOR 01 | Página 1" open>
+                    <app-accordion header-text="REFRACTOR 01 | Página 1" open>
                         <article class="pub-article">
                             <h3 class="art-title">LA IDEA ES LA ACCIÓN</h3>
                             
@@ -206,7 +206,7 @@
                         </article>
                     </app-accordion>
                     
-                    <app-accordion title="REFRACTOR 01 | Página 2">
+                    <app-accordion header-text="REFRACTOR 01 | Página 2">
                         <article class="pub-article">
                             <h3 class="art-title">LA IDEA ES LA ACCIÓN</h3>
                             
@@ -399,6 +399,17 @@
                     // In the future we could read the page number from .preview-num
                     // but for now, we just open the PDF.
                     viewer.open(targetPdf);
+                });
+            });
+
+            // Buttons inside articles: Ver artículo en PDF
+            const articlePdfButtons = document.querySelectorAll('.btn-ver-pdf');
+            articlePdfButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const url = btn.getAttribute('data-url');
+                    if (url) {
+                        viewer.open(url);
+                    }
                 });
             });
         });
