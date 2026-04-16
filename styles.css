@@ -2551,11 +2551,36 @@ issue-selector {
 @media (max-width: 768px) {
     .page-firmas .hero-firmas {
         padding: 0 32px;
-        height: 200px; /* Adjusting height for mobile to keep logo/text readable if needed, or stick to 258 */
-        background-size: cover; /* On mobile we might need cover because the aspect ratio changes too much */
+        height: 200px;
+        background-size: cover;
     }
     .page-firmas .hero-logo-img {
         width: 200px !important;
+    }
+
+    .page-firmas .section-filters {
+        height: auto;
+        padding: 40px 32px;
+    }
+
+    .page-firmas .filters-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+        margin-bottom: 0px; /* Hidden because tags are hidden */
+    }
+
+    .page-firmas .filter-group,
+    .page-firmas .search-wrapper,
+    .page-firmas .custom-dropdown-container,
+    .page-firmas .selector-trigger,
+    .page-firmas .btn-ficha-red {
+        width: 100% !important;
+        flex: none;
+    }
+
+    .page-firmas .featured-firmas {
+        display: none;
     }
 }
 
