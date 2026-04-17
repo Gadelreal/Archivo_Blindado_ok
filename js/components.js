@@ -29,7 +29,7 @@ class AppHeader extends HTMLElement {
                     <span class="dot">•</span>
                     <a href="./firmas.html" class="${isActive('firmas.html')}">FIRMAS</a>
                     <span class="dot">•</span>
-                    <a href="#">ARTEFACTOS</a>
+                    <a href="./artefactos.html" class="${isActive('artefactos.html')}">ARTEFACTOS</a>
                     <span class="dot">•</span>
                     <a href="#">EL ARCHIVO BLINDADO</a>
                 </nav>
@@ -44,7 +44,7 @@ class AppHeader extends HTMLElement {
                 <img src="./images/Ilustration_navigation.svg" class="tablet-nav-illu" alt="">
                 <a href="./index.html" class="${isActive('index.html')}">REFRACTOR</a>
                 <a href="./firmas.html" class="${isActive('firmas.html')}">FIRMAS</a>
-                <a href="#">ARTEFACTOS</a>
+                <a href="./artefactos.html" class="${isActive('artefactos.html')}">ARTEFACTOS</a>
                 <a href="#">EL ARCHIVO BLINDADO</a>
             </nav>
         </div>
@@ -83,11 +83,11 @@ class AppFooter extends HTMLElement {
                         <img src="./images/Logo_neg.svg" alt="El Archivo Blindado Logo" class="logo-img footer-logo-img">
                     </a>
                     <nav class="nav-links">
-                        <a href="#">REFRACTOR</a>
+                        <a href="./index.html">REFRACTOR</a>
                         <span class="dot">•</span>
-                        <a href="#">FIRMAS</a>
+                        <a href="./firmas.html">FIRMAS</a>
                         <span class="dot">•</span>
-                        <a href="#">ARTEFACTOS</a>
+                        <a href="./artefactos.html">ARTEFACTOS</a>
                         <span class="dot">•</span>
                         <a href="#">EL ARCHIVO BLINDADO</a>
                     </nav>
@@ -133,6 +133,35 @@ class PublicationCard extends HTMLElement {
                 </div>
             </a>
         `;
+    }
+}
+
+class ArtefactCard extends HTMLElement {
+    connectedCallback() {
+        const image = this.getAttribute('image') || './images/Placeholder Refractor.jpg';
+        const category = this.getAttribute('category') || 'Categoría';
+        const description = this.getAttribute('description') || 'Descripción breve...';
+        const pdfUrl = this.getAttribute('pdf-url') || './pdf/Artefactos_Refractor/Orsini.pdf';
+
+        this.innerHTML = `
+            <div class="pub-card artefact-card-link" style="cursor: pointer;">
+                <div class="pub-cover-wrapper">
+                    <img src="${image}" alt="${category}" class="pub-cover">
+                    <img src="./images/Onmouse_3.svg" alt="" class="pub-hover-icon">
+                </div>
+                <div class="pub-info">
+                    <h2 class="art-category">${category}</h2>
+                    <p class="art-description">${description}</p>
+                </div>
+            </div>
+        `;
+
+        this.addEventListener('click', () => {
+            const viewer = document.querySelector('pdf-viewer');
+            if (viewer) {
+                viewer.open(pdfUrl);
+            }
+        });
     }
 }
 
@@ -268,6 +297,7 @@ class AppAccordion extends HTMLElement {
 customElements.define('app-header', AppHeader);
 customElements.define('app-footer', AppFooter);
 customElements.define('pub-card', PublicationCard);
+customElements.define('artefact-card', ArtefactCard);
 customElements.define('download-dropdown', DownloadDropdown);
 customElements.define('issue-selector', IssueSelector);
 customElements.define('app-accordion', AppAccordion);
