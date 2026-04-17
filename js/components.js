@@ -99,7 +99,7 @@ class AppFooter extends HTMLElement {
                     <span class="footer-sep">&nbsp;|&nbsp;</span>
                     <a href="mailto:elarchivoblindado@gmail.com" class="footer-contact">Contacto</a>
                     <span class="footer-sep">&nbsp;|&nbsp;</span>
-                    <a href="#">Creative commons</a>
+                    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es" target="_blank">CC BY-NC-SA 4.0</a>
                     <span class="footer-sep">&nbsp;|&nbsp;</span>
                     <a href="#">Lorem ipsum</a>
                 </div>
