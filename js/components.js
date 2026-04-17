@@ -97,7 +97,7 @@ class AppFooter extends HTMLElement {
                 <div class="container text-left footer-bottom-content">
                     <span>El Archivo Blindado 2026</span>
                     <span class="footer-sep">&nbsp;|&nbsp;</span>
-                    <a href="#">Contacto</a>
+                    <a href="mailto:elarchivoblindado@gmail.com">Contacto</a>
                     <span class="footer-sep">&nbsp;|&nbsp;</span>
                     <a href="#">Creative commons</a>
                     <span class="footer-sep">&nbsp;|&nbsp;</span>
