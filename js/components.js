@@ -97,7 +97,7 @@ class AppFooter extends HTMLElement {
                 <div class="container text-left footer-bottom-content">
                     <span>El Archivo Blindado 2026</span>
                     <span class="footer-sep">&nbsp;|&nbsp;</span>
-                    <a href="mailto:elarchivoblindado@gmail.com">Contacto</a>
+                    <a href="mailto:elarchivoblindado@gmail.com" class="footer-contact">Contacto</a>
                     <span class="footer-sep">&nbsp;|&nbsp;</span>
                     <a href="#">Creative commons</a>
                     <span class="footer-sep">&nbsp;|&nbsp;</span>
@@ -106,6 +106,23 @@ class AppFooter extends HTMLElement {
             </div>
         </footer>
         `;
+
+        const contactLink = this.querySelector('.footer-contact');
+        if (contactLink) {
+            contactLink.addEventListener('click', (e) => {
+                const email = 'elarchivoblindado@gmail.com';
+                navigator.clipboard.writeText(email).then(() => {
+                    const originalText = contactLink.textContent;
+                    contactLink.textContent = '¡Email copiado!';
+                    contactLink.classList.add('is-copied');
+                    
+                    setTimeout(() => {
+                        contactLink.textContent = originalText;
+                        contactLink.classList.remove('is-copied');
+                    }, 2000);
+                });
+            });
+        }
     }
 }
 

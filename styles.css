@@ -2759,3 +2759,9 @@ a .author-tag {
 .section-artefactos .pub-grid {
     row-gap: 160px;
 }
+
+.footer-contact.is-copied {
+  color: #B40101 !important;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
