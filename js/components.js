@@ -57,17 +57,23 @@ class AppHeader extends HTMLElement {
         const menuBtn = this.querySelector('.menu-btn');
         const menuImg = this.querySelector('.menu-img');
 
+        const scrollBlocker = (e) => {
+            e.preventDefault();
+        };
+
         menuBtn.addEventListener('click', () => {
             const isOpen = this.classList.toggle('is-menu-open');
             menuImg.src = isOpen ? './images/ico_close.svg' : './images/ico_menu.svg';
             
-            // Prevent scrolling when menu is open
+            // Prevent scrolling when menu is open without breaking position: sticky in Safari
             if (isOpen) {
                 document.body.style.overflow = 'hidden';
-                document.documentElement.style.overflow = 'hidden';
+                window.addEventListener('touchmove', scrollBlocker, { passive: false });
+                window.addEventListener('wheel', scrollBlocker, { passive: false });
             } else {
                 document.body.style.overflow = '';
-                document.documentElement.style.overflow = '';
+                window.removeEventListener('touchmove', scrollBlocker);
+                window.removeEventListener('wheel', scrollBlocker);
             }
         });
     }
