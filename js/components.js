@@ -65,12 +65,9 @@ class AppHeader extends HTMLElement {
             if (isOpen) {
                 document.body.style.overflow = 'hidden';
                 document.documentElement.style.overflow = 'hidden';
-                // Prevent padding-right compensation on some mobile browsers
-                document.body.style.paddingRight = '0px';
             } else {
                 document.body.style.overflow = '';
                 document.documentElement.style.overflow = '';
-                document.body.style.paddingRight = '';
             }
         });
     }
@@ -489,37 +486,37 @@ class PdfViewer extends HTMLElement {
         });
         
         this.adjustToolbar = () => {
-            if (!this.modal.classList.contains('is-open')) return;
-            
-            const toolbar = this.querySelector('.pdf-floating-toolbar');
-            if (!toolbar) return;
+             if (!this.modal || !this.modal.classList.contains('is-open')) return;
 
-            // Restore all items first to measure full width
-            while(this.xtraToolsMenu && this.xtraToolsMenu.children.length > 0) {
-                toolbar.insertBefore(this.xtraToolsMenu.firstElementChild, this.overflowBtn);
-            }
-            if (this.overflowBtn) this.overflowBtn.style.display = 'none';
-            if (this.xtraToolsMenu) this.xtraToolsMenu.classList.remove('is-open');
+             const toolbar = this.querySelector('.pdf-floating-toolbar');
+             if (!toolbar) return;
 
-            // Force layout recalculation
-            const toolbarWidth = toolbar.offsetWidth;
-            if (toolbarWidth === 0) {
-                // If not yet laid out, retry in next frame
-                requestAnimationFrame(() => this.adjustToolbar());
-                return;
-            }
+             // Reset items to measuring state
+             while(this.xtraToolsMenu && this.xtraToolsMenu.children.length > 0) {
+                 toolbar.insertBefore(this.xtraToolsMenu.firstElementChild, this.overflowBtn);
+             }
+             
+             if (this.overflowBtn) this.overflowBtn.style.display = 'none';
+             if (this.xtraToolsMenu) this.xtraToolsMenu.classList.remove('is-open');
 
-            const safeW = window.innerWidth - 32; 
-            let cand = this.overflowBtn ? this.overflowBtn.previousElementSibling : null;
+             // Measure available space
+             const safeW = this.modal.clientWidth - 32; 
+             
+             // If toolbar is not yet rendered, retry next frame
+             if (toolbar.offsetWidth === 0) {
+                 requestAnimationFrame(() => this.adjustToolbar());
+                 return;
+             }
 
-            while(cand && cand.classList.contains('priority-item') && toolbar.offsetWidth > safeW) {
-                this.xtraToolsMenu.prepend(cand);
-                cand = this.overflowBtn.previousElementSibling;
-            }
-
-            if (this.xtraToolsMenu && this.xtraToolsMenu.children.length > 0) {
-                this.overflowBtn.style.display = 'inline-flex';
-            }
+             let cand = this.overflowBtn ? this.overflowBtn.previousElementSibling : null;
+             while(cand && cand.classList.contains('priority-item') && toolbar.offsetWidth > safeW) {
+                 this.xtraToolsMenu.prepend(cand);
+                 cand = this.overflowBtn.previousElementSibling;
+             }
+             
+             if (this.xtraToolsMenu && this.xtraToolsMenu.children.length > 0) {
+                 if (this.overflowBtn) this.overflowBtn.style.display = 'inline-flex';
+             }
         };
         
         window.addEventListener('resize', this.adjustToolbar);
@@ -626,12 +623,7 @@ class PdfViewer extends HTMLElement {
         document.body.style.top = `-${this.lockedScrollY}px`;
         document.body.style.width = '100%';
         document.body.style.overflow = 'hidden'; 
-        document.documentElement.style.overflow = 'hidden';
-
-        // Initial toolbar check
-        requestAnimationFrame(() => this.adjustToolbar());
-        // Safety check after transition usually ends
-        setTimeout(() => this.adjustToolbar(), 400);
+        document.documentElement.style.overflow = 'hidden'; 
         
         if (typeof pdfjsLib === 'undefined') {
             console.error('PDF.js no está cargado correctamente');
@@ -648,6 +640,9 @@ class PdfViewer extends HTMLElement {
             this.pageNum = 1;
             this.initialScaleCalculated = false;
             this.renderPage(this.pageNum, true); // Reset position on open
+            this.adjustToolbar(); // First attempt
+            setTimeout(() => this.adjustToolbar(), 150); // Second attempt after transition starts
+            setTimeout(() => this.adjustToolbar(), 350); // Third attempt after transition ends
         }).catch((error) => {
             console.error('Error cargando el PDF:', error);
             this.errorContainer.style.display = 'block';

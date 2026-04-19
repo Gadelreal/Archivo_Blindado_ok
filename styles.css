@@ -166,6 +166,7 @@ app-header {
   position: -webkit-sticky;
   position: sticky !important;
   top: 0 !important;
+  background-color: var(--bg-white);
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   will-change: transform;
@@ -724,7 +725,7 @@ app-header.is-menu-open .tape-02-mobile {
 /* TABLET INTERFACE (Max-Width: 1024px) */
 @media(max-width: 1024px) {
   app-header.is-menu-open {
-    height: auto;
+    height: 100vh;
   }
 
   .navbar {
@@ -1766,8 +1767,8 @@ a .author-tag {
 
 @media (max-width: 1024px) {
   .accordion-trigger {
-    width: calc(100% + 64px);
-    margin-left: -32px;
+    width: 100%;
+    margin-left: 0;
     padding: 20px 32px;
   }
 }
@@ -1947,14 +1948,14 @@ a .author-tag {
 .pdf-modal-overlay {
   position: fixed;
   inset: 0;
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
   height: 100dvh;
   margin: 0;
   padding: 0;
   background-color: #1a1a1a;
   z-index: 99999;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: stretch;
   opacity: 0;
@@ -2127,10 +2128,9 @@ a .author-tag {
 
   .pdf-floating-toolbar {
     width: max-content;
-    max-width: calc(100% - 24px);
-    bottom: max(24px, env(safe-area-inset-bottom, 24px));
-    padding: 8px 12px;
-    gap: 8px;
+    bottom: 24px;
+    padding: 8px 16px;
+    gap: 12px;
     justify-content: center;
     border-radius: 40px;
     box-sizing: border-box;
