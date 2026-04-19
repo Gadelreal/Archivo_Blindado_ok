@@ -669,7 +669,27 @@ class PdfViewer extends HTMLElement {
         document.body.removeChild(a);
     }
 
-    open(url) {
+    async ensurePdfLib() {
+        if (typeof pdfjsLib !== 'undefined') return;
+        if (window._pdfjsLoading) return window._pdfjsLoading;
+
+        window._pdfjsLoading = new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = './js/vendor/pdf.min.js';
+            script.onload = () => {
+                pdfjsLib.GlobalWorkerOptions.workerSrc = './js/vendor/pdf.worker.min.js';
+                resolve();
+            };
+            script.onerror = (err) => {
+                window._pdfjsLoading = null;
+                reject(err);
+            };
+            document.head.appendChild(script);
+        });
+        return window._pdfjsLoading;
+    }
+
+    async open(url) {
         this.currentPdfUrl = url;
         this.modal.classList.add('is-open');
         this.errorContainer.style.display = 'none';
@@ -685,29 +705,29 @@ class PdfViewer extends HTMLElement {
         document.body.style.overflow = 'hidden'; 
         document.documentElement.style.overflow = 'hidden'; 
         
-        if (typeof pdfjsLib === 'undefined') {
-            console.error('PDF.js no está cargado correctamente');
-            return;
-        }
+        try {
+            await this.ensurePdfLib();
 
-        // Configuración oficial del worker
-        pdfjsLib.GlobalWorkerOptions.workerSrc = './js/vendor/pdf.worker.min.js';
-
-        const loadingTask = pdfjsLib.getDocument(url);
-        loadingTask.promise.then((pdfDoc_) => {
-            this.pdfDoc = pdfDoc_;
-            this.querySelector('#page_count').textContent = this.pdfDoc.numPages;
-            this.pageNum = 1;
-            this.initialScaleCalculated = false;
-            this.renderPage(this.pageNum, true); // Reset position on open
-            this.adjustToolbar(); // First attempt
-            setTimeout(() => this.adjustToolbar(), 150); // Second attempt after transition starts
-            setTimeout(() => this.adjustToolbar(), 350); // Third attempt after transition ends
-        }).catch((error) => {
-            console.error('Error cargando el PDF:', error);
+            const loadingTask = pdfjsLib.getDocument(url);
+            loadingTask.promise.then((pdfDoc_) => {
+                this.pdfDoc = pdfDoc_;
+                this.querySelector('#page_count').textContent = this.pdfDoc.numPages;
+                this.pageNum = 1;
+                this.initialScaleCalculated = false;
+                this.renderPage(this.pageNum, true); // Reset position on open
+                this.adjustToolbar(); // First attempt
+                setTimeout(() => this.adjustToolbar(), 150); // Second attempt after transition starts
+                setTimeout(() => this.adjustToolbar(), 350); // Third attempt after transition ends
+            }).catch((error) => {
+                console.error('Error cargando el PDF:', error);
+                this.errorContainer.style.display = 'block';
+                this.canvas.style.display = 'none';
+            });
+        } catch (error) {
+            console.error('Error cargando la librería PDF.js:', error);
             this.errorContainer.style.display = 'block';
             this.canvas.style.display = 'none';
-        });
+        }
     }
 
     close() {
