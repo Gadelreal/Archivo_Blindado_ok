@@ -166,7 +166,9 @@ app-header {
   position: -webkit-sticky;
   position: sticky !important;
   top: 0 !important;
-  background-color: var(--bg-white);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
 }
 
 .navbar {
@@ -722,7 +724,7 @@ app-header.is-menu-open .tape-02-mobile {
 /* TABLET INTERFACE (Max-Width: 1024px) */
 @media(max-width: 1024px) {
   app-header.is-menu-open {
-    height: 100vh;
+    height: auto;
   }
 
   .navbar {
