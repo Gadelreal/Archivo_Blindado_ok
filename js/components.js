@@ -541,21 +541,61 @@ class PdfViewer extends HTMLElement {
         
         window.addEventListener('resize', this.adjustToolbar);
  
-        // --- Touch Support for Panning ---
+        // --- Touch Support for Panning and Pinch-to-Zoom ---
+        let initialPinchDistance = 0;
+        let initialPinchScale = 1;
+
         this.canvasContainer.addEventListener('touchstart', (e) => {
-            if (e.touches.length !== 1) return;
-            const touch = e.touches[0];
-            startPan(touch.clientX, touch.clientY);
-        }, { passive: true });
- 
-        this.canvasContainer.addEventListener('touchmove', (e) => {
-            if (!isDragging || e.touches.length !== 1) return;
-            const touch = e.touches[0];
-            movePan(touch.clientX, touch.clientY);
-            if (this.scale > 1.2) e.preventDefault();
+            if (e.touches.length === 1) {
+                const touch = e.touches[0];
+                startPan(touch.clientX, touch.clientY);
+            } else if (e.touches.length === 2) {
+                // Prepare for pinch zoom
+                initialPinchDistance = Math.hypot(
+                    e.touches[0].clientX - e.touches[1].clientX,
+                    e.touches[0].clientY - e.touches[1].clientY
+                );
+                initialPinchScale = this.scale;
+                isDragging = false; // Stop pan while zooming
+                e.preventDefault();
+            }
         }, { passive: false });
- 
-        this.canvasContainer.addEventListener('touchend', endPan);
+
+        this.canvasContainer.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 1 && isDragging) {
+                const touch = e.touches[0];
+                movePan(touch.clientX, touch.clientY);
+                // Prevent overscroll if we are zoomed in
+                if (this.scale > 1.1) e.preventDefault();
+            } else if (e.touches.length === 2 && initialPinchDistance > 0) {
+                e.preventDefault();
+                const currentDistance = Math.hypot(
+                    e.touches[0].clientX - e.touches[1].clientX,
+                    e.touches[0].clientY - e.touches[1].clientY
+                );
+                
+                const factor = currentDistance / initialPinchDistance;
+                const newScale = initialPinchScale * factor;
+                
+                // Constraints: 0.4x to 4.0x
+                const clamped = Math.min(Math.max(newScale, 0.4), 4.0);
+                
+                // Threshold to avoid excessive re-renders
+                if (Math.abs(clamped - this.scale) > 0.02) {
+                    this.scale = clamped;
+                    this.queueRenderPage(this.pageNum);
+                }
+            }
+        }, { passive: false });
+
+        this.canvasContainer.addEventListener('touchend', (e) => {
+            if (e.touches.length < 2) {
+                initialPinchDistance = 0;
+            }
+            if (e.touches.length === 0) {
+                endPan();
+            }
+        });
 
         // --- Wheel Zoom Support ---
         this.canvasContainer.addEventListener('wheel', (e) => {
