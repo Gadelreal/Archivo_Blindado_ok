@@ -65,9 +65,12 @@ class AppHeader extends HTMLElement {
             if (isOpen) {
                 document.body.style.overflow = 'hidden';
                 document.documentElement.style.overflow = 'hidden';
+                // Prevent padding-right compensation on some mobile browsers
+                document.body.style.paddingRight = '0px';
             } else {
                 document.body.style.overflow = '';
                 document.documentElement.style.overflow = '';
+                document.body.style.paddingRight = '';
             }
         });
     }
