@@ -1767,8 +1767,9 @@ a .author-tag {
 
 @media (max-width: 1024px) {
   .accordion-trigger {
-    width: 100%;
-    margin-left: 0;
+    width: auto;
+    margin-left: -32px;
+    margin-right: -32px;
     padding: 20px 32px;
   }
 }
@@ -2156,14 +2157,17 @@ a .author-tag {
   .pdf-xtra-tools {
     position: absolute;
     bottom: calc(100% + 12px);
-    right: 32px;
+    right: 0;
     background-color: var(--bg-white);
     border-radius: 12px;
-    padding: 8px;
+    padding: 12px;
     display: none;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    min-width: 44px;
+    align-items: center;
+    border: 1px solid #E9EAEB;
   }
 
   .pdf-xtra-tools.is-open {

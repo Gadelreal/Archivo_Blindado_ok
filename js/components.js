@@ -497,32 +497,46 @@ class PdfViewer extends HTMLElement {
              const toolbar = this.querySelector('.pdf-floating-toolbar');
              if (!toolbar) return;
 
-             // Reset items to measuring state
-             while(this.xtraToolsMenu && this.xtraToolsMenu.children.length > 0) {
-                 toolbar.insertBefore(this.xtraToolsMenu.firstElementChild, this.overflowBtn);
+             // Force temporal state for correct measurement
+             toolbar.style.width = 'max-content';
+             toolbar.style.maxWidth = 'none';
+
+             // Reset items from menu back to toolbar
+             if (this.xtraToolsMenu) {
+                 while(this.xtraToolsMenu.children.length > 0) {
+                     toolbar.insertBefore(this.xtraToolsMenu.firstElementChild, this.overflowBtn);
+                 }
              }
              
              if (this.overflowBtn) this.overflowBtn.style.display = 'none';
              if (this.xtraToolsMenu) this.xtraToolsMenu.classList.remove('is-open');
 
-             // Measure available space
-             const safeW = this.modal.clientWidth - 32; 
+             // Target width is modal width minus safety margins
+             const safeW = this.modal.clientWidth - 48; 
              
-             // If toolbar is not yet rendered, retry next frame
+             // If toolbar is not yet ready, retry
              if (toolbar.offsetWidth === 0) {
                  requestAnimationFrame(() => this.adjustToolbar());
                  return;
              }
 
+             // Move items one by one to the overflow menu until it fits
              let cand = this.overflowBtn ? this.overflowBtn.previousElementSibling : null;
-             while(cand && cand.classList.contains('priority-item') && toolbar.offsetWidth > safeW) {
+             
+             // Move priority items that don't fit
+             while (cand && cand.classList.contains('priority-item') && toolbar.offsetWidth > safeW) {
                  this.xtraToolsMenu.prepend(cand);
                  cand = this.overflowBtn.previousElementSibling;
              }
              
+             // If items were moved, show the overflow button
              if (this.xtraToolsMenu && this.xtraToolsMenu.children.length > 0) {
                  if (this.overflowBtn) this.overflowBtn.style.display = 'inline-flex';
              }
+
+             // Finalize styles to prevent horizontal bleed
+             toolbar.style.width = ''; 
+             toolbar.style.maxWidth = 'calc(100% - 24px)';
         };
         
         window.addEventListener('resize', this.adjustToolbar);
