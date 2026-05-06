@@ -419,6 +419,102 @@ class PdfViewer extends HTMLElement {
             if (e.key === 'Escape') this.close();
         };
 
+        // --- Drag to Scroll (Manita) ---
+        let isDragging = false;
+        let startX, startY;
+        let scrollLeft, scrollTop;
+
+        const startDragging = (e) => {
+            // Only left click or touch
+            if (e.button !== undefined && e.button !== 0) return;
+            
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            
+            isDragging = true;
+            this.canvasContainer.style.cursor = 'grabbing';
+            startX = clientX;
+            startY = clientY;
+            scrollLeft = this.canvasContainer.scrollLeft;
+            scrollTop = this.canvasContainer.scrollTop;
+        };
+
+        const stopDragging = () => {
+            isDragging = false;
+            this.canvasContainer.style.cursor = 'grab';
+        };
+
+        const moveDragging = (e) => {
+            if (!isDragging) return;
+            
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+            const walkX = (clientX - startX); 
+            const walkY = (clientY - startY);
+            
+            this.canvasContainer.scrollLeft = scrollLeft - walkX;
+            this.canvasContainer.scrollTop = scrollTop - walkY;
+        };
+
+        this.canvasContainer.style.cursor = 'grab';
+        this.canvasContainer.addEventListener('mousedown', startDragging);
+        window.addEventListener('mouseup', stopDragging);
+        window.addEventListener('mousemove', moveDragging);
+
+        // --- Touch Support ---
+        let initialPinchDistance = 0;
+        let initialPinchScale = 1;
+
+        this.canvasContainer.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1) {
+                startDragging(e);
+            } else if (e.touches.length === 2) {
+                isDragging = false;
+                initialPinchDistance = Math.hypot(
+                    e.touches[0].clientX - e.touches[1].clientX,
+                    e.touches[0].clientY - e.touches[1].clientY
+                );
+                initialPinchScale = this.scale;
+            }
+        }, { passive: false });
+
+        this.canvasContainer.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 1 && isDragging) {
+                moveDragging(e);
+            } else if (e.touches.length === 2 && initialPinchDistance > 0) {
+                e.preventDefault();
+                const currentDistance = Math.hypot(
+                    e.touches[0].clientX - e.touches[1].clientX,
+                    e.touches[0].clientY - e.touches[1].clientY
+                );
+                const factor = currentDistance / initialPinchDistance;
+                const newScale = Math.min(Math.max(initialPinchScale * factor, 0.4), 4.0);
+                
+                if (Math.abs(newScale - this.scale) > 0.05) {
+                    this.scale = newScale;
+                    this.renderAllPages();
+                }
+            }
+        }, { passive: false });
+
+        this.canvasContainer.addEventListener('touchend', () => {
+            initialPinchDistance = 0;
+            stopDragging();
+        });
+
+        // --- Wheel Zoom ---
+        this.canvasContainer.addEventListener('wheel', (e) => {
+            if (!this.modal.classList.contains('is-open')) return;
+            
+            // To allow vertical scroll with wheel but zoom with Ctrl (standard UX)
+            // However, user said "mantener zoom con rueda".
+            // If they have a scrollbar for pages, I'll keep wheel for zoom as before.
+            e.preventDefault();
+            if (e.deltaY < 0) this.onZoomIn();
+            else this.onZoomOut();
+        }, { passive: false });
+
         this.canvasContainer.addEventListener('scroll', () => {
             if (!this.pdfDoc) return;
             const scrollPos = this.canvasContainer.scrollTop;
