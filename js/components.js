@@ -222,7 +222,7 @@ class DownloadDropdown extends HTMLElement {
                 </a>
                 <a href="#" class="dropdown-item" id="downloadTextPdf">
                     <img src="./images/ico_text.svg" class="item-icon" alt="">
-                    <span class="item-text">Texto en PDF (48 Kb.)</span>
+                    <span class="item-text">Texto en PDF (156 KB)</span>
                 </a>
             </div>
         </div>
