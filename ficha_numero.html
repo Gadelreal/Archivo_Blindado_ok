@@ -204,7 +204,7 @@
                         </svg>
                     `;
                     box.addEventListener('click', () => {
-                        viewer.open(`./pdf/${page.id}.pdf`);
+                        viewer.open(`./pdf/N_Refractor_${strNum}.pdf#page=${page.pagina}`);
                     });
                     previewContainer.appendChild(box);
                 });
@@ -262,7 +262,7 @@
                             bodyContent = paragraphs.join('\n\n');
                         }
 
-                        const pdfUrl = `./pdf/P_R_${strNum}_${art.pagina.toString().padStart(2, '0')}.pdf`;
+                        const pdfUrl = `./pdf/N_Refractor_${strNum}.pdf#page=${art.pagina}`;
                         const authorObj = pubData.autores.find(a => a.id === art.autor_id);
                         const authorName = authorObj ? authorObj.nombre : art.autor;
 
@@ -310,7 +310,7 @@
                 });
 
                 // Attach main viewer interactions
-                const defaultPdf = `./pdf/P_R_${strNum}_01.pdf`;
+                const defaultPdf = `./pdf/N_Refractor_${strNum}.pdf`;
 
                 const mainThumb = document.getElementById('mainThumbWrapper');
                 if (mainThumb) {

@@ -690,7 +690,16 @@ class PdfViewer extends HTMLElement {
     }
 
     async open(url) {
-        this.currentPdfUrl = url;
+        let actualUrl = url;
+        let initialPage = 1;
+
+        if (url.includes('#page=')) {
+            const parts = url.split('#page=');
+            actualUrl = parts[0];
+            initialPage = parseInt(parts[1], 10) || 1;
+        }
+
+        this.currentPdfUrl = actualUrl;
         this.modal.classList.add('is-open');
         this.errorContainer.style.display = 'none';
         this.canvas.style.display = 'block';
@@ -708,11 +717,11 @@ class PdfViewer extends HTMLElement {
         try {
             await this.ensurePdfLib();
 
-            const loadingTask = pdfjsLib.getDocument(url);
+            const loadingTask = pdfjsLib.getDocument(actualUrl);
             loadingTask.promise.then((pdfDoc_) => {
                 this.pdfDoc = pdfDoc_;
                 this.querySelector('#page_count').textContent = this.pdfDoc.numPages;
-                this.pageNum = 1;
+                this.pageNum = Math.min(Math.max(1, initialPage), this.pdfDoc.numPages);
                 this.initialScaleCalculated = false;
                 this.renderPage(this.pageNum, true); // Reset position on open
                 this.adjustToolbar(); // First attempt

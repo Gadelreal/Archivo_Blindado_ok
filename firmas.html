@@ -314,8 +314,8 @@
                 Object.keys(groups).forEach((key, index) => {
                     const arts = groups[key];
                     const firstArt = arts[0];
-                    const pdfId = `P_R_${firstArt.numero}_${firstArt.pagina.toString().padStart(2, '0')}`;
-                    const pdfUrl = `./pdf/${pdfId}.pdf`;
+                    const pdfId = `N_Refractor_${firstArt.numero}`;
+                    const pdfUrl = `./pdf/${pdfId}.pdf#page=${firstArt.pagina}`;
 
                     const accordion = document.createElement('app-accordion');
                     accordion.setAttribute('header-text', key);
