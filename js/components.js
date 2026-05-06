@@ -190,7 +190,7 @@ class ArtefactCard extends HTMLElement {
 
 class DownloadDropdown extends HTMLElement {
     static get observedAttributes() {
-        return ['pdf-url', 'pdf-size'];
+        return ['pdf-url', 'pdf-size', 'pdf-text-size'];
     }
 
     connectedCallback() {
@@ -205,7 +205,8 @@ class DownloadDropdown extends HTMLElement {
         const text = this.getAttribute('text') || 'Descargar Refractor';
         const btnClass = this.getAttribute('btn-class') || 'btn-download';
         const pdfUrl = this.getAttribute('pdf-url') || '#';
-        const pdfSize = this.getAttribute('pdf-size') || '24mb';
+        const pdfSize = this.getAttribute('pdf-size') || '2.94 MB';
+        const pdfTextSize = this.getAttribute('pdf-text-size') || '156 KB';
 
         this.innerHTML = `
         <div class="download-wrapper" id="downloadWrapper">
@@ -222,7 +223,7 @@ class DownloadDropdown extends HTMLElement {
                 </a>
                 <a href="#" class="dropdown-item" id="downloadTextPdf">
                     <img src="./images/ico_text.svg" class="item-icon" alt="">
-                    <span class="item-text">Texto en PDF (156 KB)</span>
+                    <span class="item-text">Texto en PDF (${pdfTextSize})</span>
                 </a>
             </div>
         </div>

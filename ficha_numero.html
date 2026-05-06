@@ -147,7 +147,7 @@
 
     <pdf-viewer></pdf-viewer>
 
-    <script src="./js/components.js?v=15"></script>
+    <script src="./js/components.js?v=16"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             const viewer = document.querySelector('pdf-viewer');
@@ -190,9 +190,11 @@
                 // Update download buttons
                 const pdfUrl = `./pdf/N_Refractor_${strNum}.pdf`;
                 const pdfSize = ejemplar.peso_pdf || '2.94 MB';
+                const pdfTextSize = ejemplar.peso_pdf_texto || '156 KB';
                 document.querySelectorAll('download-dropdown').forEach(dd => {
                     dd.setAttribute('pdf-url', pdfUrl);
                     dd.setAttribute('pdf-size', pdfSize);
+                    dd.setAttribute('pdf-text-size', pdfTextSize);
                 });
 
                 // Update minificha
