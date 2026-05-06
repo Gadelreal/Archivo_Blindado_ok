@@ -1971,23 +1971,35 @@ a .author-tag {
 
 .pdf-canvas-container {
   flex: 1;
-  overflow: hidden;
-  /* Changed from auto to hidden for custom panning */
+  overflow-y: auto;
+  overflow-x: auto;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   padding: 40px;
   position: relative;
-  touch-action: none;
-  /* Prevent browser handling of gestures */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
 
-#pdf_canvas {
-  margin: 0 auto;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+.pdf-pages-container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: center;
+  width: 100%;
+}
+
+.pdf-page-wrapper {
   background-color: var(--bg-white);
-  /* Removed max-width: 100% and height: auto to allow scaling beyond viewport */
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  line-height: 0;
+}
+
+.pdf-page-wrapper canvas {
   display: block;
+  max-width: 100%;
+  height: auto;
 }
 
 /* =========================================================================
