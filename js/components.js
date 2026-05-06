@@ -260,16 +260,38 @@ class DownloadDropdown extends HTMLElement {
         const title = document.getElementById('fichaTitle')?.textContent || 'Refractor';
         const filename = `${title.replace(/\s+/g, '_')}_Articulos.pdf`;
 
-        // Create a temporary container for PDF content
+        // Create a temporary container in the DOM (hidden)
         const pdfContent = document.createElement('div');
+        pdfContent.className = 'pdf-export-content';
+        pdfContent.style.position = 'absolute';
+        pdfContent.style.left = '-9999px';
+        pdfContent.style.top = '0';
+        pdfContent.style.width = '800px';
         pdfContent.style.backgroundColor = 'white';
         pdfContent.style.color = 'black';
-        pdfContent.style.padding = '20px';
+        pdfContent.style.fontFamily = 'serif';
+        document.body.appendChild(pdfContent);
+
+        // Add explicit font loading to the PDF container
+        const fontStyle = document.createElement('style');
+        fontStyle.textContent = `
+            @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,900;1,900&display=swap');
+            .pdf-export-content { font-family: 'Times New Roman', serif; }
+            .pdf-title-page h1 { font-family: 'Playfair Display', serif !important; }
+            .pdf-art-title { font-family: 'Playfair Display', serif !important; font-weight: 900; text-transform: uppercase; margin-bottom: 5px; }
+            .pdf-art-subtitle { font-family: sans-serif; font-weight: bold; margin-bottom: 15px; color: #333; }
+            .pdf-art-item { margin-bottom: 40px; page-break-inside: avoid; }
+            .pdf-art-body { line-height: 1.6; font-size: 14px; text-align: justify; }
+            .pdf-art-tags { margin-top: 10px; font-style: italic; color: #666; font-size: 12px; }
+        `;
+        pdfContent.appendChild(fontStyle);
 
         // 1. Title Page
         const titlePage = document.createElement('div');
-        titlePage.style.height = '270mm'; // Almost full height for A4
+        titlePage.className = 'pdf-title-page';
+        titlePage.style.height = '280mm';
         titlePage.style.display = 'flex';
+        titlePage.style.flexDirection = 'column';
         titlePage.style.alignItems = 'center';
         titlePage.style.justifyContent = 'center';
         titlePage.style.textAlign = 'center';
@@ -283,35 +305,40 @@ class DownloadDropdown extends HTMLElement {
                 font-weight: 900; 
                 text-transform: uppercase;
                 margin: 0;
+                line-height: 1;
             ">${title}</h1>
+            <p style="margin-top: 20px; font-family: sans-serif; letter-spacing: 2px; color: #666;">ARCHIVO BLINDADO</p>
         `;
         pdfContent.appendChild(titlePage);
 
-        // 2. Articles Content
+        // 2. Articles Content - Extracting directly from the real DOM
         const accordions = accordionContainer.querySelectorAll('app-accordion');
         accordions.forEach(acc => {
-            // Get content from shadow DOM if needed, but here it's likely we can just get the innerHTML 
-            // since accordions contain the article items as light DOM children
-            const headerText = acc.getAttribute('header-text') || '';
-            const clone = acc.cloneNode(true);
-            
-            // Extract the actual article items
-            const articles = clone.querySelectorAll('.art-item');
-            articles.forEach(art => {
-                // Remove PDF button from the clone
-                const pdfBtn = art.querySelector('.btn-ficha-pdf');
-                if (pdfBtn) pdfBtn.remove();
+            // Find all art-items inside this specific accordion
+            // Since they are in light DOM, we can find them directly
+            const items = acc.querySelectorAll('.art-item');
+            items.forEach(item => {
+                const artDiv = document.createElement('div');
+                artDiv.className = 'pdf-art-item';
                 
-                // Remove tags or other UI if needed? No, tags are probably fine.
-                
-                // Style the title of the article in the PDF
-                const artTitle = art.querySelector('.art-item-title');
-                if (artTitle) {
-                    artTitle.style.fontSize = '24px';
-                    artTitle.style.color = 'black';
+                const artTitle = item.querySelector('.art-item-title')?.textContent || '';
+                const artSubtitle = item.querySelector('.art-item-subtitle')?.textContent || '';
+                const artBody = item.querySelector('.art-item-content')?.cloneNode(true);
+                const artTags = item.querySelector('.art-item-tags')?.textContent || '';
+
+                // Clean up the body (remove the PDF button)
+                if (artBody) {
+                    const pdfBtn = artBody.querySelector('.btn-ficha-pdf');
+                    if (pdfBtn) pdfBtn.remove();
                 }
 
-                pdfContent.appendChild(art);
+                artDiv.innerHTML = `
+                    <div class="pdf-art-title" style="font-size: 28px; color: black; border-bottom: 1px solid #ccc; padding-bottom: 5px;">${artTitle}</div>
+                    <div class="pdf-art-subtitle" style="font-size: 16px;">${artSubtitle}</div>
+                    <div class="pdf-art-body" style="font-family: serif;">${artBody ? artBody.innerHTML : ''}</div>
+                    <div class="pdf-art-tags" style="margin-top: 10px; border-top: 1px solid #eee; padding-top: 5px;">${artTags}</div>
+                `;
+                pdfContent.appendChild(artDiv);
             });
         });
 
@@ -319,20 +346,26 @@ class DownloadDropdown extends HTMLElement {
             margin: [15, 15],
             filename: filename,
             image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true, logging: false },
+            html2canvas: { scale: 2, useCORS: true, logging: false, letterRendering: true },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
 
         if (typeof html2pdf === 'undefined') {
             console.error('html2pdf.js no está cargado');
             alert('La librería de generación de PDF no se ha cargado correctamente.');
+            pdfContent.remove();
             return;
         }
 
         try {
+            // Give a small timeout for styles to apply if needed
+            await new Promise(resolve => setTimeout(resolve, 500));
             await html2pdf().set(opt).from(pdfContent).save();
         } catch (error) {
             console.error('Error generando PDF:', error);
+        } finally {
+            // Cleanup
+            pdfContent.remove();
         }
     }
 }
