@@ -254,20 +254,65 @@ class DownloadDropdown extends HTMLElement {
     }
 
     async generateTextPdf() {
-        const container = document.getElementById('accordionContainer');
-        if (!container) return;
+        const accordionContainer = document.getElementById('accordionContainer');
+        if (!accordionContainer) return;
 
         const title = document.getElementById('fichaTitle')?.textContent || 'Refractor';
         const filename = `${title.replace(/\s+/g, '_')}_Articulos.pdf`;
 
-        // Create a clone to avoid modifying the original UI during export
-        const element = container.cloneNode(true);
-        
-        // Ensure all accordions in the clone are "open" so content is visible in PDF
-        element.querySelectorAll('app-accordion').forEach(acc => {
-            acc.setAttribute('open', '');
-            // We need to reach into the shadow DOM if it's a web component
-            // But if it's our own component, we can force styles
+        // Create a temporary container for PDF content
+        const pdfContent = document.createElement('div');
+        pdfContent.style.backgroundColor = 'white';
+        pdfContent.style.color = 'black';
+        pdfContent.style.padding = '20px';
+
+        // 1. Title Page
+        const titlePage = document.createElement('div');
+        titlePage.style.height = '270mm'; // Almost full height for A4
+        titlePage.style.display = 'flex';
+        titlePage.style.alignItems = 'center';
+        titlePage.style.justifyContent = 'center';
+        titlePage.style.textAlign = 'center';
+        titlePage.style.pageBreakAfter = 'always';
+
+        titlePage.innerHTML = `
+            <h1 style="
+                color: #e63946; 
+                font-family: 'Playfair Display', serif; 
+                font-size: 80px; 
+                font-weight: 900; 
+                text-transform: uppercase;
+                margin: 0;
+            ">${title}</h1>
+        `;
+        pdfContent.appendChild(titlePage);
+
+        // 2. Articles Content
+        const accordions = accordionContainer.querySelectorAll('app-accordion');
+        accordions.forEach(acc => {
+            // Get content from shadow DOM if needed, but here it's likely we can just get the innerHTML 
+            // since accordions contain the article items as light DOM children
+            const headerText = acc.getAttribute('header-text') || '';
+            const clone = acc.cloneNode(true);
+            
+            // Extract the actual article items
+            const articles = clone.querySelectorAll('.art-item');
+            articles.forEach(art => {
+                // Remove PDF button from the clone
+                const pdfBtn = art.querySelector('.btn-ficha-pdf');
+                if (pdfBtn) pdfBtn.remove();
+                
+                // Remove tags or other UI if needed? No, tags are probably fine.
+                
+                // Style the title of the article in the PDF
+                const artTitle = art.querySelector('.art-item-title');
+                if (artTitle) {
+                    artTitle.style.fontSize = '24px';
+                    artTitle.style.color = 'black';
+                }
+
+                pdfContent.appendChild(art);
+            });
         });
 
         const opt = {
@@ -278,7 +323,6 @@ class DownloadDropdown extends HTMLElement {
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
 
-        // If html2pdf is not loaded yet, wait or log error
         if (typeof html2pdf === 'undefined') {
             console.error('html2pdf.js no está cargado');
             alert('La librería de generación de PDF no se ha cargado correctamente.');
@@ -286,15 +330,7 @@ class DownloadDropdown extends HTMLElement {
         }
 
         try {
-            // Add a temporary title to the element for the PDF
-            const pdfHeader = document.createElement('div');
-            pdfHeader.innerHTML = `
-                <h1 style="font-family: serif; border-bottom: 2px solid black; padding-bottom: 10px;">${title}</h1>
-                <p style="font-family: sans-serif; color: #666; margin-bottom: 20px;">Artículos extraídos del Archivo Blindado</p>
-            `;
-            element.insertBefore(pdfHeader, element.firstChild);
-
-            await html2pdf().set(opt).from(element).save();
+            await html2pdf().set(opt).from(pdfContent).save();
         } catch (error) {
             console.error('Error generando PDF:', error);
         }
