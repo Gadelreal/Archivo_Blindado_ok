@@ -10,11 +10,11 @@
   "metadata_archivo": {
     "nombre_publicacion": "REFRACTOR",
     "numeros_procesados": 1,
-    "paginas_procesadas": 1,
-    "autores_registrados": 3,
-    "articulos_extraidos": 3,
+    "paginas_procesadas": 2,
+    "autores_registrados": 5,
+    "articulos_extraidos": 5,
     "artefactos_registrados": 1,
-    "fecha_actualizacion": "27 de marzo de 2026"
+    "fecha_actualizacion": "6 de mayo de 2026"
   },
   "autores": [
     {
@@ -26,29 +26,43 @@
       "nombre": "Luis Falcón"
     },
     {
-      "id": "AU_J_Garcia_Gasso",
-      "nombre": "J. García Gasso"
+      "id": "AU_J_Garcia_Oliver",
+      "nombre": "J. García Oliver"
+    },
+    {
+      "id": "AU_Max_Stirner",
+      "nombre": "Max Stirner"
+    },
+    {
+      "id": "AU_Renzo_Novatore",
+      "nombre": "Renzo Novatore"
     }
   ],
   "ejemplares": [
     {
       "id": "N_Refractor_01",
       "numero": 1,
-      "paginas_procesadas": 1,
-      "articulos_extraidos": 3,
+      "paginas_procesadas": 2,
+      "articulos_extraidos": 5,
       "autores_ids": [
         "AU_Victor_Nero",
         "AU_Luis_Falcon",
-        "AU_J_Garcia_Gasso"
+        "AU_J_Garcia_Oliver",
+        "AU_Max_Stirner",
+        "AU_Renzo_Novatore"
       ],
-      "fecha_publicacion": "14 de marzo de 1998",
+      "fecha_publicacion": "14 de febrero de 1998",
       "precio": "400 pts.",
-      "tirada": "1500 ejemplares",
+      "tirada": "1500 ej.",
       "tamaño": "135 x 124 cm.",
       "lista_paginas": [
         {
           "id": "P_R_01_01",
           "pagina": 1
+        },
+        {
+          "id": "P_R_01_02",
+          "pagina": 2
         }
       ]
     }
