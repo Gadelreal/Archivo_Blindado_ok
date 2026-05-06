@@ -254,118 +254,103 @@ class DownloadDropdown extends HTMLElement {
     }
 
     async generateTextPdf() {
-        const accordionContainer = document.getElementById('accordionContainer');
-        if (!accordionContainer) return;
+        const urlParams = new URLSearchParams(window.location.search);
+        const pubId = urlParams.get('id'); // Ej: N_Refractor_01
+        if (!pubId) return;
 
-        const title = document.getElementById('fichaTitle')?.textContent || 'Refractor';
-        const filename = `${title.replace(/\s+/g, '_')}_Articulos.pdf`;
+        const numMatch = pubId.match(/\d+$/);
+        const numStr = numMatch ? numMatch[0] : null;
+        if (!numStr) return;
 
-        // Create a temporary container in the DOM (hidden)
-        const pdfContent = document.createElement('div');
-        pdfContent.className = 'pdf-export-content';
-        pdfContent.style.position = 'absolute';
-        pdfContent.style.left = '-9999px';
-        pdfContent.style.top = '0';
-        pdfContent.style.width = '800px';
-        pdfContent.style.backgroundColor = 'white';
-        pdfContent.style.color = 'black';
-        pdfContent.style.fontFamily = 'serif';
-        document.body.appendChild(pdfContent);
+        try {
+            // 1. Fetch articles data
+            const response = await fetch('./data/articulos.json');
+            const allArticles = await response.json();
+            const articles = allArticles.filter(a => a.numero === numStr);
 
-        // Add explicit font loading to the PDF container
-        const fontStyle = document.createElement('style');
-        fontStyle.textContent = `
-            @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,900;1,900&display=swap');
-            .pdf-export-content { font-family: 'Times New Roman', serif; }
-            .pdf-title-page h1 { font-family: 'Playfair Display', serif !important; }
-            .pdf-art-title { font-family: 'Playfair Display', serif !important; font-weight: 900; text-transform: uppercase; margin-bottom: 5px; }
-            .pdf-art-subtitle { font-family: sans-serif; font-weight: bold; margin-bottom: 15px; color: #333; }
-            .pdf-art-item { margin-bottom: 40px; page-break-inside: avoid; }
-            .pdf-art-body { line-height: 1.6; font-size: 14px; text-align: justify; }
-            .pdf-art-tags { margin-top: 10px; font-style: italic; color: #666; font-size: 12px; }
-        `;
-        pdfContent.appendChild(fontStyle);
+            if (articles.length === 0) {
+                alert('No se encontraron artículos para este número.');
+                return;
+            }
 
-        // 1. Title Page
-        const titlePage = document.createElement('div');
-        titlePage.className = 'pdf-title-page';
-        titlePage.style.height = '280mm';
-        titlePage.style.display = 'flex';
-        titlePage.style.flexDirection = 'column';
-        titlePage.style.alignItems = 'center';
-        titlePage.style.justifyContent = 'center';
-        titlePage.style.textAlign = 'center';
-        titlePage.style.pageBreakAfter = 'always';
+            const title = document.getElementById('fichaTitle')?.textContent || `Refractor ${numStr}`;
+            const filename = `${title.replace(/\s+/g, '_')}_Articulos.pdf`;
 
-        titlePage.innerHTML = `
-            <h1 style="
-                color: #e63946; 
-                font-family: 'Playfair Display', serif; 
-                font-size: 80px; 
-                font-weight: 900; 
-                text-transform: uppercase;
-                margin: 0;
-                line-height: 1;
-            ">${title}</h1>
-            <p style="margin-top: 20px; font-family: sans-serif; letter-spacing: 2px; color: #666;">ARCHIVO BLINDADO</p>
-        `;
-        pdfContent.appendChild(titlePage);
+            // 2. Create PDF container
+            const pdfContent = document.createElement('div');
+            pdfContent.className = 'pdf-export-content';
+            pdfContent.style.backgroundColor = 'white';
+            pdfContent.style.color = 'black';
+            pdfContent.style.padding = '40px';
+            pdfContent.style.fontFamily = 'serif';
 
-        // 2. Articles Content - Extracting directly from the real DOM
-        const accordions = accordionContainer.querySelectorAll('app-accordion');
-        accordions.forEach(acc => {
-            // Find all art-items inside this specific accordion
-            // Since they are in light DOM, we can find them directly
-            const items = acc.querySelectorAll('.art-item');
-            items.forEach(item => {
+            // Add Styles
+            const style = document.createElement('style');
+            style.textContent = `
+                @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,900;1,900&display=swap');
+                .pdf-export-content { font-family: 'Times New Roman', serif; line-height: 1.5; }
+                .pdf-title-page { height: 260mm; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; page-break-after: always; }
+                .pdf-title-page h1 { color: #e63946; font-family: 'Playfair Display', serif !important; font-size: 70pt; font-weight: 900; text-transform: uppercase; margin: 0; }
+                .pdf-title-page p { font-family: sans-serif; font-size: 14pt; letter-spacing: 4px; color: #666; margin-top: 20px; }
+                .pdf-article { margin-bottom: 50px; page-break-inside: avoid; }
+                .pdf-art-header { border-bottom: 2px solid black; margin-bottom: 15px; padding-bottom: 5px; }
+                .pdf-art-title { font-family: 'Playfair Display', serif !important; font-size: 22pt; font-weight: 900; text-transform: uppercase; color: black; margin: 0; }
+                .pdf-art-subtitle { font-family: sans-serif; font-size: 11pt; font-weight: bold; color: #444; margin-top: 5px; }
+                .pdf-art-content { font-size: 12pt; text-align: justify; white-space: pre-wrap; }
+                .pdf-art-footer { margin-top: 15px; font-style: italic; color: #666; font-size: 10pt; border-top: 1px solid #eee; padding-top: 5px; }
+            `;
+            pdfContent.appendChild(style);
+
+            // 3. Cover Page
+            const cover = document.createElement('div');
+            cover.className = 'pdf-title-page';
+            cover.innerHTML = `
+                <h1>${title}</h1>
+                <p>ARCHIVO BLINDADO</p>
+            `;
+            pdfContent.appendChild(cover);
+
+            // 4. Articles
+            articles.forEach(art => {
                 const artDiv = document.createElement('div');
-                artDiv.className = 'pdf-art-item';
+                artDiv.className = 'pdf-article';
                 
-                const artTitle = item.querySelector('.art-item-title')?.textContent || '';
-                const artSubtitle = item.querySelector('.art-item-subtitle')?.textContent || '';
-                const artBody = item.querySelector('.art-item-content')?.cloneNode(true);
-                const artTags = item.querySelector('.art-item-tags')?.textContent || '';
-
-                // Clean up the body (remove the PDF button)
-                if (artBody) {
-                    const pdfBtn = artBody.querySelector('.btn-ficha-pdf');
-                    if (pdfBtn) pdfBtn.remove();
-                }
-
                 artDiv.innerHTML = `
-                    <div class="pdf-art-title" style="font-size: 28px; color: black; border-bottom: 1px solid #ccc; padding-bottom: 5px;">${artTitle}</div>
-                    <div class="pdf-art-subtitle" style="font-size: 16px;">${artSubtitle}</div>
-                    <div class="pdf-art-body" style="font-family: serif;">${artBody ? artBody.innerHTML : ''}</div>
-                    <div class="pdf-art-tags" style="margin-top: 10px; border-top: 1px solid #eee; padding-top: 5px;">${artTags}</div>
+                    <div class="pdf-art-header">
+                        <h2 class="pdf-art-title">${art.titulo}</h2>
+                        <div class="pdf-art-subtitle">${art.autor}${art.lugar_fecha_publicacion ? ' • ' + art.lugar_fecha_publicacion : ''}</div>
+                    </div>
+                    <div class="pdf-art-content">${art.contenido}</div>
+                    <div class="pdf-art-footer">Página ${art.pagina}</div>
                 `;
                 pdfContent.appendChild(artDiv);
             });
-        });
 
-        const opt = {
-            margin: [15, 15],
-            filename: filename,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true, logging: false, letterRendering: true },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        };
+            // 5. Generate PDF
+            const opt = {
+                margin: [15, 15],
+                filename: filename,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true, logging: false, letterRendering: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
 
-        if (typeof html2pdf === 'undefined') {
-            console.error('html2pdf.js no está cargado');
-            alert('La librería de generación de PDF no se ha cargado correctamente.');
-            pdfContent.remove();
-            return;
-        }
+            // We need to add it to the body temporarily for fonts to load
+            pdfContent.style.position = 'absolute';
+            pdfContent.style.left = '-9999px';
+            document.body.appendChild(pdfContent);
 
-        try {
-            // Give a small timeout for styles to apply if needed
-            await new Promise(resolve => setTimeout(resolve, 500));
+            // Small delay for font loading
+            await new Promise(r => setTimeout(r, 800));
+
             await html2pdf().set(opt).from(pdfContent).save();
-        } catch (error) {
-            console.error('Error generando PDF:', error);
-        } finally {
+            
             // Cleanup
-            pdfContent.remove();
+            document.body.removeChild(pdfContent);
+
+        } catch (error) {
+            console.error('Error al generar el PDF:', error);
+            alert('Hubo un error al recuperar los datos para el PDF.');
         }
     }
 }
