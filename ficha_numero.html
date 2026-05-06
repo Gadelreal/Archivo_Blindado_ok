@@ -147,7 +147,8 @@
 
     <pdf-viewer></pdf-viewer>
 
-    <script src="./js/components.js?v=8"></script>
+    <script src="./js/vendor/html2pdf.bundle.min.js"></script>
+    <script src="./js/components.js?v=9"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             const viewer = document.querySelector('pdf-viewer');
@@ -186,6 +187,14 @@
                 
                 const metaPagesText = ejemplar.paginas_procesadas === 1 ? '1 página' : `${ejemplar.paginas_procesadas} páginas`;
                 document.getElementById('fichaBottomMeta').textContent = `${metaPagesText} • Tamaño: ${ejemplar.tamaño}`;
+                
+                // Update download buttons
+                const pdfUrl = `./pdf/N_Refractor_${strNum}.pdf`;
+                const pdfSize = ejemplar.peso_pdf || '2.94 MB';
+                document.querySelectorAll('download-dropdown').forEach(dd => {
+                    dd.setAttribute('pdf-url', pdfUrl);
+                    dd.setAttribute('pdf-size', pdfSize);
+                });
 
                 // Update minificha
                 document.getElementById('miniThumbImg').src = thumbnailPath;

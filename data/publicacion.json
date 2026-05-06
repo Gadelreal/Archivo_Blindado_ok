@@ -55,6 +55,7 @@
       "precio": "400 pts.",
       "tirada": "1500 ej.",
       "tamaño": "60 x 40 cm.",
+      "peso_pdf": "2.94 MB",
       "lista_paginas": [
         {
           "id": "P_R_01_01",

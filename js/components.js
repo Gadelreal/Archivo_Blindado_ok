@@ -189,9 +189,23 @@ class ArtefactCard extends HTMLElement {
 }
 
 class DownloadDropdown extends HTMLElement {
+    static get observedAttributes() {
+        return ['pdf-url', 'pdf-size'];
+    }
+
     connectedCallback() {
+        this.render();
+    }
+
+    attributeChangedCallback() {
+        this.render();
+    }
+
+    render() {
         const text = this.getAttribute('text') || 'Descargar Refractor';
         const btnClass = this.getAttribute('btn-class') || 'btn-download';
+        const pdfUrl = this.getAttribute('pdf-url') || '#';
+        const pdfSize = this.getAttribute('pdf-size') || '24mb';
 
         this.innerHTML = `
         <div class="download-wrapper" id="downloadWrapper">
@@ -202,11 +216,11 @@ class DownloadDropdown extends HTMLElement {
                 </svg>
             </button>
             <div class="dropdown-menu">
-                <a href="#" class="dropdown-item">
+                <a href="${pdfUrl}" class="dropdown-item" download>
                     <img src="./images/ico_image.svg" class="item-icon" alt="">
-                    <span class="item-text">Imágenes en PDF (24mb)</span>
+                    <span class="item-text">Imágenes en PDF (${pdfSize})</span>
                 </a>
-                <a href="#" class="dropdown-item">
+                <a href="#" class="dropdown-item" id="downloadTextPdf">
                     <img src="./images/ico_text.svg" class="item-icon" alt="">
                     <span class="item-text">Texto en PDF (48 Kb.)</span>
                 </a>
@@ -217,15 +231,73 @@ class DownloadDropdown extends HTMLElement {
         const btn = this.querySelector('#downloadBtn');
         const wrapper = this.querySelector('#downloadWrapper');
         
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            wrapper.classList.toggle('is-open');
+        if (btn && wrapper) {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                wrapper.classList.toggle('is-open');
+            });
+
+            document.addEventListener('click', () => {
+                wrapper.classList.remove('is-open');
+            });
+
+            // Handle Text PDF Generation
+            const textPdfLink = this.querySelector('#downloadTextPdf');
+            if (textPdfLink) {
+                textPdfLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.generateTextPdf();
+                });
+            }
+        }
+    }
+
+    async generateTextPdf() {
+        const container = document.getElementById('accordionContainer');
+        if (!container) return;
+
+        const title = document.getElementById('fichaTitle')?.textContent || 'Refractor';
+        const filename = `${title.replace(/\s+/g, '_')}_Articulos.pdf`;
+
+        // Create a clone to avoid modifying the original UI during export
+        const element = container.cloneNode(true);
+        
+        // Ensure all accordions in the clone are "open" so content is visible in PDF
+        element.querySelectorAll('app-accordion').forEach(acc => {
+            acc.setAttribute('open', '');
+            // We need to reach into the shadow DOM if it's a web component
+            // But if it's our own component, we can force styles
         });
 
-        // Close when clicking outside
-        document.addEventListener('click', () => {
-            wrapper.classList.remove('is-open');
-        });
+        const opt = {
+            margin: [15, 15],
+            filename: filename,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true, logging: false },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        // If html2pdf is not loaded yet, wait or log error
+        if (typeof html2pdf === 'undefined') {
+            console.error('html2pdf.js no está cargado');
+            alert('La librería de generación de PDF no se ha cargado correctamente.');
+            return;
+        }
+
+        try {
+            // Add a temporary title to the element for the PDF
+            const pdfHeader = document.createElement('div');
+            pdfHeader.innerHTML = `
+                <h1 style="font-family: serif; border-bottom: 2px solid black; padding-bottom: 10px;">${title}</h1>
+                <p style="font-family: sans-serif; color: #666; margin-bottom: 20px;">Artículos extraídos del Archivo Blindado</p>
+            `;
+            element.insertBefore(pdfHeader, element.firstChild);
+
+            await html2pdf().set(opt).from(element).save();
+        } catch (error) {
+            console.error('Error generando PDF:', error);
+        }
     }
 }
 
