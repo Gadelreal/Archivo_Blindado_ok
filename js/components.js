@@ -274,7 +274,6 @@ class DownloadDropdown extends HTMLElement {
             }
 
             const title = document.getElementById('fichaTitle')?.textContent || `Refractor ${numStr}`;
-            const filename = `${title.replace(/\s+/g, '_')}_Articulos.pdf`;
 
             // Function to parse basic markdown
             const parseMD = (text) => {
@@ -288,58 +287,138 @@ class DownloadDropdown extends HTMLElement {
                 return parsed;
             };
 
-            // 2. Build HTML String
-            let htmlString = `
-                <div style="font-family: 'Times New Roman', serif; background-color: white; color: black; padding: 20px;">
-                    <!-- Cover Page -->
-                    <div style="height: 270mm; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; page-break-after: always;">
-                        <h1 style="color: #e63946; font-family: 'Playfair Display', serif; font-size: 70pt; font-weight: 900; text-transform: uppercase; margin: 0; line-height: 1;">${title}</h1>
-                        <p style="font-family: sans-serif; font-size: 14pt; letter-spacing: 4px; color: #666; margin-top: 20px;">ARCHIVO BLINDADO</p>
-                    </div>
+            // 2. Build HTML Content for the Print Window
+            const htmlContent = `
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>${title} - Artículos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,900;1,900&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Times New Roman', Times, serif; 
+            color: black; 
+            background: white; 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.6; 
+        }
+        .cover { 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            text-align: center; 
+            page-break-after: always; 
+        }
+        .cover h1 { 
+            color: #e63946 !important; 
+            font-family: 'Playfair Display', serif; 
+            font-size: 60pt; 
+            font-weight: 900; 
+            text-transform: uppercase; 
+            margin: 0; 
+            line-height: 1; 
+            /* Force exact colors in print */
+            -webkit-print-color-adjust: exact; 
+            print-color-adjust: exact; 
+        }
+        .cover p { 
+            font-family: sans-serif; 
+            font-size: 14pt; 
+            letter-spacing: 4px; 
+            color: #666; 
+            margin-top: 20px; 
+        }
+        .article { 
+            page-break-inside: avoid; 
+            margin-bottom: 50px; 
+            padding-top: 20px;
+        }
+        .art-header { 
+            border-bottom: 2px solid black; 
+            margin-bottom: 15px; 
+            padding-bottom: 5px; 
+        }
+        .art-title { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 22pt; 
+            font-weight: 900; 
+            text-transform: uppercase; 
+            color: black; 
+            margin: 0; 
+            line-height: 1.1;
+        }
+        .art-subtitle { 
+            font-family: sans-serif; 
+            font-size: 11pt; 
+            font-weight: bold; 
+            color: #444; 
+            margin-top: 5px; 
+        }
+        .art-content { 
+            font-size: 12pt; 
+            text-align: justify; 
+        }
+        .art-content p {
+            margin: 0 0 1em 0;
+        }
+        @media print {
+            @page { 
+                margin: 25mm; /* Safe margins for standard A4 */
+            }
+            body { 
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cover">
+        <h1>${title}</h1>
+        <p>ARCHIVO BLINDADO</p>
+    </div>
+    
+    ${articles.map(art => `
+        <div class="article">
+            <div class="art-header">
+                <h2 class="art-title">${art.titulo}</h2>
+                <div class="art-subtitle">${art.autor}${art.lugar_fecha_publicacion ? ' &bull; ' + art.lugar_fecha_publicacion : ''}</div>
+            </div>
+            <div class="art-content">
+                ${parseMD(art.contenido)}
+            </div>
+        </div>
+    `).join('')}
+
+    <script>
+        // Wait for fonts to load before printing
+        window.onload = () => {
+            setTimeout(() => {
+                window.print();
+                // Opcional: cerrar la ventana tras imprimir
+                // setTimeout(() => window.close(), 1000); 
+            }, 500); // Give the browser a moment to render
+        };
+    </script>
+</body>
+</html>
             `;
 
-            // 3. Add Articles
-            articles.forEach(art => {
-                const contentHtml = parseMD(art.contenido);
-                
-                htmlString += `
-                    <!-- Article -->
-                    <div style="margin-bottom: 50px; page-break-inside: avoid;">
-                        <div style="border-bottom: 2px solid black; margin-bottom: 15px; padding-bottom: 5px;">
-                            <h2 style="font-family: 'Playfair Display', serif; font-size: 22pt; font-weight: 900; text-transform: uppercase; color: black; margin: 0;">${art.titulo}</h2>
-                            <div style="font-family: sans-serif; font-size: 11pt; font-weight: bold; color: #444; margin-top: 5px;">${art.autor}${art.lugar_fecha_publicacion ? ' • ' + art.lugar_fecha_publicacion : ''}</div>
-                        </div>
-                        <div style="font-size: 12pt; text-align: justify; line-height: 1.6;">
-                            ${contentHtml}
-                        </div>
-                        <div style="margin-top: 15px; font-style: italic; color: #666; font-size: 10pt; border-top: 1px solid #eee; padding-top: 5px;">
-                            Página ${art.pagina}
-                        </div>
-                    </div>
-                `;
-            });
-
-            htmlString += `</div>`;
-
-            // 4. Generate PDF
-            const opt = {
-                margin: [15, 15],
-                filename: filename,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true, logging: false },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-
-            if (typeof html2pdf === 'undefined') {
-                console.error('html2pdf.js no está cargado');
-                alert('La librería de generación de PDF no se ha cargado correctamente.');
-                return;
+            // 3. Open Native Print Window
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            
+            const printWindow = window.open(url, '_blank');
+            if (!printWindow) {
+                alert('Por favor, permite las ventanas emergentes en tu navegador para generar el PDF.');
             }
 
-            await html2pdf().set(opt).from(htmlString).save();
-
         } catch (error) {
-            console.error('Error al generar el PDF:', error);
+            console.error('Error al preparar el PDF:', error);
             alert('Hubo un error al generar el PDF.');
         }
     }
