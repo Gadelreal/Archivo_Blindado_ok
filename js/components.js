@@ -711,6 +711,55 @@ class PdfViewer extends HTMLElement {
             else this.onZoomOut();
         }, { passive: false });
 
+        // --- Pinch to Zoom ---
+        let initialDistance = null;
+        let initialScale = null;
+        let currentPinchScale = 1.0;
+
+        this.canvasContainer.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 2 && this.modal.classList.contains('is-open')) {
+                const dx = e.touches[0].clientX - e.touches[1].clientX;
+                const dy = e.touches[0].clientY - e.touches[1].clientY;
+                initialDistance = Math.hypot(dx, dy);
+                initialScale = this.scale;
+                currentPinchScale = 1.0;
+                this.pagesContainer.style.transformOrigin = 'center top';
+            }
+        }, { passive: false });
+
+        this.canvasContainer.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 2 && initialDistance !== null && this.modal.classList.contains('is-open')) {
+                e.preventDefault(); // Detiene el pinch-zoom nativo del navegador
+                const dx = e.touches[0].clientX - e.touches[1].clientX;
+                const dy = e.touches[0].clientY - e.touches[1].clientY;
+                const currentDistance = Math.hypot(dx, dy);
+                
+                currentPinchScale = currentDistance / initialDistance;
+                let potentialScale = initialScale * currentPinchScale;
+                
+                if (potentialScale > 1.5) currentPinchScale = 1.5 / initialScale;
+                if (potentialScale < 0.4) currentPinchScale = 0.4 / initialScale;
+                
+                this.pagesContainer.style.transform = `scale(${currentPinchScale})`;
+            }
+        }, { passive: false });
+
+        this.canvasContainer.addEventListener('touchend', (e) => {
+            if (initialDistance !== null && e.touches.length < 2) {
+                initialDistance = null;
+                this.pagesContainer.style.transform = '';
+                
+                let newScale = initialScale * currentPinchScale;
+                if (newScale > 1.5) newScale = 1.5;
+                if (newScale < 0.4) newScale = 0.4;
+                
+                if (Math.abs(newScale - initialScale) > 0.05) {
+                    this.scale = newScale;
+                    this.renderAllPages();
+                }
+            }
+        });
+
         this.canvasContainer.addEventListener('scroll', () => {
             if (!this.pdfDoc) return;
             const scrollPos = this.canvasContainer.scrollTop;
@@ -964,9 +1013,9 @@ class PdfViewer extends HTMLElement {
     }
 
     onZoomIn() {
-        if (this.scale >= 1.0) return;
+        if (this.scale >= 1.5) return;
         this.scale += 0.2;
-        if (this.scale > 1.0) this.scale = 1.0;
+        if (this.scale > 1.5) this.scale = 1.5;
         this.renderAllPages();
     }
 
