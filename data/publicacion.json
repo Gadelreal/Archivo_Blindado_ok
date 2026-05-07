@@ -76,5 +76,19 @@
       "descripcion": "Réplica digitalizada del póster central de gran formato que acompañaba al lanzamiento del boletín.",
       "file_url": "pdf/ART_R_P_poster_manifiesto_01.pdf"
     }
+  ],
+  "frases": [
+    {
+      "texto_pre": "Todo pasa, la nada quedará, la nada creadora. Los refractarios vamos a por el todo porque no aspiramos a nada.",
+      "texto_resaltado": "¡Para otros la revolución!",
+      "texto_post": "Para nosotros la gimnasia revolucionaria. El futuro se ve tan negro que nadie duda que será nuestro.",
+      "autor": "Victor Nero"
+    },
+    {
+      "texto_pre": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "texto_resaltado": "Ut enim ad minim veniam",
+      "texto_post": "quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "autor": "Lorem Ipsum"
+    }
   ]
 }

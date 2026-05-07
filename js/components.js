@@ -426,12 +426,39 @@ class DownloadDropdown extends HTMLElement {
 }
 
 class AppQuote extends HTMLElement {
-    connectedCallback() {
+    async connectedCallback() {
+        try {
+            const response = await fetch('./data/publicacion.json');
+            if (!response.ok) throw new Error('Network response was not ok');
+            const data = await response.json();
+            const frases = data.frases || [];
+            
+            if (frases.length > 0) {
+                const randomFrase = frases[Math.floor(Math.random() * frases.length)];
+                this.render(
+                    randomFrase.autor, 
+                    randomFrase.texto_pre, 
+                    randomFrase.texto_resaltado, 
+                    randomFrase.texto_post
+                );
+            } else {
+                this.renderFromAttributes();
+            }
+        } catch (error) {
+            // Fallback to attributes if JSON fails
+            this.renderFromAttributes();
+        }
+    }
+
+    renderFromAttributes() {
         const author = this.getAttribute('author') || '';
         const text = this.getAttribute('text') || '';
         const highlight = this.getAttribute('highlight') || '';
         const textPost = this.getAttribute('text-post') || '';
-        
+        this.render(author, text, highlight, textPost);
+    }
+
+    render(author, text, highlight, textPost) {
         this.innerHTML = `
         <section class="quote-section">
             <div class="container quote-container">
