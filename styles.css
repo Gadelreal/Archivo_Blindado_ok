@@ -784,7 +784,7 @@ app-header.is-menu-open .tape-02-mobile {
     left: 32px;
     right: 32px;
     height: calc(100dvh - 180px - 64px);
-    background-image: url('./images/Navigation_Bg_Image.png');
+    background-image: url('./images/Navigation_Bg_Image.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center top;

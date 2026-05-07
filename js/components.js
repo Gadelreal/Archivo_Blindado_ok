@@ -156,8 +156,8 @@ class PublicationCard extends HTMLElement {
         this.innerHTML = `
             <a href="${link}" class="pub-card">
                 <div class="pub-cover-wrapper">
-                    <img src="${image}" alt="Portada Edición ${number}" class="pub-cover">
-                    <img src="./images/Onmouse.svg" alt="" class="pub-hover-icon">
+                    <img src="${image}" alt="Portada Edición ${number}" class="pub-cover" loading="lazy">
+                    <img src="./images/Onmouse.svg" alt="" class="pub-hover-icon" loading="lazy">
                 </div>
                 <div class="pub-info">
                     <h2 class="pub-issue">${number}</h2>
@@ -181,8 +181,8 @@ class ArtefactCard extends HTMLElement {
         this.innerHTML = `
             <div class="pub-card artefact-card-link" style="cursor: pointer;">
                 <div class="pub-cover-wrapper">
-                    <img src="${image}" alt="${category}" class="pub-cover">
-                    <img src="./images/Onmouse_3.svg" alt="" class="pub-hover-icon">
+                    <img src="${image}" alt="${category}" class="pub-cover" loading="lazy">
+                    <img src="./images/Onmouse_3.svg" alt="" class="pub-hover-icon" loading="lazy">
                 </div>
                 <div class="pub-info">
                     <h2 class="art-category">${category}</h2>
