@@ -129,6 +129,18 @@ class AppFooter extends HTMLElement {
                 });
             });
         }
+
+        const logoLink = this.querySelector('.footer-logo');
+        if (logoLink) {
+            logoLink.addEventListener('click', (e) => {
+                const path = window.location.pathname;
+                const isHome = path.endsWith('index.html') || path === '/' || path.endsWith('/');
+                if (isHome) {
+                    e.preventDefault();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+        }
     }
 }
 
