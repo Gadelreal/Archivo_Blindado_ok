@@ -87,7 +87,7 @@ class AppFooter extends HTMLElement {
                 <img src="./images/Image_Footer 1.png" alt="" class="footer-banner-img">
             </div><div class="footer-red-strip">
                 <div class="container footer-strip-content">
-                    <a href="#" class="logo footer-logo">
+                    <a href="./index.html" class="logo footer-logo">
                         <img src="./images/Logo_neg.svg" alt="El Archivo Blindado Logo" class="logo-img footer-logo-img">
                     </a>
                     <nav class="nav-links">
