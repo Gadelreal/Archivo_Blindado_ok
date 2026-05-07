@@ -964,8 +964,9 @@ class PdfViewer extends HTMLElement {
     }
 
     onZoomIn() {
-        if (this.scale >= 4.0) return;
+        if (this.scale >= 1.0) return;
         this.scale += 0.2;
+        if (this.scale > 1.0) this.scale = 1.0;
         this.renderAllPages();
     }
 

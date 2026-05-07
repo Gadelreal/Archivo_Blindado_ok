@@ -2027,7 +2027,7 @@ a .author-tag {
    FLOATING NAV BUTTONS (LEFT & RIGHT)
    ========================================================================= */
 .pdf-nav-btn {
-  position: absolute;
+  position: fixed;
   top: 50%;
   transform: translateY(-50%);
   background: transparent;
@@ -2049,7 +2049,7 @@ a .author-tag {
 }
 
 .pdf-top-close-btn {
-  position: absolute;
+  position: fixed;
   top: 32px;
   right: 32px;
   background: transparent;
@@ -2082,7 +2082,7 @@ a .author-tag {
    FLOATING TOOLBAR
    ========================================================================= */
 .pdf-floating-toolbar {
-  position: absolute;
+  position: fixed;
   bottom: 32px;
   left: 50%;
   transform: translateX(-50%);
