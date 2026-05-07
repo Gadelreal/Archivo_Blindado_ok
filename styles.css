@@ -2010,7 +2010,8 @@ a .author-tag {
   flex-direction: column;
   gap: 32px;
   align-items: center;
-  width: 100%;
+  min-width: 100%;
+  width: max-content;
 }
 
 .pdf-page-wrapper {
@@ -2021,7 +2022,7 @@ a .author-tag {
 
 .pdf-page-wrapper canvas {
   display: block;
-  max-width: 100%;
+  max-width: none;
   height: auto;
 }
 
