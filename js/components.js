@@ -589,6 +589,9 @@ class PdfViewer extends HTMLElement {
                 </button>
 
                 <div class="pdf-canvas-container" id="canvasContainer">
+                    <div id="pdfLoading" class="pdf-loading-spinner">
+                        <div class="spinner"></div>
+                    </div>
                     <div id="pages_container" class="pdf-pages-container"></div>
                     <div id="pdfError" class="pdf-error-container" style="display: none;">
                         <div class="pdf-error-message">
@@ -647,6 +650,7 @@ class PdfViewer extends HTMLElement {
         this.modal = this.querySelector('#pdfModal');
         this.canvasContainer = this.querySelector('#canvasContainer');
         this.pagesContainer = this.querySelector('#pages_container');
+        this.loadingSpinner = this.querySelector('#pdfLoading');
         this.errorContainer = this.querySelector('#pdfError');
         
         this._keyHandler = (e) => {
@@ -976,32 +980,36 @@ class PdfViewer extends HTMLElement {
             this.pdfDoc = pdfDoc;
             this.querySelector('#page_count').textContent = this.pdfDoc.numPages;
             
-            await this.renderAllPages();
+            // Show loading initially
+            if (this.loadingSpinner) this.loadingSpinner.style.display = 'flex';
+            this.pagesContainer.style.opacity = '0';
+
+            await this.renderAllPages(initialPage);
             
-            if (initialPage > 1) {
-                this.scrollToPage(initialPage, 'auto');
-            } else {
-                this.canvasContainer.scrollTop = 0;
-            }
+            this.pagesContainer.style.opacity = '1';
+            if (this.loadingSpinner) this.loadingSpinner.style.display = 'none';
 
             this.adjustToolbar();
             setTimeout(() => this.adjustToolbar(), 150);
             setTimeout(() => this.adjustToolbar(), 350);
         } catch (error) {
             console.error('Error:', error);
+            if (this.loadingSpinner) this.loadingSpinner.style.display = 'none';
             this.errorContainer.style.display = 'block';
             this.pagesContainer.style.display = 'none';
         }
     }
 
-    async renderAllPages() {
+    async renderAllPages(initialPage = 1) {
         this.pagesContainer.innerHTML = '';
         this.renderTasks.forEach(t => t.cancel());
         this.renderTasks = [];
 
+        // 1. Get first page to calculate scale and dimensions
         const firstPage = await this.pdfDoc.getPage(1);
+        const unscaledViewport = firstPage.getViewport({scale: 1.0});
+        
         if (!this.initialScaleCalculated) {
-            const unscaledViewport = firstPage.getViewport({scale: 1.0});
             let safeWidth = this.canvasContainer.clientWidth - 80;
             if (!safeWidth || safeWidth <= 0) safeWidth = window.innerWidth - 80;
             
@@ -1013,17 +1021,40 @@ class PdfViewer extends HTMLElement {
             this.initialScaleCalculated = true;
         }
 
+        const viewport1 = firstPage.getViewport({scale: this.scale});
+        const estHeight = viewport1.height;
+
+        // 2. Create ALL wrappers immediately with estimated height
         for (let i = 1; i <= this.pdfDoc.numPages; i++) {
             const wrapper = document.createElement('div');
             wrapper.className = 'pdf-page-wrapper';
             wrapper.setAttribute('data-page-num', i);
-            
+            wrapper.style.minHeight = `${estHeight}px`;
+            wrapper.style.width = `${viewport1.width}px`;
+            this.pagesContainer.appendChild(wrapper);
+        }
+
+        // 3. Scroll immediately to target page (behavior 'auto' for direct jump)
+        if (initialPage > 1) {
+            this.scrollToPage(initialPage, 'auto');
+        } else {
+            this.canvasContainer.scrollTop = 0;
+        }
+
+        // 4. Start rendering loop (we don't await the whole thing if we want to show the first page fast)
+        // But for consistency with current code, we await each page render
+        for (let i = 1; i <= this.pdfDoc.numPages; i++) {
+            const wrapper = this.pagesContainer.querySelector(`[data-page-num="${i}"]`);
             const canvas = document.createElement('canvas');
             wrapper.appendChild(canvas);
-            this.pagesContainer.appendChild(wrapper);
 
             const page = await this.pdfDoc.getPage(i);
             const viewport = page.getViewport({scale: this.scale});
+            
+            // Adjust wrapper height if the actual page differs from page 1
+            wrapper.style.minHeight = `${viewport.height}px`;
+            wrapper.style.width = `${viewport.width}px`;
+            
             canvas.height = viewport.height;
             canvas.width = viewport.width;
 
@@ -1033,6 +1064,9 @@ class PdfViewer extends HTMLElement {
             };
             const renderTask = page.render(renderContext);
             this.renderTasks.push(renderTask);
+            
+            // Optional: await renderTask.promise if you want sequential loading
+            // Currently they start rendering as canvases are created
         }
         
         this.updateZoomDisplay();

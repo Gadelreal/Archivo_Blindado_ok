@@ -1490,7 +1490,7 @@ issue-selector {
   }
 
   .ficha-pages-preview {
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   .ficha-col-image {
@@ -2237,7 +2237,32 @@ a .author-tag {
   }
 }
 
-/* ERROR HANDLING */
+/* ERROR HANDLING & LOADING */
+.pdf-loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  z-index: 10001;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: var(--bg-red);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 .pdf-error-container {
   position: absolute;
   top: 50%;
