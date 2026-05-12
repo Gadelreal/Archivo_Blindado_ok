@@ -9,12 +9,12 @@
   },
   "metadata_archivo": {
     "nombre_publicacion": "REFRACTOR",
-    "numeros_procesados": 1,
-    "paginas_procesadas": 2,
-    "autores_registrados": 5,
-    "articulos_extraidos": 5,
+    "numeros_procesados": 2,
+    "paginas_procesadas": 8,
+    "autores_registrados": 12,
+    "articulos_extraidos": 13,
     "artefactos_registrados": 1,
-    "fecha_actualizacion": "6 de mayo de 2026"
+    "fecha_actualizacion": "12 de mayo de 2026"
   },
   "autores": [
     {
@@ -36,6 +36,34 @@
     {
       "id": "AU_Renzo_Novatore",
       "nombre": "Renzo Novatore"
+    },
+    {
+      "id": "alexei_tsvetkov",
+      "nombre": "Alexei Tsvetkov"
+    },
+    {
+      "id": "ali_calabres",
+      "nombre": "Alí Calabrés"
+    },
+    {
+      "id": "evgueni_golovin",
+      "nombre": "Evgueni Golovín"
+    },
+    {
+      "id": "los_refractarios",
+      "nombre": "Los Refractarios"
+    },
+    {
+      "id": "el_nieto_de_orsini",
+      "nombre": "El Nieto de Orsini"
+    },
+    {
+      "id": "la_negra_judia_la_sola",
+      "nombre": "La Negra Judía. La Sola"
+    },
+    {
+      "id": "coronel_azar",
+      "nombre": "Coronel Azar"
     }
   ],
   "ejemplares": [
@@ -72,8 +100,16 @@
       "id": "N_Refractor_04-05",
       "numero": "04-05",
       "paginas_procesadas": 6,
-      "articulos_extraidos": 15,
-      "autores_ids": [],
+      "articulos_extraidos": 8,
+      "autores_ids": [
+        "ali_calabres",
+        "evgueni_golovin",
+        "los_refractarios",
+        "alexei_tsvetkov",
+        "el_nieto_de_orsini",
+        "la_negra_judia_la_sola",
+        "coronel_azar"
+      ],
       "fecha_publicacion": "3 de junio de 1998",
       "precio": "400 pts.",
       "tirada": "",
