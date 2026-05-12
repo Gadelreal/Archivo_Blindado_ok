@@ -12,7 +12,7 @@
     "numeros_procesados": 2,
     "paginas_procesadas": 8,
     "autores_registrados": 16,
-    "articulos_extraidos": 17,
+    "articulos_extraidos": 18,
     "artefactos_registrados": 1,
     "fecha_actualizacion": "12 de mayo de 2026"
   },
@@ -116,7 +116,7 @@
       "id": "N_Refractor_04-05",
       "numero": "04-05",
       "paginas_procesadas": 6,
-      "articulos_extraidos": 12,
+      "articulos_extraidos": 13,
       "autores_ids": [
         "ali_calabres",
         "evgueni_golovin",

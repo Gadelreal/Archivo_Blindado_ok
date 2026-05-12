@@ -59,6 +59,14 @@
   --grid-gap: 64px;
 }
 
+.text-serif {
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.text-sans {
+  font-family: var(--font-base);
+}
+
 /* =========================================================================
    2. BASE
    ========================================================================= */
