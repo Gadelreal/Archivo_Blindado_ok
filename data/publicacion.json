@@ -11,8 +11,8 @@
     "nombre_publicacion": "REFRACTOR",
     "numeros_procesados": 2,
     "paginas_procesadas": 8,
-    "autores_registrados": 12,
-    "articulos_extraidos": 13,
+    "autores_registrados": 16,
+    "articulos_extraidos": 17,
     "artefactos_registrados": 1,
     "fecha_actualizacion": "12 de mayo de 2026"
   },
@@ -64,6 +64,22 @@
     {
       "id": "coronel_azar",
       "nombre": "Coronel Azar"
+    },
+    {
+      "id": "alexander_duguin",
+      "nombre": "Alexander Duguin"
+    },
+    {
+      "id": "javier_memba",
+      "nombre": "Javier Memba"
+    },
+    {
+      "id": "pedro_g_romero",
+      "nombre": "Pedro G. Romero"
+    },
+    {
+      "id": "koldo_artieda",
+      "nombre": "Koldo Artieda"
     }
   ],
   "ejemplares": [
@@ -100,7 +116,7 @@
       "id": "N_Refractor_04-05",
       "numero": "04-05",
       "paginas_procesadas": 6,
-      "articulos_extraidos": 8,
+      "articulos_extraidos": 12,
       "autores_ids": [
         "ali_calabres",
         "evgueni_golovin",
@@ -108,7 +124,11 @@
         "alexei_tsvetkov",
         "el_nieto_de_orsini",
         "la_negra_judia_la_sola",
-        "coronel_azar"
+        "coronel_azar",
+        "alexander_duguin",
+        "javier_memba",
+        "pedro_g_romero",
+        "koldo_artieda"
       ],
       "fecha_publicacion": "3 de junio de 1998",
       "precio": "400 pts.",
