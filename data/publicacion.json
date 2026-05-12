@@ -67,6 +67,45 @@
           "pagina": 2
         }
       ]
+    },
+    {
+      "id": "N_Refractor_04-05",
+      "numero": "4-5",
+      "paginas_procesadas": 6,
+      "articulos_extraidos": 15,
+      "autores_ids": [],
+      "fecha_publicacion": "3 de junio de 1998",
+      "precio": "400 pts.",
+      "tirada": "",
+      "tamaño": "400 x 594 mm.",
+      "peso_pdf": "8.57 MB",
+      "peso_pdf_texto": "",
+      "lista_paginas": [
+        {
+          "id": "P_R_04-05_01",
+          "pagina": 1
+        },
+        {
+          "id": "P_R_04-05_02",
+          "pagina": 2
+        },
+        {
+          "id": "P_R_04-05_03",
+          "pagina": 3
+        },
+        {
+          "id": "P_R_04-05_04",
+          "pagina": 4
+        },
+        {
+          "id": "P_R_04-05_05",
+          "pagina": 5
+        },
+        {
+          "id": "P_R_04-05_06",
+          "pagina": 6
+        }
+      ]
     }
   ],
   "artefactos": [

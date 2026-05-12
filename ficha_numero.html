@@ -166,7 +166,7 @@
                     return;
                 }
 
-                const strNum = ejemplar.numero.toString().padStart(2, '0');
+                const strNum = ejemplar.numero.toString().split('-').map(n => n.padStart(2, '0')).join('-');
                 const thumbnailPath = `./images/Miniaturas_Refractor/N_Refractor_${strNum}.jpg`;
                 const titleText = `REFRACTOR ${strNum}`;
                 
