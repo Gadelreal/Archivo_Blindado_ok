@@ -41,7 +41,7 @@
   "ejemplares": [
     {
       "id": "N_Refractor_01",
-      "numero": 1,
+      "numero": "01",
       "paginas_procesadas": 2,
       "articulos_extraidos": 5,
       "autores_ids": [
@@ -70,7 +70,7 @@
     },
     {
       "id": "N_Refractor_04-05",
-      "numero": "4-5",
+      "numero": "04-05",
       "paginas_procesadas": 6,
       "articulos_extraidos": 15,
       "autores_ids": [],
