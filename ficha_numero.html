@@ -177,7 +177,12 @@
                 document.getElementById('mainCoverImg').alt = titleText;
                 
                 document.getElementById('fichaTitle').textContent = titleText;
-                document.getElementById('fichaSubtitle').textContent = `${ejemplar.fecha_publicacion} • ${ejemplar.precio} • Tirada: ${ejemplar.tirada}`;
+                
+                const subtitleParts = [];
+                if (ejemplar.fecha_publicacion) subtitleParts.push(ejemplar.fecha_publicacion);
+                if (ejemplar.precio) subtitleParts.push(ejemplar.precio);
+                if (ejemplar.tirada) subtitleParts.push(`Tirada: ${ejemplar.tirada}`);
+                document.getElementById('fichaSubtitle').textContent = subtitleParts.join(' • ');
                 
                 const metaPagesText = ejemplar.paginas_procesadas === 1 ? '1 página' : `${ejemplar.paginas_procesadas} páginas`;
                 document.getElementById('fichaBottomMeta').textContent = `${metaPagesText} • Tamaño: ${ejemplar.tamaño}`;
