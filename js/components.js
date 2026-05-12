@@ -880,11 +880,11 @@ class PdfViewer extends HTMLElement {
         }
     }
 
-    scrollToPage(num) {
+    scrollToPage(num, behavior = 'smooth') {
         if (num < 1 || num > this.pdfDoc.numPages) return;
         const target = this.pagesContainer.querySelector(`[data-page-num="${num}"]`);
         if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            target.scrollIntoView({ behavior: behavior, block: 'start' });
         }
     }
 
@@ -979,7 +979,7 @@ class PdfViewer extends HTMLElement {
             await this.renderAllPages();
             
             if (initialPage > 1) {
-                setTimeout(() => this.scrollToPage(initialPage), 100);
+                this.scrollToPage(initialPage, 'auto');
             } else {
                 this.canvasContainer.scrollTop = 0;
             }
