@@ -732,7 +732,7 @@ class PdfViewer extends HTMLElement {
                 
                 if (Math.abs(newScale - this.scale) > 0.05) {
                     this.scale = newScale;
-                    this.renderAllPages();
+                    this.renderAllPages(this.pageNum);
                 }
             }
         }, { passive: false });
@@ -798,7 +798,7 @@ class PdfViewer extends HTMLElement {
                 
                 if (Math.abs(newScale - initialScale) > 0.05) {
                     this.scale = newScale;
-                    this.renderAllPages();
+                    this.renderAllPages(this.pageNum);
                 }
             }
         });
@@ -1089,18 +1089,18 @@ class PdfViewer extends HTMLElement {
         if (this.scale >= 1.5) return;
         this.scale += 0.2;
         if (this.scale > 1.5) this.scale = 1.5;
-        this.renderAllPages();
+        this.renderAllPages(this.pageNum);
     }
 
     onZoomOut() {
         if (this.scale <= 0.4) return;
         this.scale -= 0.2;
-        this.renderAllPages();
+        this.renderAllPages(this.pageNum);
     }
 
     onZoomReset() {
         this.initialScaleCalculated = false;
-        this.renderAllPages();
+        this.renderAllPages(this.pageNum);
     }
 
     updateZoomDisplay() {
