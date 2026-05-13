@@ -225,7 +225,11 @@
                 document.getElementById('artsMeta').textContent = `${metaPagesText} | ${artsText}`;
 
                 const authorsContainer = document.getElementById('artsAuthors');
-                ejemplar.autores_ids.forEach(authId => {
+                const maxVisible = 6;
+                const visibleIds = ejemplar.autores_ids.slice(0, maxVisible);
+                const remainingIds = ejemplar.autores_ids.slice(maxVisible);
+
+                visibleIds.forEach(authId => {
                     const authorObj = pubData.autores.find(a => a.id === authId);
                     if (authorObj) {
                         const tag = document.createElement('div');
@@ -234,6 +238,36 @@
                         authorsContainer.appendChild(tag);
                     }
                 });
+
+                if (remainingIds.length > 0) {
+                    const plusTag = document.createElement('div');
+                    plusTag.className = 'author-tag author-tag-plus';
+                    plusTag.innerHTML = `
+                        <span>+</span>
+                        <div class="author-tooltip">
+                            ${remainingIds.map(id => {
+                                const a = pubData.autores.find(obj => obj.id === id);
+                                return a ? `<span>${a.nombre}</span>` : '';
+                            }).join('')}
+                        </div>
+                    `;
+                    
+                    plusTag.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        plusTag.classList.toggle('is-open');
+                    });
+
+                    plusTag.querySelector('.author-tooltip').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                    });
+                    
+                    authorsContainer.appendChild(plusTag);
+
+                    // Close tooltip when clicking outside
+                    document.addEventListener('click', () => {
+                        plusTag.classList.remove('is-open');
+                    });
+                }
 
                 // Articulos Content (Accordions)
                 const accordionContainer = document.getElementById('accordionContainer');
