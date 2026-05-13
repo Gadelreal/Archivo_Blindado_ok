@@ -1669,25 +1669,26 @@ issue-selector {
   cursor: default;
 }
 
+/* Elementos interactivos (pills y el tag +) */
 .author-tag.is-interactive,
-a .author-tag,
+.page-firmas .firma-pill,
 .author-tag-plus {
   cursor: pointer;
 }
 
-.author-tag-plus {
-  position: relative;
-  background-color: #FFFFFF;
-  color: #475467;
+/* Estado Hover unificado para elementos interactivos */
+.author-tag.is-interactive:hover,
+.page-firmas .firma-pill:hover:not(.selected),
+.author-tag-plus:hover {
+  background-color: #F2F4F7;
   border-color: #D0D5DD;
-  font-weight: 600;
-  padding: 4px 12px;
+  color: #101828;
 }
 
-.author-tag-plus:hover {
-  background-color: #F9FAFB;
-  border-color: var(--bg-red);
-  color: var(--bg-red);
+/* Estilo específico para el signo + */
+.author-tag-plus {
+  position: relative;
+  /* background, color, border etc ya heredados de .author-tag */
 }
 
 /* Author Tooltip */
@@ -2643,9 +2644,7 @@ a .author-tag,
   border-color: #101828;
 }
 
-.page-firmas .firma-pill:hover:not(.selected) {
-  background: #F2F4F7;
-}
+/* El hover ahora está unificado en la sección de componentes comunes */
 
 .page-firmas .section-results {
   padding: 0;
