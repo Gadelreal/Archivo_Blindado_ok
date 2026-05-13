@@ -271,8 +271,8 @@ class DownloadDropdown extends HTMLElement {
         const pubId = urlParams.get('id'); // Ej: N_Refractor_01
         if (!pubId) return;
 
-        const numMatch = pubId.match(/\d+$/);
-        const numStr = numMatch ? numMatch[0] : null;
+        const numParts = pubId.split('_');
+        const numStr = numParts[numParts.length - 1]; // "01" or "04-05"
         if (!numStr) return;
 
         try {
