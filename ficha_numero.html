@@ -323,8 +323,8 @@
                                 </div>
                                 <div class="art-signature">
                                     ${index === 0 && i === 0 && authorName === 'Victor Nero' ? '<p class="art-signature-intro">por los refractarios,</p>' : ''}
-                                    <p class="art-signature-name"><strong>${authorName}${art.lugar_fecha_publicacion ? `, ${art.lugar_fecha_publicacion.split(',')[0].trim()}` : ''}</strong></p>
-                                    <p class="art-signature-date">${art.lugar_fecha_publicacion && art.lugar_fecha_publicacion.includes(',') ? art.lugar_fecha_publicacion.split(',')[1].trim() : ''}</p>
+                                    <p class="art-signature-name"><strong>${authorName ? `${authorName}, ` : ''}${art.lugar_fecha_publicacion ? art.lugar_fecha_publicacion.split(',')[0].trim() : ''}</strong></p>
+                                    <p class="art-signature-date">${art.lugar_fecha_publicacion && art.lugar_fecha_publicacion.includes(',') ? art.lugar_fecha_publicacion.split(',').slice(1).join(',').trim() : ''}</p>
                                 </div>
                                 <div class="art-tag-footer">
                                     <div class="author-tag">Refractor ${strNum}</div>
