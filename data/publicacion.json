@@ -11,10 +11,10 @@
     "nombre_publicacion": "REFRACTOR",
     "numeros_procesados": 2,
     "paginas_procesadas": 8,
-    "autores_registrados": 16,
-    "articulos_extraidos": 18,
+    "autores_registrados": 18,
+    "articulos_extraidos": 21,
     "artefactos_registrados": 1,
-    "fecha_actualizacion": "12 de mayo de 2026"
+    "fecha_actualizacion": "13 de mayo de 2026"
   },
   "autores": [
     {
@@ -80,6 +80,14 @@
     {
       "id": "koldo_artieda",
       "nombre": "Koldo Artieda"
+    },
+    {
+      "id": "donald_k",
+      "nombre": "Donald K."
+    },
+    {
+      "id": "ricardo_flores_magon",
+      "nombre": "Ricardo Flores Magón"
     }
   ],
   "ejemplares": [
@@ -116,7 +124,7 @@
       "id": "N_Refractor_04-05",
       "numero": "04-05",
       "paginas_procesadas": 6,
-      "articulos_extraidos": 13,
+      "articulos_extraidos": 16,
       "autores_ids": [
         "ali_calabres",
         "evgueni_golovin",
@@ -128,7 +136,9 @@
         "alexander_duguin",
         "javier_memba",
         "pedro_g_romero",
-        "koldo_artieda"
+        "koldo_artieda",
+        "donald_k",
+        "ricardo_flores_magon"
       ],
       "fecha_publicacion": "3 de junio de 1998",
       "precio": "400 pts.",
