@@ -22,7 +22,7 @@ class AppHeader extends HTMLElement {
         <header class="navbar">
             <div class="nav-container">
                 <a href="./index.html" class="logo">
-                    <img src="./images/Logo.svg" alt="El Archivo Blindado Logo" class="logo-img">
+                    <img src="./images/Logo.svg" alt="Archivo blindado Logo" class="logo-img">
                 </a>
                 <nav class="nav-links">
                     <a href="./index.html" class="${isActive('index.html')}">REFRACTOR</a>
@@ -31,7 +31,7 @@ class AppHeader extends HTMLElement {
                     <span class="dot">•</span>
                     <a href="./artefactos.html" class="${isActive('artefactos.html')}">ARTEFACTOS</a>
                     <span class="dot">•</span>
-                    <a href="#">EL ARCHIVO BLINDADO</a>
+                    <a href="#">ARCHIVO BLINDADO</a>
                 </nav>
                 <button class="menu-btn">
                     <img src="./images/ico_menu.svg" alt="Menú" class="menu-img">
@@ -45,7 +45,7 @@ class AppHeader extends HTMLElement {
                 <a href="./index.html" class="${isActive('index.html')}">REFRACTOR</a>
                 <a href="./firmas.html" class="${isActive('firmas.html')}">FIRMAS</a>
                 <a href="./artefactos.html" class="${isActive('artefactos.html')}">ARTEFACTOS</a>
-                <a href="#">EL ARCHIVO BLINDADO</a>
+                <a href="#">ARCHIVO BLINDADO</a>
             </nav>
         </div>
         <img src="./images/Masking Tape_01_tablet.png" alt="" class="tape-01">
@@ -88,7 +88,7 @@ class AppFooter extends HTMLElement {
             </div><div class="footer-red-strip">
                 <div class="container footer-strip-content">
                     <a href="./index.html" class="logo footer-logo">
-                        <img src="./images/Logo_neg.svg" alt="El Archivo Blindado Logo" class="logo-img footer-logo-img">
+                        <img src="./images/Logo_neg.svg" alt="Archivo blindado Logo" class="logo-img footer-logo-img">
                     </a>
                     <nav class="nav-links">
                         <a href="./index.html">REFRACTOR</a>
@@ -97,13 +97,13 @@ class AppFooter extends HTMLElement {
                         <span class="dot">•</span>
                         <a href="./artefactos.html">ARTEFACTOS</a>
                         <span class="dot">•</span>
-                        <a href="#">EL ARCHIVO BLINDADO</a>
+                        <a href="#">ARCHIVO BLINDADO</a>
                     </nav>
                 </div>
             </div>
             <div class="footer-bottom">
                 <div class="container text-left footer-bottom-content">
-                    <span>El Archivo Blindado 2026</span>
+                    <span>Archivo blindado 2026</span>
                     <span class="footer-sep">&nbsp;|&nbsp;</span>
                     <a href="mailto:elarchivoblindado@gmail.com" class="footer-contact">Contacto</a>
                     <span class="footer-sep">&nbsp;|&nbsp;</span>
@@ -902,7 +902,7 @@ class PdfViewer extends HTMLElement {
 
     onShare() {
         if (navigator.share) {
-            navigator.share({ title: 'Archivo Blindado PDF', url: window.location.href }).catch(console.error);
+            navigator.share({ title: 'Archivo blindado PDF', url: window.location.href }).catch(console.error);
         } else {
             navigator.clipboard.writeText(window.location.href)
                 .then(() => alert('Enlace copiado al portapapeles'))
