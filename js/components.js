@@ -31,7 +31,7 @@ class AppHeader extends HTMLElement {
                     <span class="dot">•</span>
                     <a href="./artefactos.html" class="${isActive('artefactos.html')}">ARTEFACTOS</a>
                     <span class="dot">•</span>
-                    <a href="#">ARCHIVO BLINDADO</a>
+                    <a href="./archivo_blindado.html" class="${isActive('archivo_blindado.html')}">ARCHIVO BLINDADO</a>
                 </nav>
                 <button class="menu-btn">
                     <img src="./images/ico_menu.svg" alt="Menú" class="menu-img">
@@ -45,7 +45,7 @@ class AppHeader extends HTMLElement {
                 <a href="./index.html" class="${isActive('index.html')}">REFRACTOR</a>
                 <a href="./firmas.html" class="${isActive('firmas.html')}">FIRMAS</a>
                 <a href="./artefactos.html" class="${isActive('artefactos.html')}">ARTEFACTOS</a>
-                <a href="#">ARCHIVO BLINDADO</a>
+                <a href="./archivo_blindado.html" class="${isActive('archivo_blindado.html')}">ARCHIVO BLINDADO</a>
             </nav>
         </div>
         <img src="./images/Masking Tape_01_tablet.png" alt="" class="tape-01">
@@ -97,7 +97,7 @@ class AppFooter extends HTMLElement {
                         <span class="dot">•</span>
                         <a href="./artefactos.html">ARTEFACTOS</a>
                         <span class="dot">•</span>
-                        <a href="#">ARCHIVO BLINDADO</a>
+                        <a href="./archivo_blindado.html">ARCHIVO BLINDADO</a>
                     </nav>
                 </div>
             </div>
@@ -105,7 +105,7 @@ class AppFooter extends HTMLElement {
                 <div class="container text-left footer-bottom-content">
                     <span>Archivo blindado 2026</span>
                     <span class="footer-sep">&nbsp;|&nbsp;</span>
-                    <a href="mailto:elarchivoblindado@gmail.com" class="footer-contact">Contacto</a>
+                    <a href="mailto:contacto@archivoblindado.org" class="footer-contact">Contacto</a>
                     <span class="footer-sep">&nbsp;|&nbsp;</span>
                     <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es" target="_blank">CC BY-NC-SA 4.0</a>
                 </div>
@@ -116,7 +116,7 @@ class AppFooter extends HTMLElement {
         const contactLink = this.querySelector('.footer-contact');
         if (contactLink) {
             contactLink.addEventListener('click', (e) => {
-                const email = 'elarchivoblindado@gmail.com';
+                const email = 'contacto@archivoblindado.org';
                 navigator.clipboard.writeText(email).then(() => {
                     const originalText = contactLink.textContent;
                     contactLink.textContent = '¡Email copiado!';

@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archivo blindado - El Archivo</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="images/Favicon_16_16.png?v=1">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/Favicon_32_32.png?v=1">
+    <link rel="icon" type="image/png" sizes="64x64" href="images/Favicon_64_64.png?v=1">
+    <link rel="shortcut icon" href="images/Favicon_32_32.png?v=1">
+
+    <!-- Hoja de estilos compartida del proyecto -->
+    <link rel="stylesheet" href="./styles.css?v=13">
+
+    <!-- Estilos específicos y exclusivos para esta sección (Autocontenidos y Responsivos) -->
+    <style>
+        /* Estructura del Hero del Archivo (Imagen Completa sin Recorte) */
+        .hero-archivo {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1440 / 1757;
+            background-image: url('./images/Bg_Archibo_Blindado_Desktop.png');
+            background-size: cover;
+            background-position: center top;
+            background-repeat: no-repeat;
+            box-sizing: border-box;
+            overflow: hidden;
+            /* Evita desbordamientos por la rotación */
+        }
+
+        /* MÓDULO I: Icono de Mina y Texto Inclinado (-18.2°) */
+        .module-one {
+            position: absolute;
+            top: 25.5%;
+            left: 19%;
+            width: 62%;
+            transform: rotate(-18.2deg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: left;
+            z-index: 10;
+        }
+
+        .module-one-icon {
+            width: 120px;
+            height: auto;
+            margin-bottom: 24px;
+            filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.3));
+        }
+
+        .module-one-text {
+            font-family: var(--font-nav);
+            font-weight: 700;
+            font-size: 60px;
+            color: #FFFFFF;
+            line-height: 1.1;
+            text-transform: none;
+            letter-spacing: -0.01em;
+            text-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .module-one-text .text-red {
+            color: #FF3B30;
+            /* Bright readable red on dark backgrounds */
+        }
+
+        /* MÓDULO II: Titular y Texto Centrado (Max width 1070px) */
+        .module-two {
+            position: absolute;
+            bottom: calc(12% + 150px);
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1070px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .module-two-title {
+            font-family: var(--font-nav);
+            font-weight: 800;
+            /* Extra Bold */
+            font-size: 42px;
+            color: #121926;
+            /* Negro / Charcoal del sistema */
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            line-height: 1.1;
+            letter-spacing: -0.01em;
+        }
+
+        .module-two-title .text-white {
+            color: #FFFFFF;
+        }
+
+        .module-two-text {
+            font-family: var(--font-nav);
+            font-weight: 500;
+            /* Medium */
+            font-size: 28px;
+            color: #FFFFFF;
+            line-height: 1.25;
+            letter-spacing: 0.01em;
+            text-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Secciones del Cuerpo de la Página (Módulos de Reserva) */
+        .archivo-content {
+            background-color: var(--bg-white);
+            padding: 80px;
+            position: relative;
+        }
+
+        /* Contenedores para futuros Módulos de Contenido */
+        .archivo-modules {
+            display: flex;
+            flex-direction: column;
+            gap: 64px;
+        }
+
+        /* MÓDULO III: Manifiesto del Archivo Blindado */
+        .module-three {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 0;
+            box-sizing: border-box;
+        }
+
+        .module-three-logo {
+            width: 231.81px;
+            height: auto;
+            margin-bottom: 32px;
+        }
+
+        .module-three-text {
+            font-family: var(--font-nav);
+            font-weight: 500;
+            /* Medium */
+            font-size: 26px;
+            color: #121926;
+            /* Negro / Charcoal del sistema */
+            line-height: 1.4;
+            letter-spacing: -0.01em;
+        }
+
+        .content-module-placeholder {
+            border: 2px dashed rgba(207, 5, 17, 0.15);
+            background: #FAFAFA;
+            padding: 60px 40px;
+            text-align: center;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .content-module-placeholder:hover {
+            border-color: var(--bg-red);
+            background: #FFF5F5;
+        }
+
+        .placeholder-title {
+            font-family: var(--font-nav);
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--bg-red);
+            margin-bottom: 12px;
+            letter-spacing: 0.05em;
+        }
+
+        .placeholder-desc {
+            font-family: var(--font-base);
+            font-size: 14px;
+            color: #667085;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* MÓDULO IV: Cinta Roja (Cinto.png) */
+        .module-four-banner {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1440 / 488;
+            background-image: url('./images/Cinto.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            box-sizing: border-box;
+            padding-left: 15%;
+            padding-right: 15%;
+            overflow: hidden;
+        }
+
+        .module-four-text {
+            font-family: var(--font-nav);
+            font-weight: 700;
+            /* Bold */
+            font-size: 36px;
+            color: #FFFFFF;
+            line-height: 1.35;
+            text-align: left;
+            letter-spacing: -0.015em;
+            max-width: 1050px;
+            text-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
+            transform: translateY(-40px);
+        }
+
+        .module-four-text .text-dark {
+            color: #121926;
+            /* Negro / Charcoal del sistema */
+            text-shadow: none;
+        }
+
+        /* MÓDULO V: Manifiesto Final, GitHub y Contacto (Max width 660px) */
+        .module-five-section {
+            background-color: var(--bg-white);
+            padding: 80px 0 100px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        .module-five-content {
+            width: 90%;
+            max-width: 660px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .module-five-img {
+            width: 180px;
+            height: 180px;
+            margin-bottom: 32px;
+            object-fit: contain;
+        }
+
+        .module-five-title {
+            font-family: var(--font-nav);
+            font-weight: 800; /* Extra Bold / Black */
+            font-size: 32px;
+            line-height: 1.15;
+            text-transform: uppercase;
+            color: #121926; /* Negro / Charcoal del sistema */
+            margin-bottom: 24px;
+            letter-spacing: -0.01em;
+        }
+
+        .module-five-text {
+            font-family: var(--font-base), sans-serif;
+            font-weight: 400; /* Regular */
+            font-size: 15px;
+            line-height: 1.6;
+            color: #475467; /* Suave carbón/gris premium */
+            margin-bottom: 24px;
+        }
+
+        .module-five-text .text-red-link {
+            color: var(--bg-red);
+            font-weight: 600;
+        }
+
+        .module-five-btn {
+            background-color: var(--bg-red);
+            color: #FFFFFF;
+            font-family: var(--font-base), sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            height: 48px;
+            padding: 10px 20px;
+            border-radius: 0; /* Bordes perfectamente rectos / 90 grados */
+            border: 1px solid var(--bg-red);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            margin-bottom: 48px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+
+        .module-five-btn:hover {
+            background-color: var(--bg-red-dark);
+            border-color: var(--bg-red-dark);
+            color: #FFFFFF !important;
+        }
+
+        .module-five-btn .btn-icon {
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        /* Ajuste para el último botón de la sección para evitar margen inferior excesivo */
+        .module-five-btn:last-of-type {
+            margin-bottom: 0;
+        }
+
+        /* Adaptabilidad y Diseño Proporcional Responsivo */
+        @media (max-width: 1440px) {
+            .module-one-text {
+                font-size: 4.16vw;
+                /* Escalado proporcional a partir de 60px */
+            }
+
+            .module-one-icon {
+                width: 8.33vw;
+                /* Escalado proporcional a partir de 120px */
+                margin-bottom: 1.6vw;
+            }
+
+            .module-two {
+                bottom: calc(12% + 110px); /* Bajado exactamente 40px (de 150px a 110px) */
+            }
+
+            .module-two-title {
+                font-size: clamp(36px, 2.9vw, 42px);
+                /* Escalado proporcional a partir de 42px */
+                margin-bottom: 1.6vw;
+            }
+
+            .module-two-text {
+                font-size: clamp(26px, 1.94vw, 28px);
+                /* Escalado proporcional a partir de 28px */
+            }
+
+            .module-three-logo {
+                width: clamp(160px, 16.1vw, 231.81px);
+                margin-bottom: 2.2vw;
+            }
+
+            .module-three-text {
+                font-size: clamp(16px, 1.8vw, 26px);
+            }
+
+            .module-four-text {
+                font-size: clamp(16px, 2.5vw, 36px);
+                transform: translateY(-2.77vw); /* Escalado proporcional a partir de -40px */
+            }
+            .module-five-title {
+                font-size: clamp(22px, 2.2vw, 32px);
+                margin-bottom: 1.6vw;
+            }
+            .module-five-img {
+                width: clamp(120px, 12.5vw, 180px);
+                height: clamp(120px, 12.5vw, 180px);
+                margin-bottom: 2.2vw;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .module-one {
+                top: 14%; /* Subido para dar espacio */
+                width: 80%;
+                left: 10%;
+            }
+
+            .module-one-text {
+                font-size: 4.8vw;
+            }
+
+            .module-one-icon {
+                width: 10vw;
+                margin-bottom: 12px;
+            }
+
+            .module-two {
+                bottom: calc(8% - 40px); /* Bajado exactamente 40px */
+                width: 88%;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .module-two-title {
+                font-size: clamp(34px, 5.2vw, 44px);
+                /* Scaled down for tablet/mobile */
+                margin-bottom: 16px;
+            }
+
+            .module-two-text {
+                font-size: clamp(26px, 3.8vw, 32px);
+                line-height: 1.35;
+            }
+
+            .module-three {
+                padding: 20px 0;
+            }
+
+            .module-three-logo {
+                width: 180px;
+                margin-bottom: 20px;
+            }
+
+            .module-three-text {
+                font-size: 18px;
+                line-height: 1.35;
+            }
+
+            .archivo-content {
+                padding: 60px 32px;
+            }
+
+            .module-four-banner {
+                padding-left: 10%;
+                padding-right: 10%;
+            }
+
+            .module-four-text {
+                font-size: 2.8vw;
+                line-height: 1.25;
+                transform: translateY(-20px);
+            }
+            .module-five-section {
+                padding: 60px 0 80px 0;
+            }
+            .module-five-img {
+                width: 140px;
+                height: 140px;
+                margin-bottom: 20px;
+            }
+            .module-five-title {
+                font-size: 24px;
+                margin-bottom: 16px;
+            }
+            .module-five-text {
+                font-size: 14px;
+                line-height: 1.5;
+                margin-bottom: 20px;
+            }
+            .module-five-btn {
+                padding: 10px 20px;
+                height: 48px;
+                font-size: 14px;
+                margin-bottom: 36px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .module-one {
+                top: 6%; /* Subido para dar el máximo espacio superior */
+                width: 86%;
+                left: 7%;
+            }
+
+            .module-one-text {
+                font-size: 5vw;
+            }
+
+            .module-one-icon {
+                width: 11vw;
+                margin-bottom: 8px;
+            }
+
+            .module-two {
+                bottom: 11%; /* Subido para mantener el texto 100% dentro del fondo rojo */
+                width: 90%;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .module-two-title {
+                font-size: clamp(18px, 5.2vw, 23px);
+                /* Scaled down for mobile */
+                margin-bottom: 8px;
+            }
+
+            .module-two-text {
+                font-family: var(--font-base), sans-serif; /* Tipografía general sin serifa del proyecto */
+                font-weight: 500;
+                font-size: clamp(14px, 4.2vw, 16px);
+                line-height: 1.4;
+                text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+            }
+
+            .module-three-logo {
+                width: 140px;
+                margin-bottom: 16px;
+            }
+
+            .module-three-text {
+                font-size: 15px;
+                line-height: 1.3;
+            }
+
+            .module-four-banner {
+                padding-left: 8%;
+                padding-right: 8%;
+            }
+
+            .module-four-text {
+                font-size: 3.5vw;
+                line-height: 1.2;
+                transform: translateY(-10px);
+            }
+            .module-five-section {
+                padding: 40px 0 60px 0;
+            }
+            .module-five-img {
+                width: 120px;
+                height: 120px;
+                margin-bottom: 16px;
+            }
+            .module-five-title {
+                font-size: 20px;
+                margin-bottom: 12px;
+            }
+            .module-five-text {
+                font-size: 13px;
+                margin-bottom: 16px;
+            }
+            .module-five-btn {
+                padding: 8px 16px;
+                height: 44px;
+                font-size: 13px;
+                margin-bottom: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="site-wrapper page-archivo-blindado">
+        <!-- HEADER COMPARTIDO -->
+        <app-header></app-header>
+
+        <div class="site-content">
+            <!-- SECCIÓN HERO CON COMPONENTES SUPERPUESTOS -->
+            <section class="hero-archivo">
+                <!-- MÓDULO I: Icono y texto inclinado -->
+                <div class="module-one">
+                    <img src="./images/Mina.svg" alt="Mina" class="module-one-icon">
+                    <div class="module-one-text">
+                        Archivo Blindado es un <span class="text-red">bunker</span><br>
+                        <span class="text-red">espectral</span> de silicio en detonación<br>
+                        permanente
+                    </div>
+                </div>
+
+                <!-- MÓDULO II: Titular y descripción centrado -->
+                <div class="module-two">
+                    <h2 class="module-two-title"><span class="text-white">¡Contra el óxido mental,</span> blindaje
+                        espectral!</h2>
+                    <p class="module-two-text">
+                        Archivo Blindado es una acción dirigida a recuperar, preservar y difundir publicaciones
+                        anarquistas en riesgo de desaparición y olvido. Se manifiesta espectralmente como un búnker de
+                        silicio, una estructura blindada virtual independiente y autosustentada.
+                    </p>
+                </div>
+            </section>
+
+            <!-- CONTENIDO PRINCIPAL (MÓDULOS DE CONTENIDO FUTUROS) -->
+            <section class="archivo-content">
+                <div class="container">
+                    <!-- CONTENEDOR DE MÓDULOS DE CONTENIDO -->
+                    <div class="archivo-modules">
+
+                        <!-- MÓDULO III: Manifiesto del Archivo Blindado -->
+                        <div class="module-three">
+                            <img src="./images/Logo.svg" alt="Archivo Blindado Logo" class="module-three-logo">
+                            <div class="module-three-text">
+                                Archivo Blindado no es exhaustivo, metódico ni antológico<br>
+                                Archivo Blindado no es explicativo, ni interpretativo, ni justificativo<br>
+                                Archivo Blindado ni es nostálgico ni es melancólico<br>
+                                Archivo Blindado no es imparcial ni moderado
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- MÓDULO IV: Cinta Roja (Cinto.png) -->
+            <section class="module-four-banner">
+                <p class="module-four-text">
+                    Archivo Blindado es otra proyección abisal de refractarios, infiltrados, nocturnos y polizones. <span class="text-dark">Jamás hemos sido vencidos.</span> Nunca firmaremos la paz. Nadie logrará borrarnos de la faz de la tierra.
+                </p>
+            </section>
+
+            <!-- MÓDULO V: Manifiesto Final, GitHub y Contacto (Max width 660px) -->
+            <section class="module-five-section">
+                <div class="module-five-content">
+                    <img src="./images/Falling.png" alt="Falling Figure" class="module-five-img">
+                    
+                    <h2 class="module-five-title">
+                        ¿Quieres un Archivo Blindado?<br>
+                        TOMA UN ARCHIVO BLINDADO
+                    </h2>
+                    
+                    <p class="module-five-text">
+                        Archivo Blindado es un proyecto de código abierto, caótico y gratuito. Puede ser descargado en su totalidad, modificado y usado para fines propios con objetivos no lucrativos <span class="text-red-link">(Creative Commons BY-NC-SA 4.0)</span> . El código del Archivo Blindado es completamente stateless (sin estado) y no realiza ninguna gestión de datos de usuario ni seguimiento mediante cookies.
+                    </p>
+                    
+                    <a href="https://github.com/Gadelreal/Archivo_Blindado_ok" target="_blank" class="module-five-btn">
+                        Código en Github
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="btn-icon"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    </a>
+                    
+                    <p class="module-five-text">
+                        Archivo Blindado utiliza la licencia Creative Commons BY-NC-SA 4.0 como un perímetro legal de autodefensa tanto para su contenido como para su propio código. Este blindaje garantiza que el Archivo Blindado permanezca siempre en el dominio de lo común, impidiendo que cualquier entidad privada pueda lucrarse con éste.
+                    </p>
+                    
+                    <a href="mailto:contacto@archivoblindado.org" id="btnContactoArchivo" class="module-five-btn">
+                        <span class="btn-text">contacto@archivoblindado.org</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="btn-icon"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    </a>
+                </div>
+            </section>
+        </div>
+
+
+        <!-- FOOTER COMPARTIDO -->
+        <app-footer></app-footer>
+    </div>
+
+    <!-- SCRIPTS COMPARTIDOS DEL PROYECTO -->
+    <script src="./js/components.js?v=16"></script>
+
+    <!-- SCRIPT DE COPIADO DE EMAIL EN MÓDULO V -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnContacto = document.getElementById('btnContactoArchivo');
+            if (btnContacto) {
+                const btnText = btnContacto.querySelector('.btn-text');
+                btnContacto.addEventListener('click', (e) => {
+                    const email = 'contacto@archivoblindado.org';
+                    navigator.clipboard.writeText(email).then(() => {
+                        if (btnText) {
+                            const originalText = btnText.textContent;
+                            btnText.textContent = '¡Email copiado!';
+                            btnContacto.classList.add('is-copied');
+                            
+                            setTimeout(() => {
+                                btnText.textContent = originalText;
+                                btnContacto.classList.remove('is-copied');
+                            }, 2000);
+                        }
+                    }).catch(err => {
+                        console.error('Error al copiar el email: ', err);
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
