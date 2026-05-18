@@ -453,39 +453,49 @@
         }
 
         @media (max-width: 480px) {
+            .hero-archivo {
+                aspect-ratio: auto;
+                height: 854px; /* Proporcional a un ancho de fondo de 700px */
+                background-size: 700px 854px;
+                background-position: center top;
+                background-repeat: no-repeat;
+                overflow: hidden;
+            }
+
             .module-one {
-                top: 6%; /* Subido para dar el máximo espacio superior */
-                width: 86%;
-                left: 7%;
+                top: calc(15% + 60px); /* Bajado exactamente 60px */
+                width: 90%;
+                left: 50%;
+                transform: translateX(-50%) rotate(-18.2deg);
             }
 
             .module-one-text {
-                font-size: 5vw;
+                font-size: 24px; /* Aumentado para tener mayor impacto visual */
             }
 
             .module-one-icon {
-                width: 11vw;
-                margin-bottom: 8px;
+                width: 56px; /* Aumentado proporcionalmente */
+                margin-bottom: 12px;
             }
 
             .module-two {
-                bottom: 11%; /* Subido para mantener el texto 100% dentro del fondo rojo */
+                bottom: 14%; /* Perfectamente ubicado y contenido dentro del fondo rojo del banner */
                 width: 90%;
                 left: 50%;
                 transform: translateX(-50%);
             }
 
             .module-two-title {
-                font-size: clamp(18px, 5.2vw, 23px);
+                font-size: clamp(20px, 5.8vw, 24px);
                 /* Scaled down for mobile */
-                margin-bottom: 8px;
+                margin-bottom: 12px;
             }
 
             .module-two-text {
                 font-family: var(--font-base), sans-serif; /* Tipografía general sin serifa del proyecto */
                 font-weight: 500;
-                font-size: clamp(14px, 4.2vw, 16px);
-                line-height: 1.4;
+                font-size: clamp(14px, 4vw, 16px);
+                line-height: 1.45;
                 text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
             }
 
