@@ -349,6 +349,34 @@
                             bodyContent = paragraphs.join('\n\n');
                         }
 
+                        let place = '';
+                        let date = '';
+                        if (art.lugar_fecha_publicacion) {
+                            const parts = art.lugar_fecha_publicacion.split(',');
+                            if (parts.length > 1) {
+                                place = parts[0].trim();
+                                date = parts.slice(1).join(',').trim();
+                            } else {
+                                date = parts[0].trim();
+                            }
+                        }
+
+                        let signatureHtml = '';
+                        if (author.nombre === 'Victor Nero' && index === 0) {
+                            signatureHtml += '<p class="art-signature-intro">por los refractarios,</p>';
+                        }
+                        if (author.nombre) {
+                            const nameDot = author.nombre.endsWith('.') ? '' : '.';
+                            signatureHtml += `<p class="art-signature-name"><strong>${author.nombre}${nameDot}</strong></p>`;
+                        }
+                        if (place && date) {
+                            signatureHtml += `<p class="art-signature-date">${place}. ${date}</p>`;
+                        } else if (place) {
+                            signatureHtml += `<p class="art-signature-date">${place}</p>`;
+                        } else if (date) {
+                            signatureHtml += `<p class="art-signature-date">${date}</p>`;
+                        }
+
                         articlesHtml += `
                             <article class="pub-article">
                                 <h3 class="art-title">${art.titulo}</h3>
@@ -361,9 +389,7 @@
                                     }).join('')}
                                 </div>
                                 <div class="art-signature">
-                                    ${author.nombre === 'Victor Nero' && index === 0 ? '<p class="art-signature-intro">por los refractarios,</p>' : ''}
-                                    <p class="art-signature-name"><strong>${author.nombre}${art.lugar_fecha_publicacion ? `, ${art.lugar_fecha_publicacion.split(',')[0].trim()}` : ''}</strong></p>
-                                    <p class="art-signature-date">${art.lugar_fecha_publicacion && art.lugar_fecha_publicacion.includes(',') ? art.lugar_fecha_publicacion.split(',')[1].trim() : ''}</p>
+                                    ${signatureHtml}
                                 </div>
                                 <div class="art-tag-footer">
                                     <div class="author-tag">Refractor ${art.numero}</div>

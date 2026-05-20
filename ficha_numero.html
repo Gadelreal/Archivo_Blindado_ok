@@ -329,6 +329,34 @@
                         const authorObj = pubData.autores.find(a => a.id === art.autor_id);
                         const authorName = authorObj ? authorObj.nombre : art.autor;
 
+                        let place = '';
+                        let date = '';
+                        if (art.lugar_fecha_publicacion) {
+                            const parts = art.lugar_fecha_publicacion.split(',');
+                            if (parts.length > 1) {
+                                place = parts[0].trim();
+                                date = parts.slice(1).join(',').trim();
+                            } else {
+                                date = parts[0].trim();
+                            }
+                        }
+
+                        let signatureHtml = '';
+                        if (index === 0 && i === 0 && authorName === 'Victor Nero') {
+                            signatureHtml += '<p class="art-signature-intro">por los refractarios,</p>';
+                        }
+                        if (authorName) {
+                            const nameDot = authorName.endsWith('.') ? '' : '.';
+                            signatureHtml += `<p class="art-signature-name"><strong>${authorName}${nameDot}</strong></p>`;
+                        }
+                        if (place && date) {
+                            signatureHtml += `<p class="art-signature-date">${place}. ${date}</p>`;
+                        } else if (place) {
+                            signatureHtml += `<p class="art-signature-date">${place}</p>`;
+                        } else if (date) {
+                            signatureHtml += `<p class="art-signature-date">${date}</p>`;
+                        }
+
                         articlesHtml += `
                             <article class="pub-article">
                                 <h3 class="art-title">${art.titulo}</h3>
@@ -341,9 +369,7 @@
                                     }).join('')}
                                 </div>
                                 <div class="art-signature">
-                                    ${index === 0 && i === 0 && authorName === 'Victor Nero' ? '<p class="art-signature-intro">por los refractarios,</p>' : ''}
-                                    <p class="art-signature-name"><strong>${authorName ? `${authorName}, ` : ''}${art.lugar_fecha_publicacion ? art.lugar_fecha_publicacion.split(',')[0].trim() : ''}</strong></p>
-                                    <p class="art-signature-date">${art.lugar_fecha_publicacion && art.lugar_fecha_publicacion.includes(',') ? art.lugar_fecha_publicacion.split(',').slice(1).join(',').trim() : ''}</p>
+                                    ${signatureHtml}
                                 </div>
                                 <div class="art-tag-footer">
                                     <div class="author-tag">Refractor ${strNum}</div>
