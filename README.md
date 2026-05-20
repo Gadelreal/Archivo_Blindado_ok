@@ -2,7 +2,7 @@
 
 > **"¡Contra el óxido mental, blindaje espectral!"**
 
-**Archivo Blindado** es un búnker digital estático, soberano y de alto impacto visual, diseñado originalmente para rescatar, preservar y difundir de forma libre el boletín anarquista histórico **Refractor (1998 - 2000)**. 
+**Archivo Blindado** es un búnker digital estático, soberano y de alto impacto visual, diseñado originalmente para rescatar, preservar y difundir de forma libre el boletín anarquista histórico **Refractor (1998 - 2000)**, en primera instancia y con el objetivo de alojar otras publicaciones.
 
 Este repositorio ha sido liberado públicamente no solo como un acto de preservación de la memoria histórica, sino también como una **plantilla web soberana y de código abierto** para que cualquier colectivo, colectivo editorial o activista pueda desplegar su propio archivo digital independiente, seguro y libre de rastreo.
 
