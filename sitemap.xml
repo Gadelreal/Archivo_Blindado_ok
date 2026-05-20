@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <!-- Home -->
+    <url>
+        <loc>https://archivoblindado.org/index.html</loc>
+        <lastmod>2026-05-20</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <!-- El Archivo (Manifiesto) -->
+    <url>
+        <loc>https://archivoblindado.org/archivo_blindado.html</loc>
+        <lastmod>2026-05-20</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <!-- Firmas -->
+    <url>
+        <loc>https://archivoblindado.org/firmas.html</loc>
+        <lastmod>2026-05-20</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <!-- Artefactos -->
+    <url>
+        <loc>https://archivoblindado.org/artefactos.html</loc>
+        <lastmod>2026-05-20</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <!-- Ficha Número Base -->
+    <url>
+        <loc>https://archivoblindado.org/ficha_numero.html</loc>
+        <lastmod>2026-05-20</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <!-- Ficha Ejemplar 01 -->
+    <url>
+        <loc>https://archivoblindado.org/ficha_numero.html?id=N_Refractor_01</loc>
+        <lastmod>2026-05-20</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <!-- Ficha Ejemplar 04-05 -->
+    <url>
+        <loc>https://archivoblindado.org/ficha_numero.html?id=N_Refractor_04-05</loc>
+        <lastmod>2026-05-20</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+</urlset>
