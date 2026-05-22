@@ -11,7 +11,7 @@
     "nombre_publicacion": "REFRACTOR",
     "numeros_procesados": 2,
     "paginas_procesadas": 8,
-    "autores_registrados": 18,
+    "autores_registrados": 19,
     "articulos_extraidos": 21,
     "artefactos_registrados": 1,
     "fecha_actualizacion": "13 de mayo de 2026"
@@ -88,6 +88,10 @@
     {
       "id": "ricardo_flores_magon",
       "nombre": "Ricardo Flores Magón"
+    },
+    {
+      "id": "zrz",
+      "nombre": "ZRZ"
     }
   ],
   "ejemplares": [
@@ -138,7 +142,8 @@
         "pedro_g_romero",
         "koldo_artieda",
         "donald_k",
-        "ricardo_flores_magon"
+        "ricardo_flores_magon",
+        "zrz"
       ],
       "fecha_publicacion": "3 de junio de 1998",
       "precio": "400 pts.",
