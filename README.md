@@ -10,8 +10,8 @@ Este repositorio ha sido liberado públicamente no solo como un acto de preserva
 
 ## 💎 Características del Diseño y Filosofía Técnica
 
-* **Privacidad Absoluta (Stateless & Cookie-free)**: Cero cookies, cero rastreadores de terceros, cero analíticas invasivas. Soberanía total de datos.
-* **Sin Dependencias Externas (Offline-First)**: El proyecto no consume ningún recurso de CDNs externas. Las fuentes, iconos, librerías JS (incluyendo el visor de PDF.js) y estilos se sirven de manera local. Funciona completamente sin conexión a internet.
+* **Privacidad Absoluta (Stateless & Cookie-free)**: Cero cookies, cero analíticas invasivas. Soberanía total de datos. Para registrar estadísticas de acceso mínimas y respetuosas con la privacidad, se utiliza de forma opcional la analítica ética, descentralizada y cookieless de GoatCounter, la cual no rastrea identidad ni perfiles de usuarios.
+* **Sin Dependencias Externas (Offline-First)**: El búnker está diseñado de forma totalmente autónoma. Las fuentes, iconos, librerías JS (incluyendo el visor de PDF.js) y estilos se sirven de manera local, garantizando que el sitio funcione completamente sin conexión a internet. El script opcional de telemetría ética de GoatCounter requiere conexión, pero su bloqueo o ausencia en modo sin conexión no interfiere en absoluto con la funcionalidad del sitio.
 * **Componentes Web Nativos (Vanilla Web Components)**: Modularidad sin frameworks pesados (React/Vue/Angular). Estructura pura con HTML5, CSS3 y JavaScript nativo.
 * **Optimización SEO y Accesibilidad (a11y)**: Estructura semántica completa, descripciones jerárquicas con encabezados visualmente ocultos para lectores de pantalla y buscadores, y mapas de sitio (`sitemap.xml`) y `robots.txt` listos para indexación en frío.
 
