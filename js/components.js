@@ -301,16 +301,35 @@ class DownloadDropdown extends HTMLElement {
             };
 
             // 2. Build HTML Content for the Print Window
+            const baseHref = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1);
             const htmlContent = `
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>${title} - Artículos</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,900;1,900&display=swap" rel="stylesheet">
+    <base href="${baseHref}">
     <style>
+        @font-face {
+            font-family: 'Open Sans';
+            font-style: normal;
+            font-weight: 400;
+            src: url('./fonts/OpenSans-Regular.ttf') format('truetype');
+        }
+        @font-face {
+            font-family: 'Open Sans';
+            font-style: normal;
+            font-weight: 600;
+            src: url('./fonts/OpenSans-SemiBold.ttf') format('truetype');
+        }
+        @font-face {
+            font-family: 'Open Sans';
+            font-style: normal;
+            font-weight: 800;
+            src: url('./fonts/OpenSans-ExtraBold.ttf') format('truetype');
+        }
         body { 
-            font-family: 'Times New Roman', Times, serif; 
+            font-family: 'Open Sans', sans-serif; 
             color: black; 
             background: white; 
             margin: 0; 
@@ -328,9 +347,9 @@ class DownloadDropdown extends HTMLElement {
         }
         .cover h1 { 
             color: #e63946 !important; 
-            font-family: 'Playfair Display', serif; 
+            font-family: 'Open Sans', sans-serif; 
             font-size: 60pt; 
-            font-weight: 900; 
+            font-weight: 800; 
             text-transform: uppercase; 
             margin: 0; 
             line-height: 1; 
@@ -339,7 +358,7 @@ class DownloadDropdown extends HTMLElement {
             print-color-adjust: exact; 
         }
         .cover p { 
-            font-family: sans-serif; 
+            font-family: 'Open Sans', sans-serif; 
             font-size: 14pt; 
             letter-spacing: 4px; 
             color: #666; 
@@ -356,16 +375,16 @@ class DownloadDropdown extends HTMLElement {
             padding-bottom: 5px; 
         }
         .art-title { 
-            font-family: 'Playfair Display', serif; 
+            font-family: 'Open Sans', sans-serif; 
             font-size: 22pt; 
-            font-weight: 900; 
+            font-weight: 800; 
             text-transform: uppercase; 
             color: black; 
             margin: 0; 
             line-height: 1.1;
         }
         .art-subtitle { 
-            font-family: sans-serif; 
+            font-family: 'Open Sans', sans-serif; 
             font-size: 11pt; 
             font-weight: bold; 
             color: #444; 
