@@ -682,7 +682,7 @@ class PdfViewer extends HTMLElement {
         let startX, startY;
         let scrollLeft, scrollTop;
 
-        const startDragging = (e) => {
+        this._startDragging = (e) => {
             // Only left click or touch
             if (e.button !== undefined && e.button !== 0) return;
             
@@ -697,12 +697,12 @@ class PdfViewer extends HTMLElement {
             scrollTop = this.canvasContainer.scrollTop;
         };
 
-        const stopDragging = () => {
+        this._stopDragging = () => {
             isDragging = false;
             this.canvasContainer.style.cursor = 'grab';
         };
 
-        const moveDragging = (e) => {
+        this._moveDragging = (e) => {
             if (!isDragging) return;
             
             const clientX = e.touches ? e.touches[0].clientX : e.clientX;
@@ -716,70 +716,20 @@ class PdfViewer extends HTMLElement {
         };
 
         this.canvasContainer.style.cursor = 'grab';
-        this.canvasContainer.addEventListener('mousedown', startDragging);
-        window.addEventListener('mouseup', stopDragging);
-        window.addEventListener('mousemove', moveDragging);
+        this.canvasContainer.addEventListener('mousedown', this._startDragging);
+        window.addEventListener('mouseup', this._stopDragging);
+        window.addEventListener('mousemove', this._moveDragging);
 
-        // --- Touch Support ---
-        let initialPinchDistance = 0;
-        let initialPinchScale = 1;
-
-        this.canvasContainer.addEventListener('touchstart', (e) => {
-            if (e.touches.length === 1) {
-                startDragging(e);
-            } else if (e.touches.length === 2) {
-                isDragging = false;
-                initialPinchDistance = Math.hypot(
-                    e.touches[0].clientX - e.touches[1].clientX,
-                    e.touches[0].clientY - e.touches[1].clientY
-                );
-                initialPinchScale = this.scale;
-            }
-        }, { passive: false });
-
-        this.canvasContainer.addEventListener('touchmove', (e) => {
-            if (e.touches.length === 1 && isDragging) {
-                moveDragging(e);
-            } else if (e.touches.length === 2 && initialPinchDistance > 0) {
-                e.preventDefault();
-                const currentDistance = Math.hypot(
-                    e.touches[0].clientX - e.touches[1].clientX,
-                    e.touches[0].clientY - e.touches[1].clientY
-                );
-                const factor = currentDistance / initialPinchDistance;
-                const newScale = Math.min(Math.max(initialPinchScale * factor, 0.4), 4.0);
-                
-                if (Math.abs(newScale - this.scale) > 0.05) {
-                    this.scale = newScale;
-                    this.renderAllPages(this.pageNum);
-                }
-            }
-        }, { passive: false });
-
-        this.canvasContainer.addEventListener('touchend', () => {
-            initialPinchDistance = 0;
-            stopDragging();
-        });
-
-        // --- Wheel Zoom ---
-        this.canvasContainer.addEventListener('wheel', (e) => {
-            if (!this.modal.classList.contains('is-open')) return;
-            
-            // To allow vertical scroll with wheel but zoom with Ctrl (standard UX)
-            // However, user said "mantener zoom con rueda".
-            // If they have a scrollbar for pages, I'll keep wheel for zoom as before.
-            e.preventDefault();
-            if (e.deltaY < 0) this.onZoomIn();
-            else this.onZoomOut();
-        }, { passive: false });
-
-        // --- Pinch to Zoom ---
+        // --- Touch Support (Pan & Pinch-to-Zoom combined) ---
         let initialDistance = null;
         let initialScale = null;
         let currentPinchScale = 1.0;
 
         this.canvasContainer.addEventListener('touchstart', (e) => {
-            if (e.touches.length === 2 && this.modal.classList.contains('is-open')) {
+            if (e.touches.length === 1) {
+                this._startDragging(e);
+            } else if (e.touches.length === 2 && this.modal.classList.contains('is-open')) {
+                isDragging = false;
                 const dx = e.touches[0].clientX - e.touches[1].clientX;
                 const dy = e.touches[0].clientY - e.touches[1].clientY;
                 initialDistance = Math.hypot(dx, dy);
@@ -790,7 +740,9 @@ class PdfViewer extends HTMLElement {
         }, { passive: false });
 
         this.canvasContainer.addEventListener('touchmove', (e) => {
-            if (e.touches.length === 2 && initialDistance !== null && this.modal.classList.contains('is-open')) {
+            if (e.touches.length === 1 && isDragging) {
+                this._moveDragging(e);
+            } else if (e.touches.length === 2 && initialDistance !== null && this.modal.classList.contains('is-open')) {
                 e.preventDefault(); // Detiene el pinch-zoom nativo del navegador
                 const dx = e.touches[0].clientX - e.touches[1].clientX;
                 const dy = e.touches[0].clientY - e.touches[1].clientY;
@@ -820,7 +772,20 @@ class PdfViewer extends HTMLElement {
                     this.renderAllPages(this.pageNum);
                 }
             }
+            this._stopDragging();
         });
+
+        // --- Wheel Zoom (Ctrl + Wheel) ---
+        this.canvasContainer.addEventListener('wheel', (e) => {
+            if (!this.modal.classList.contains('is-open')) return;
+            
+            // Allow normal vertical scrolling, zoom only when holding the Ctrl key
+            if (e.ctrlKey) {
+                e.preventDefault();
+                if (e.deltaY < 0) this.onZoomIn();
+                else this.onZoomOut();
+            }
+        }, { passive: false });
 
         this.canvasContainer.addEventListener('scroll', () => {
             if (!this.pdfDoc) return;
@@ -901,6 +866,8 @@ class PdfViewer extends HTMLElement {
         if (this.adjustToolbar) {
             window.removeEventListener('resize', this.adjustToolbar);
         }
+        window.removeEventListener('mouseup', this._stopDragging);
+        window.removeEventListener('mousemove', this._moveDragging);
     }
 
     scrollToPage(num, behavior = 'smooth') {
