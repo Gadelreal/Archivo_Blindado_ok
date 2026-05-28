@@ -2087,9 +2087,7 @@ issue-selector {
   flex: 1;
   overflow-y: scroll;
   overflow-x: auto;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  display: block;
   padding: 60px 40px;
   position: relative;
   scroll-behavior: smooth;
@@ -2125,6 +2123,7 @@ issue-selector {
   align-items: center;
   min-width: 100%;
   width: max-content;
+  margin: 0 auto;
 }
 
 .pdf-page-wrapper {
