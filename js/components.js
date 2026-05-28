@@ -735,7 +735,14 @@ class PdfViewer extends HTMLElement {
                 initialDistance = Math.hypot(dx, dy);
                 initialScale = this.scale;
                 currentPinchScale = 1.0;
-                this.pagesContainer.style.transformOrigin = 'center top';
+                
+                // Save initial wrapper sizes to dynamically scale CSS boxes during pinch
+                const wrappers = this.pagesContainer.querySelectorAll('.pdf-page-wrapper');
+                this._initialWrapperSizes = Array.from(wrappers).map(wrapper => ({
+                    element: wrapper,
+                    width: parseFloat(wrapper.style.width) || wrapper.clientWidth,
+                    height: parseFloat(wrapper.style.minHeight) || wrapper.clientHeight
+                }));
             }
         }, { passive: false });
 
@@ -751,24 +758,49 @@ class PdfViewer extends HTMLElement {
                 currentPinchScale = currentDistance / initialDistance;
                 let potentialScale = initialScale * currentPinchScale;
                 
-                if (potentialScale > 1.5) currentPinchScale = 1.5 / initialScale;
-                if (potentialScale < 0.4) currentPinchScale = 0.4 / initialScale;
+                let actualFactor = currentPinchScale;
+                if (potentialScale > 2.0) actualFactor = 2.0 / initialScale;
+                if (potentialScale < 0.4) actualFactor = 0.4 / initialScale;
                 
-                this.pagesContainer.style.transform = `scale(${currentPinchScale})`;
+                // Temporarily scale each wrapper's CSS dimensions to update container overflow bounds perfectly
+                if (this._initialWrapperSizes) {
+                    this._initialWrapperSizes.forEach(size => {
+                        size.element.style.width = `${size.width * actualFactor}px`;
+                        size.element.style.minHeight = `${size.height * actualFactor}px`;
+                        const canvas = size.element.querySelector('canvas');
+                        if (canvas) {
+                            canvas.style.width = `${size.width * actualFactor}px`;
+                            canvas.style.height = `${size.height * actualFactor}px`;
+                        }
+                    });
+                }
             }
         }, { passive: false });
 
         this.canvasContainer.addEventListener('touchend', (e) => {
             if (initialDistance !== null && e.touches.length < 2) {
                 initialDistance = null;
-                this.pagesContainer.style.transform = '';
                 
                 let newScale = initialScale * currentPinchScale;
-                if (newScale > 1.5) newScale = 1.5;
+                if (newScale > 2.0) newScale = 2.0;
                 if (newScale < 0.4) newScale = 0.4;
                 
-                if (Math.abs(newScale - initialScale) > 0.05) {
+                // Clear CSS sizing overrides so standard renderAllPages layout sets clean dimensions
+                if (this._initialWrapperSizes) {
+                    this._initialWrapperSizes.forEach(size => {
+                        const canvas = size.element.querySelector('canvas');
+                        if (canvas) {
+                            canvas.style.width = '';
+                            canvas.style.height = '';
+                        }
+                    });
+                    this._initialWrapperSizes = null;
+                }
+                
+                if (Math.abs(newScale - this.scale) > 0.05) {
                     this.scale = newScale;
+                    this.renderAllPages(this.pageNum);
+                } else {
                     this.renderAllPages(this.pageNum);
                 }
             }
@@ -1072,15 +1104,16 @@ class PdfViewer extends HTMLElement {
     }
 
     onZoomIn() {
-        if (this.scale >= 1.5) return;
+        if (this.scale >= 2.0) return;
         this.scale += 0.2;
-        if (this.scale > 1.5) this.scale = 1.5;
+        if (this.scale > 2.0) this.scale = 2.0;
         this.renderAllPages(this.pageNum);
     }
 
     onZoomOut() {
         if (this.scale <= 0.4) return;
         this.scale -= 0.2;
+        if (this.scale < 0.4) this.scale = 0.4;
         this.renderAllPages(this.pageNum);
     }
 
