@@ -190,7 +190,7 @@
     {
       "id": "ART_R_02_Orsini",
       "titulo": "Tipografía Orsini",
-      "descripcion": "Juego alfabético (A-Z), inspirado en la Bomba Orsini y compuesto exclusivamente por enfáticas MAYÚSCULAS muy aptas para usos propagandísticos e insultos airados. Primer Salón Refractario Interestelar, Grazalema.",
+      "descripcion": "Juego alfabético inspirado en la bomba Orsini y compuesto exclusivamente por enfáticas MAYÚSCULAS muy aptas para usos propagandísticos e insultos airados. Primer Salón Refractario Interestelar, Grazalema.",
       "image_url": "images/Artefactos/ART_R_02_Orsini.jpg",
       "file_url": "pdf/Artefactos_Refractor/Orsini.pdf"
     },
@@ -232,7 +232,7 @@
     {
       "id": "ART_R_09_comunicado",
       "titulo": "Comunicado C.O.I.N.",
-      "descripcion": "Cominicado interno de C.O.I.N para la organización del Primer Salón Refractario Interestelar, llevado a cabo en Grazalema en 2008.",
+      "descripcion": "Comunicado interno de C.O.A.I.N para la organización del Primer Salón Refractario Interestelar, llevado a cabo en Grazalema en 2008.",
       "image_url": "images/Artefactos/ART_R_09_comunicado.jpg",
       "file_url": "images/Artefactos/ART_R_09_comunicado.pdf"
     },
