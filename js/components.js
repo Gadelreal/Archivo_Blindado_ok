@@ -767,10 +767,10 @@ class PdfViewer extends HTMLElement {
                     this._initialWrapperSizes.forEach(size => {
                         size.element.style.width = `${size.width * actualFactor}px`;
                         size.element.style.minHeight = `${size.height * actualFactor}px`;
-                        const canvas = size.element.querySelector('canvas');
-                        if (canvas) {
-                            canvas.style.width = `${size.width * actualFactor}px`;
-                            canvas.style.height = `${size.height * actualFactor}px`;
+                        const media = size.element.querySelector('canvas, img');
+                        if (media) {
+                            media.style.width = `${size.width * actualFactor}px`;
+                            media.style.height = `${size.height * actualFactor}px`;
                         }
                     });
                 }
@@ -788,10 +788,10 @@ class PdfViewer extends HTMLElement {
                 // Clear CSS sizing overrides so standard renderAllPages layout sets clean dimensions
                 if (this._initialWrapperSizes) {
                     this._initialWrapperSizes.forEach(size => {
-                        const canvas = size.element.querySelector('canvas');
-                        if (canvas) {
-                            canvas.style.width = '';
-                            canvas.style.height = '';
+                        const media = size.element.querySelector('canvas, img');
+                        if (media) {
+                            media.style.width = '';
+                            media.style.height = '';
                         }
                     });
                     this._initialWrapperSizes = null;
@@ -799,9 +799,17 @@ class PdfViewer extends HTMLElement {
                 
                 if (Math.abs(newScale - this.scale) > 0.05) {
                     this.scale = newScale;
-                    this.renderAllPages(this.pageNum);
+                    if (this.isImage) {
+                        this.renderImagePage(this.currentPdfUrl);
+                    } else {
+                        this.renderAllPages(this.pageNum);
+                    }
                 } else {
-                    this.renderAllPages(this.pageNum);
+                    if (this.isImage) {
+                        this.renderImagePage(this.currentPdfUrl);
+                    } else {
+                        this.renderAllPages(this.pageNum);
+                    }
                 }
             }
             this._stopDragging();
@@ -990,6 +998,39 @@ class PdfViewer extends HTMLElement {
         document.body.style.width = '100%';
         document.body.style.overflow = 'hidden'; 
         document.documentElement.style.overflow = 'hidden'; 
+
+        const isImage = actualUrl.match(/\.(jpg|jpeg|png|gif|webp|svg)(\?.*)?$/i);
+        this.isImage = !!isImage;
+
+        if (this.isImage) {
+            this.pdfDoc = null;
+            this.querySelector('#page_count').textContent = '1';
+            this.querySelector('#page_num').textContent = '1';
+            this.querySelector('#prev').style.display = 'none';
+            this.querySelector('#next').style.display = 'none';
+            this.querySelector('.pdf-page-info').style.display = 'none';
+
+            if (this.loadingSpinner) this.loadingSpinner.style.display = 'flex';
+            this.pagesContainer.style.opacity = '0';
+
+            try {
+                await this.renderImagePage(actualUrl);
+                this.pagesContainer.style.opacity = '1';
+                if (this.loadingSpinner) this.loadingSpinner.style.display = 'none';
+                this.adjustToolbar();
+                setTimeout(() => this.adjustToolbar(), 150);
+            } catch (err) {
+                console.error('Error loading image:', err);
+                if (this.loadingSpinner) this.loadingSpinner.style.display = 'none';
+                this.errorContainer.style.display = 'block';
+                this.pagesContainer.style.display = 'none';
+            }
+            return;
+        } else {
+            this.querySelector('#prev').style.display = 'inline-flex';
+            this.querySelector('#next').style.display = 'inline-flex';
+            this.querySelector('.pdf-page-info').style.display = 'inline-block';
+        }
         
         try {
             await this.ensurePdfLib();
@@ -1107,25 +1148,86 @@ class PdfViewer extends HTMLElement {
         if (this.scale >= 2.0) return;
         this.scale += 0.2;
         if (this.scale > 2.0) this.scale = 2.0;
-        this.renderAllPages(this.pageNum);
+        if (this.isImage) {
+            this.renderImagePage(this.currentPdfUrl);
+        } else {
+            this.renderAllPages(this.pageNum);
+        }
     }
 
     onZoomOut() {
         if (this.scale <= 0.4) return;
         this.scale -= 0.2;
         if (this.scale < 0.4) this.scale = 0.4;
-        this.renderAllPages(this.pageNum);
+        if (this.isImage) {
+            this.renderImagePage(this.currentPdfUrl);
+        } else {
+            this.renderAllPages(this.pageNum);
+        }
     }
 
     onZoomReset() {
         this.initialScaleCalculated = false;
-        this.renderAllPages(this.pageNum);
+        if (this.isImage) {
+            this.renderImagePage(this.currentPdfUrl);
+        } else {
+            this.renderAllPages(this.pageNum);
+        }
     }
 
     updateZoomDisplay() {
         const percent = Math.round(this.scale * 100);
         const display = this.querySelector('#zoom_percent');
         if (display) display.textContent = `${percent}%`;
+    }
+
+    async renderImagePage(url) {
+        this.pagesContainer.innerHTML = '';
+        this.renderTasks.forEach(t => t.cancel());
+        this.renderTasks = [];
+
+        const img = new Image();
+        img.src = url;
+        await new Promise((resolve, reject) => {
+            img.onload = resolve;
+            img.onerror = reject;
+        });
+
+        const unscaledWidth = img.naturalWidth;
+        const unscaledHeight = img.naturalHeight;
+
+        if (!this.initialScaleCalculated) {
+            let safeWidth = this.canvasContainer.clientWidth - 80;
+            if (!safeWidth || safeWidth <= 0) safeWidth = window.innerWidth - 80;
+
+            if (safeWidth > 0 && safeWidth < unscaledWidth) {
+                this.scale = safeWidth / unscaledWidth;
+            } else {
+                this.scale = 1.0;
+            }
+            this.initialScaleCalculated = true;
+        }
+
+        const width = unscaledWidth * this.scale;
+        const height = unscaledHeight * this.scale;
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'pdf-page-wrapper';
+        wrapper.setAttribute('data-page-num', 1);
+        wrapper.style.minHeight = `${height}px`;
+        wrapper.style.width = `${width}px`;
+
+        const displayImg = document.createElement('img');
+        displayImg.src = url;
+        displayImg.style.width = '100%';
+        displayImg.style.height = '100%';
+        displayImg.style.display = 'block';
+        
+        wrapper.appendChild(displayImg);
+        this.pagesContainer.appendChild(wrapper);
+
+        this.canvasContainer.scrollTop = 0;
+        this.updateZoomDisplay();
     }
 }
 
