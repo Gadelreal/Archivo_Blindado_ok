@@ -2916,7 +2916,7 @@ issue-selector {
 }
 
 /* Card Artefactos Styling */
-.art-category {
+.art-title {
     font-family: var(--font-base);
     font-size: 24px;
     font-weight: 800;
@@ -2936,6 +2936,10 @@ issue-selector {
 
 .section-artefactos .pub-grid {
     row-gap: 160px;
+}
+
+.section-artefactos .pub-info {
+    min-height: auto;
 }
 
 .footer-contact.is-copied {

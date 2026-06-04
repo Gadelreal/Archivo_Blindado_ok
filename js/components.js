@@ -174,18 +174,18 @@ class PublicationCard extends HTMLElement {
 class ArtefactCard extends HTMLElement {
     connectedCallback() {
         const image = this.getAttribute('image') || './images/Placeholder Refractor.jpg';
-        const category = this.getAttribute('category') || 'Categoría';
+        const title = this.getAttribute('title') || 'Título del Artefacto';
         const description = this.getAttribute('description') || 'Descripción breve...';
         const pdfUrl = this.getAttribute('pdf-url') || './pdf/Artefactos_Refractor/Orsini.pdf';
 
         this.innerHTML = `
             <div class="pub-card artefact-card-link" style="cursor: pointer;">
                 <div class="pub-cover-wrapper">
-                    <img src="${image}" alt="${category}" class="pub-cover" loading="lazy">
+                    <img src="${image}" alt="${title}" class="pub-cover" loading="lazy">
                     <img src="./images/Onmouse_3.svg" alt="" class="pub-hover-icon" loading="lazy">
                 </div>
                 <div class="pub-info">
-                    <h2 class="art-category">${category}</h2>
+                    <h2 class="art-title">${title}</h2>
                     <p class="art-description">${description}</p>
                 </div>
             </div>
