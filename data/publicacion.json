@@ -177,6 +177,29 @@
           "pagina": 6
         }
       ]
+    },
+    {
+      "id": "N_Refractor_06",
+      "numero": "06",
+      "paginas_procesadas": 2,
+      "articulos_extraidos": 6,
+      "autores_ids": [],
+      "fecha_publicacion": "4 de diciembre de 1998",
+      "precio": "400 pts.",
+      "tirada": "",
+      "tamaño": "400 x 594 mm.",
+      "peso_pdf": "1.31 MB",
+      "peso_pdf_texto": "156 KB",
+      "lista_paginas": [
+        {
+          "id": "P_R_06_01",
+          "pagina": 1
+        },
+        {
+          "id": "P_R_06_02",
+          "pagina": 2
+        }
+      ]
     }
   ],
   "artefactos": [
@@ -225,7 +248,7 @@
     {
       "id": "ART_R_07_yo_soy_la_bomba",
       "titulo": "Yo soy la bomba",
-      "descripcion": "Artefacto desconocido con el lema \"Yo soy la bomba\" acompañado por una bomba Orsini, artefacto explosivo esférico con pernos sobresalientes que introdujo la innovación de estallar por impacto o contacto mediante fulminato de mercurio, eliminando la necesidad de usar una mecha o temporizador.",
+      "descripcion": "Artefacto desconocido con el lema \"Yo soy la bomba\" acompañado por una bomba Orsini, explosivo esférico con pernos sobresalientes que introdujo la innovación de estallar por impacto o contacto mediante fulminato de mercurio, eliminando la necesidad de usar una mecha o temporizador.",
       "image_url": "images/Artefactos/ART_R_07_yo_soy_la_bomba.jpg",
       "file_url": "images/Artefactos/ART_R_07_yo_soy_la_bomba.jpg"
     },
