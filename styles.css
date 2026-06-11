@@ -1509,9 +1509,15 @@ issue-selector {
 @media (max-width: 600px) {
   .ficha-row {
     flex-direction: column;
-    align-items: center;
-    text-align: center;
+    align-items: flex-start;
+    text-align: left;
     gap: 40px;
+  }
+
+  .ficha-content-block {
+    align-items: flex-start;
+    text-align: left;
+    width: 100%;
   }
 
   .ficha-pages-preview {
@@ -1525,7 +1531,7 @@ issue-selector {
   }
 
   .ficha-metadata {
-    margin-left: auto;
+    margin-left: 0;
     margin-right: auto;
   }
 
