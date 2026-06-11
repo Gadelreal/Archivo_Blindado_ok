@@ -11,8 +11,8 @@
     "nombre_publicacion": "REFRACTOR",
     "numeros_procesados": 3,
     "paginas_procesadas": 10,
-    "autores_registrados": 21,
-    "articulos_extraidos": 25,
+    "autores_registrados": 22,
+    "articulos_extraidos": 26,
     "artefactos_registrados": 1,
     "fecha_actualizacion": "11 de junio de 2026"
   },
@@ -100,6 +100,10 @@
     {
       "id": "AU_LOLA_DIAZ",
       "nombre": "Lola Díaz"
+    },
+    {
+      "id": "AU_Juanito_Almoneda",
+      "nombre": "Juanito Almoneda"
     }
   ],
   "ejemplares": [
@@ -195,7 +199,8 @@
         "AU_Victor_Nero_Y_La_Redaccion",
         "alexei_tsvetkov",
         "AU_LOLA_DIAZ",
-        "los_refractarios"
+        "los_refractarios",
+        "AU_Juanito_Almoneda"
       ],
       "fecha_publicacion": "4 de diciembre de 1998",
       "precio": "400 pts.",
