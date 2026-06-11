@@ -9,12 +9,12 @@
   },
   "metadata_archivo": {
     "nombre_publicacion": "REFRACTOR",
-    "numeros_procesados": 2,
-    "paginas_procesadas": 8,
-    "autores_registrados": 19,
-    "articulos_extraidos": 21,
+    "numeros_procesados": 3,
+    "paginas_procesadas": 10,
+    "autores_registrados": 20,
+    "articulos_extraidos": 22,
     "artefactos_registrados": 1,
-    "fecha_actualizacion": "13 de mayo de 2026"
+    "fecha_actualizacion": "11 de junio de 2026"
   },
   "autores": [
     {
@@ -92,6 +92,10 @@
     {
       "id": "zrz",
       "nombre": "ZRZ"
+    },
+    {
+      "id": "AU_Victor_Nero_Y_La_Redaccion",
+      "nombre": "Víctor Nero y La Redacción"
     }
   ],
   "ejemplares": [
@@ -183,7 +187,9 @@
       "numero": "06",
       "paginas_procesadas": 2,
       "articulos_extraidos": 6,
-      "autores_ids": [],
+      "autores_ids": [
+        "AU_Victor_Nero_Y_La_Redaccion"
+      ],
       "fecha_publicacion": "4 de diciembre de 1998",
       "precio": "400 pts.",
       "tirada": "",
