@@ -12,7 +12,7 @@
     "numeros_procesados": 3,
     "paginas_procesadas": 10,
     "autores_registrados": 20,
-    "articulos_extraidos": 22,
+    "articulos_extraidos": 23,
     "artefactos_registrados": 1,
     "fecha_actualizacion": "11 de junio de 2026"
   },
@@ -188,7 +188,8 @@
       "paginas_procesadas": 2,
       "articulos_extraidos": 6,
       "autores_ids": [
-        "AU_Victor_Nero_Y_La_Redaccion"
+        "AU_Victor_Nero_Y_La_Redaccion",
+        "alexei_tsvetkov"
       ],
       "fecha_publicacion": "4 de diciembre de 1998",
       "precio": "400 pts.",
