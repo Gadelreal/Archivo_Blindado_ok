@@ -12,7 +12,7 @@
     "numeros_procesados": 4,
     "paginas_procesadas": 14,
     "autores_registrados": 22,
-    "articulos_extraidos": 28,
+    "articulos_extraidos": 29,
     "artefactos_registrados": 1,
     "fecha_actualizacion": "16 de junio de 2026"
   },
@@ -196,7 +196,8 @@
       "paginas_procesadas": 4,
       "articulos_extraidos": 9,
       "autores_ids": [
-        "AU_Victor_Nero"
+        "AU_Victor_Nero",
+        "AU_Luis_Falcon"
       ],
       "fecha_publicacion": "abril de 1998",
       "precio": "400 pts.",
