@@ -11,8 +11,8 @@
     "nombre_publicacion": "REFRACTOR",
     "numeros_procesados": 4,
     "paginas_procesadas": 14,
-    "autores_registrados": 23,
-    "articulos_extraidos": 31,
+    "autores_registrados": 24,
+    "articulos_extraidos": 32,
     "artefactos_registrados": 1,
     "fecha_actualizacion": "16 de junio de 2026"
   },
@@ -108,6 +108,10 @@
     {
       "id": "AU_Mercurio_Rojo",
       "nombre": "Mercurio Rojo"
+    },
+    {
+      "id": "AU_KAX1013",
+      "nombre": "KAX-1013"
     }
   ],
   "ejemplares": [
@@ -203,7 +207,8 @@
         "AU_Victor_Nero",
         "AU_Luis_Falcon",
         "alexander_duguin",
-        "AU_Mercurio_Rojo"
+        "AU_Mercurio_Rojo",
+        "AU_KAX1013"
       ],
       "fecha_publicacion": "abril de 1998",
       "precio": "400 pts.",
