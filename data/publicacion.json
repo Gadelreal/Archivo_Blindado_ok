@@ -9,12 +9,12 @@
   },
   "metadata_archivo": {
     "nombre_publicacion": "REFRACTOR",
-    "numeros_procesados": 3,
+    "numeros_procesados": 4,
     "paginas_procesadas": 10,
     "autores_registrados": 22,
     "articulos_extraidos": 27,
     "artefactos_registrados": 1,
-    "fecha_actualizacion": "11 de junio de 2026"
+    "fecha_actualizacion": "16 de junio de 2026"
   },
   "autores": [
     {
@@ -189,6 +189,20 @@
           "pagina": 6
         }
       ]
+    },
+    {
+      "id": "N_Refractor_03",
+      "numero": "03",
+      "paginas_procesadas": 0,
+      "articulos_extraidos": 9,
+      "autores_ids": [],
+      "fecha_publicacion": "abril de 1998",
+      "precio": "400 pts.",
+      "tirada": "",
+      "tamaño": "400 x 594 mm.",
+      "peso_pdf": "",
+      "peso_pdf_texto": "",
+      "lista_paginas": []
     },
     {
       "id": "N_Refractor_06",
