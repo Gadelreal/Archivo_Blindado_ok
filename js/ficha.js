@@ -275,19 +275,21 @@ function renderArticulos(allArticles, ejemplar, strNum, titleText, pubData, view
                 }
 
                 let signatureHtml = '';
-                if (index === 0 && i === 0 && authorName === 'Victor Nero') {
-                    signatureHtml += '<p class="art-signature-intro">por los refractarios,</p>';
-                }
-                if (authorName) {
-                    const nameDot = authorName.endsWith('.') ? '' : '.';
-                    signatureHtml += `<p class="art-signature-name"><strong>${authorName}${nameDot}</strong></p>`;
-                }
-                if (place && date) {
-                    signatureHtml += `<p class="art-signature-date">${place}. ${date}</p>`;
-                } else if (place) {
-                    signatureHtml += `<p class="art-signature-date">${place}</p>`;
-                } else if (date) {
-                    signatureHtml += `<p class="art-signature-date">${date}</p>`;
+                if (art.id !== 'A_R_03_01_noche_real') {
+                    if (strNum === '01' && index === 0 && i === 0 && authorName === 'Victor Nero') {
+                        signatureHtml += '<p class="art-signature-intro">por los refractarios,</p>';
+                    }
+                    if (authorName) {
+                        const nameDot = authorName.endsWith('.') ? '' : '.';
+                        signatureHtml += `<p class="art-signature-name"><strong>${authorName}${nameDot}</strong></p>`;
+                    }
+                    if (place && date) {
+                        signatureHtml += `<p class="art-signature-date">${place}. ${date}</p>`;
+                    } else if (place) {
+                        signatureHtml += `<p class="art-signature-date">${place}</p>`;
+                    } else if (date) {
+                        signatureHtml += `<p class="art-signature-date">${date}</p>`;
+                    }
                 }
 
                 articlesHtml += `
