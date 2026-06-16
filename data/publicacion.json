@@ -12,7 +12,7 @@
     "numeros_procesados": 4,
     "paginas_procesadas": 14,
     "autores_registrados": 25,
-    "articulos_extraidos": 34,
+    "articulos_extraidos": 35,
     "artefactos_registrados": 1,
     "fecha_actualizacion": "16 de junio de 2026"
   },
@@ -214,7 +214,8 @@
         "AU_Mercurio_Rojo",
         "AU_KAX1013",
         "ali_calabres",
-        "AU_Casto_Escopico"
+        "AU_Casto_Escopico",
+        "AU_Juanito_Almoneda"
       ],
       "fecha_publicacion": "abril de 1998",
       "precio": "400 pts.",
