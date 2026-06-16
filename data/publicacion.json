@@ -11,8 +11,8 @@
     "nombre_publicacion": "REFRACTOR",
     "numeros_procesados": 4,
     "paginas_procesadas": 14,
-    "autores_registrados": 24,
-    "articulos_extraidos": 33,
+    "autores_registrados": 25,
+    "articulos_extraidos": 34,
     "artefactos_registrados": 1,
     "fecha_actualizacion": "16 de junio de 2026"
   },
@@ -112,6 +112,10 @@
     {
       "id": "AU_KAX1013",
       "nombre": "KAX-1013"
+    },
+    {
+      "id": "AU_Casto_Escopico",
+      "nombre": "Casto Escópico"
     }
   ],
   "ejemplares": [
@@ -209,7 +213,8 @@
         "alexander_duguin",
         "AU_Mercurio_Rojo",
         "AU_KAX1013",
-        "ali_calabres"
+        "ali_calabres",
+        "AU_Casto_Escopico"
       ],
       "fecha_publicacion": "abril de 1998",
       "precio": "400 pts.",
