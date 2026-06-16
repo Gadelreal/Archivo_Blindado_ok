@@ -11,8 +11,8 @@
     "nombre_publicacion": "REFRACTOR",
     "numeros_procesados": 4,
     "paginas_procesadas": 14,
-    "autores_registrados": 25,
-    "articulos_extraidos": 35,
+    "autores_registrados": 26,
+    "articulos_extraidos": 36,
     "artefactos_registrados": 1,
     "fecha_actualizacion": "16 de junio de 2026"
   },
@@ -116,6 +116,10 @@
     {
       "id": "AU_Casto_Escopico",
       "nombre": "Casto Escópico"
+    },
+    {
+      "id": "AU_GRUPO_DE_LOS_ANARCO_FUTURISTAS",
+      "nombre": "Grupo de los Anarco-Futuristas"
     }
   ],
   "ejemplares": [
@@ -215,7 +219,8 @@
         "AU_KAX1013",
         "ali_calabres",
         "AU_Casto_Escopico",
-        "AU_Juanito_Almoneda"
+        "AU_Juanito_Almoneda",
+        "AU_GRUPO_DE_LOS_ANARCO_FUTURISTAS"
       ],
       "fecha_publicacion": "abril de 1998",
       "precio": "400 pts.",
