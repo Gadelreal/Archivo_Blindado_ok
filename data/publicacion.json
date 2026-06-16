@@ -12,7 +12,7 @@
     "numeros_procesados": 4,
     "paginas_procesadas": 14,
     "autores_registrados": 24,
-    "articulos_extraidos": 32,
+    "articulos_extraidos": 33,
     "artefactos_registrados": 1,
     "fecha_actualizacion": "16 de junio de 2026"
   },
@@ -208,7 +208,8 @@
         "AU_Luis_Falcon",
         "alexander_duguin",
         "AU_Mercurio_Rojo",
-        "AU_KAX1013"
+        "AU_KAX1013",
+        "ali_calabres"
       ],
       "fecha_publicacion": "abril de 1998",
       "precio": "400 pts.",
