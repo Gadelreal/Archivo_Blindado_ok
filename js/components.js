@@ -510,12 +510,11 @@ class AppQuote extends HTMLElement {
 class IssueSelector extends HTMLElement {
     connectedCallback() {
         const current = this.getAttribute('current') || '01';
+        const issues = ["01", "02", "03", "04-05", "06", "07"];
         let options = '';
-        for (let i = 1; i <= 8; i++) {
-            const num = i.toString().padStart(2, '0');
-            // In a real app, this would link to the actual page. For now, dummy links.
-            options += `<a href="./ficha_numero.html" class="dropdown-item issue-item">${num}</a>`;
-        }
+        issues.forEach(num => {
+            options += `<a href="./ficha_numero.html?id=N_Refractor_${num}" class="dropdown-item issue-item">${num}</a>`;
+        });
 
         this.innerHTML = `
         <div class="download-wrapper issue-selector-wrapper" id="issueWrapper">

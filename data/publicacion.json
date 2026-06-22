@@ -9,12 +9,12 @@
   },
   "metadata_archivo": {
     "nombre_publicacion": "REFRACTOR",
-    "numeros_procesados": 4,
-    "paginas_procesadas": 14,
+    "numeros_procesados": 5,
+    "paginas_procesadas": 18,
     "autores_registrados": 26,
     "articulos_extraidos": 36,
     "artefactos_registrados": 1,
-    "fecha_actualizacion": "16 de junio de 2026"
+    "fecha_actualizacion": "22 de junio de 2026"
   },
   "autores": [
     {
@@ -273,6 +273,37 @@
         {
           "id": "P_R_06_02",
           "pagina": 2
+        }
+      ]
+    },
+    {
+      "id": "N_Refractor_07",
+      "numero": "07",
+      "paginas_procesadas": 4,
+      "articulos_extraidos": 20,
+      "autores_ids": [],
+      "fecha_publicacion": "Enero de 1999",
+      "precio": "400 pts.",
+      "tirada": "",
+      "tamaño": "",
+      "peso_pdf": "",
+      "peso_pdf_texto": "",
+      "lista_paginas": [
+        {
+          "id": "P_R_07_01",
+          "pagina": 1
+        },
+        {
+          "id": "P_R_07_02",
+          "pagina": 2
+        },
+        {
+          "id": "P_R_07_03",
+          "pagina": 3
+        },
+        {
+          "id": "P_R_07_04",
+          "pagina": 4
         }
       ]
     }

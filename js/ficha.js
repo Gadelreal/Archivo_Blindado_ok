@@ -36,11 +36,41 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         const strNum = ejemplar.numero.toString().split('-').map(n => n.padStart(2, '0')).join('-');
-        const thumbnailPath = `./images/Miniaturas_Refractor/N_Refractor_${strNum}.jpg`;
+        const thumbnailPath = `./images/Miniaturas_Refractor/N_Refractor_${strNum}.jpg?v=2`;
         const titleText = `REFRACTOR ${strNum}`;
 
         renderFicha(ejemplar, strNum, thumbnailPath, titleText, viewer);
         renderArticulos(artData, ejemplar, strNum, titleText, pubData, viewer);
+
+        // Configurar botones Anterior y Siguiente
+        const orderedEjemplares = [...pubData.ejemplares].sort((a, b) => a.numero.localeCompare(b.numero));
+        const currentIndex = orderedEjemplares.findIndex(e => e.id === ejemplar.id);
+        const prevEjemplar = currentIndex > 0 ? orderedEjemplares[currentIndex - 1] : null;
+        const nextEjemplar = currentIndex < orderedEjemplares.length - 1 ? orderedEjemplares[currentIndex + 1] : null;
+
+        document.querySelectorAll('.hero-nav-group').forEach(group => {
+            const buttons = group.querySelectorAll('.hero-nav-btn');
+            if (buttons.length >= 2) {
+                const prevBtn = buttons[0];
+                const nextBtn = buttons[1];
+
+                if (prevEjemplar) {
+                    prevBtn.removeAttribute('disabled');
+                    prevBtn.onclick = () => window.location.href = `./ficha_numero.html?id=${prevEjemplar.id}`;
+                } else {
+                    prevBtn.setAttribute('disabled', 'true');
+                    prevBtn.onclick = null;
+                }
+
+                if (nextEjemplar) {
+                    nextBtn.removeAttribute('disabled');
+                    nextBtn.onclick = () => window.location.href = `./ficha_numero.html?id=${nextEjemplar.id}`;
+                } else {
+                    nextBtn.setAttribute('disabled', 'true');
+                    nextBtn.onclick = null;
+                }
+            }
+        });
         
     } catch (error) {
         console.error('Error cargando los datos de la publicación:', error);
