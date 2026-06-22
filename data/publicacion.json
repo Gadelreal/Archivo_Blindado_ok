@@ -11,8 +11,8 @@
     "nombre_publicacion": "REFRACTOR",
     "numeros_procesados": 5,
     "paginas_procesadas": 18,
-    "autores_registrados": 30,
-    "articulos_extraidos": 42,
+    "autores_registrados": 31,
+    "articulos_extraidos": 43,
     "artefactos_registrados": 1,
     "fecha_actualizacion": "22 de junio de 2026"
   },
@@ -136,6 +136,10 @@
     {
       "id": "AU_Steven_Wishnia",
       "nombre": "Steven Wishnia"
+    },
+    {
+      "id": "AU_A_Kronstadt",
+      "nombre": "A. Kronstadt"
     }
   ],
   "ejemplares": [
@@ -302,7 +306,8 @@
         "AU_Luis_Falcon",
         "AU_Paco_Almazan_y_Pepe_Rubio",
         "AU_Alberto_Donis",
-        "AU_Steven_Wishnia"
+        "AU_Steven_Wishnia",
+        "AU_A_Kronstadt"
       ],
       "fecha_publicacion": "Enero de 1999",
       "precio": "400 pts.",
