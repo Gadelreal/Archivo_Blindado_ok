@@ -12,7 +12,7 @@
     "numeros_procesados": 5,
     "paginas_procesadas": 18,
     "autores_registrados": 27,
-    "articulos_extraidos": 38,
+    "articulos_extraidos": 39,
     "artefactos_registrados": 1,
     "fecha_actualizacion": "22 de junio de 2026"
   },
@@ -286,7 +286,8 @@
       "paginas_procesadas": 4,
       "articulos_extraidos": 20,
       "autores_ids": [
-        "AU_Rafael_Barrett"
+        "AU_Rafael_Barrett",
+        "AU_Luis_Falcon"
       ],
       "fecha_publicacion": "Enero de 1999",
       "precio": "400 pts.",
