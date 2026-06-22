@@ -11,8 +11,8 @@
     "nombre_publicacion": "REFRACTOR",
     "numeros_procesados": 5,
     "paginas_procesadas": 18,
-    "autores_registrados": 27,
-    "articulos_extraidos": 39,
+    "autores_registrados": 28,
+    "articulos_extraidos": 40,
     "artefactos_registrados": 1,
     "fecha_actualizacion": "22 de junio de 2026"
   },
@@ -124,6 +124,10 @@
     {
       "id": "AU_Rafael_Barrett",
       "nombre": "Rafael Barrett"
+    },
+    {
+      "id": "AU_Paco_Almazan_y_Pepe_Rubio",
+      "nombre": "PACO ALMAZÁN y PEPE RUBIO"
     }
   ],
   "ejemplares": [
@@ -287,7 +291,8 @@
       "articulos_extraidos": 20,
       "autores_ids": [
         "AU_Rafael_Barrett",
-        "AU_Luis_Falcon"
+        "AU_Luis_Falcon",
+        "AU_Paco_Almazan_y_Pepe_Rubio"
       ],
       "fecha_publicacion": "Enero de 1999",
       "precio": "400 pts.",
