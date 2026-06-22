@@ -11,8 +11,8 @@
     "nombre_publicacion": "REFRACTOR",
     "numeros_procesados": 5,
     "paginas_procesadas": 18,
-    "autores_registrados": 29,
-    "articulos_extraidos": 41,
+    "autores_registrados": 30,
+    "articulos_extraidos": 42,
     "artefactos_registrados": 1,
     "fecha_actualizacion": "22 de junio de 2026"
   },
@@ -132,6 +132,10 @@
     {
       "id": "AU_Alberto_Donis",
       "nombre": "Alberto Donis"
+    },
+    {
+      "id": "AU_Steven_Wishnia",
+      "nombre": "Steven Wishnia"
     }
   ],
   "ejemplares": [
@@ -297,7 +301,8 @@
         "AU_Rafael_Barrett",
         "AU_Luis_Falcon",
         "AU_Paco_Almazan_y_Pepe_Rubio",
-        "AU_Alberto_Donis"
+        "AU_Alberto_Donis",
+        "AU_Steven_Wishnia"
       ],
       "fecha_publicacion": "Enero de 1999",
       "precio": "400 pts.",
