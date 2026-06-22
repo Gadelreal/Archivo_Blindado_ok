@@ -11,8 +11,8 @@
     "nombre_publicacion": "REFRACTOR",
     "numeros_procesados": 5,
     "paginas_procesadas": 18,
-    "autores_registrados": 26,
-    "articulos_extraidos": 37,
+    "autores_registrados": 27,
+    "articulos_extraidos": 38,
     "artefactos_registrados": 1,
     "fecha_actualizacion": "22 de junio de 2026"
   },
@@ -120,6 +120,10 @@
     {
       "id": "AU_GRUPO_DE_LOS_ANARCO_FUTURISTAS",
       "nombre": "Grupo de los Anarco-Futuristas"
+    },
+    {
+      "id": "AU_Rafael_Barrett",
+      "nombre": "Rafael Barrett"
     }
   ],
   "ejemplares": [
@@ -281,7 +285,9 @@
       "numero": "07",
       "paginas_procesadas": 4,
       "articulos_extraidos": 20,
-      "autores_ids": [],
+      "autores_ids": [
+        "AU_Rafael_Barrett"
+      ],
       "fecha_publicacion": "Enero de 1999",
       "precio": "400 pts.",
       "tirada": "",
