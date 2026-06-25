@@ -144,6 +144,10 @@
     {
       "id": "AU_Ali_K",
       "nombre": "Alí K."
+    },
+    {
+      "id": "AU_Michele_Pontolillo",
+      "nombre": "Michele Pontolillo"
     }
   ],
   "ejemplares": [
@@ -312,7 +316,8 @@
         "AU_Alberto_Donis",
         "AU_Steven_Wishnia",
         "AU_A_Kronstadt",
-        "AU_Ali_K"
+        "AU_Ali_K",
+        "AU_Michele_Pontolillo"
       ],
       "fecha_publicacion": "Enero de 1999",
       "precio": "400 pts.",
