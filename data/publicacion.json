@@ -140,6 +140,10 @@
     {
       "id": "AU_A_Kronstadt",
       "nombre": "A. Kronstadt"
+    },
+    {
+      "id": "AU_Ali_K",
+      "nombre": "Alí K."
     }
   ],
   "ejemplares": [
@@ -307,7 +311,8 @@
         "AU_Paco_Almazan_y_Pepe_Rubio",
         "AU_Alberto_Donis",
         "AU_Steven_Wishnia",
-        "AU_A_Kronstadt"
+        "AU_A_Kronstadt",
+        "AU_Ali_K"
       ],
       "fecha_publicacion": "Enero de 1999",
       "precio": "400 pts.",
