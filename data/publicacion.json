@@ -152,6 +152,10 @@
     {
       "id": "AU_SOLE",
       "nombre": "SOLE"
+    },
+    {
+      "id": "AU_ALGUNAS_ANIMAS_ARDIENTES",
+      "nombre": "ALGUNAS ÁNIMAS ARDIENTES"
     }
   ],
   "ejemplares": [
@@ -322,7 +326,8 @@
         "AU_A_Kronstadt",
         "AU_Ali_K",
         "AU_Michele_Pontolillo",
-        "AU_SOLE"
+        "AU_SOLE",
+        "AU_ALGUNAS_ANIMAS_ARDIENTES"
       ],
       "fecha_publicacion": "Enero de 1999",
       "precio": "400 pts.",
