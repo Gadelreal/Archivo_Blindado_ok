@@ -148,6 +148,10 @@
     {
       "id": "AU_Michele_Pontolillo",
       "nombre": "Michele Pontolillo"
+    },
+    {
+      "id": "AU_SOLE",
+      "nombre": "SOLE"
     }
   ],
   "ejemplares": [
@@ -317,7 +321,8 @@
         "AU_Steven_Wishnia",
         "AU_A_Kronstadt",
         "AU_Ali_K",
-        "AU_Michele_Pontolillo"
+        "AU_Michele_Pontolillo",
+        "AU_SOLE"
       ],
       "fecha_publicacion": "Enero de 1999",
       "precio": "400 pts.",
