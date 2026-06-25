@@ -164,6 +164,10 @@
     {
       "id": "AU_Gabriel_Pombo_da_Silva",
       "nombre": "Gabriel Pombo da Silva"
+    },
+    {
+      "id": "AU_El_Caballero_M_SEM",
+      "nombre": "El Caballero M. SEM"
     }
   ],
   "ejemplares": [
@@ -337,7 +341,8 @@
         "AU_SOLE",
         "AU_ALGUNAS_ANIMAS_ARDIENTES",
         "AU_XOSE_TARRIO",
-        "AU_Gabriel_Pombo_da_Silva"
+        "AU_Gabriel_Pombo_da_Silva",
+        "AU_El_Caballero_M_SEM"
       ],
       "fecha_publicacion": "Enero de 1999",
       "precio": "400 pts.",
