@@ -156,6 +156,10 @@
     {
       "id": "AU_ALGUNAS_ANIMAS_ARDIENTES",
       "nombre": "ALGUNAS ÁNIMAS ARDIENTES"
+    },
+    {
+      "id": "AU_XOSE_TARRIO",
+      "nombre": "Xosé Tarrio"
     }
   ],
   "ejemplares": [
@@ -327,7 +331,8 @@
         "AU_Ali_K",
         "AU_Michele_Pontolillo",
         "AU_SOLE",
-        "AU_ALGUNAS_ANIMAS_ARDIENTES"
+        "AU_ALGUNAS_ANIMAS_ARDIENTES",
+        "AU_XOSE_TARRIO"
       ],
       "fecha_publicacion": "Enero de 1999",
       "precio": "400 pts.",
