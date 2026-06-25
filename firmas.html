@@ -373,8 +373,7 @@
                             signatureHtml += '<p class="art-signature-intro">por los refractarios,</p>';
                         }
                         if (author.nombre) {
-                            const nameDot = author.nombre.endsWith('.') ? '' : '.';
-                            signatureHtml += `<p class="art-signature-name"><strong>${author.nombre}${nameDot}</strong></p>`;
+                            signatureHtml += `<p class="art-signature-name"><strong>${author.nombre}</strong></p>`;
                         }
                         if (place && date) {
                             signatureHtml += `<p class="art-signature-date">${place}. ${date}</p>`;
