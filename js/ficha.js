@@ -305,7 +305,7 @@ function renderArticulos(allArticles, ejemplar, strNum, titleText, pubData, view
                 }
 
                 let signatureHtml = '';
-                if (art.id !== 'A_R_03_01_noche_real') {
+                if (art.id !== 'A_R_03_01_noche_real' && art.id !== 'A_R_1_1_la_ultima_carta_de_soledad') {
                     if (strNum === '01' && index === 0 && i === 0 && authorName === 'Victor Nero') {
                         signatureHtml += '<p class="art-signature-intro">por los refractarios,</p>';
                     }
