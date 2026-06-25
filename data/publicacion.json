@@ -160,6 +160,10 @@
     {
       "id": "AU_XOSE_TARRIO",
       "nombre": "Xosé Tarrio"
+    },
+    {
+      "id": "AU_Gabriel_Pombo_da_Silva",
+      "nombre": "Gabriel Pombo da Silva"
     }
   ],
   "ejemplares": [
@@ -332,7 +336,8 @@
         "AU_Michele_Pontolillo",
         "AU_SOLE",
         "AU_ALGUNAS_ANIMAS_ARDIENTES",
-        "AU_XOSE_TARRIO"
+        "AU_XOSE_TARRIO",
+        "AU_Gabriel_Pombo_da_Silva"
       ],
       "fecha_publicacion": "Enero de 1999",
       "precio": "400 pts.",
