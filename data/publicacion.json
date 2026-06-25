@@ -38,59 +38,59 @@
       "nombre": "Renzo Novatore"
     },
     {
-      "id": "alexei_tsvetkov",
+      "id": "AU_Alexei_Tsvetkov",
       "nombre": "Alexei Tsvetkov"
     },
     {
-      "id": "ali_calabres",
+      "id": "AU_Ali_Calabres",
       "nombre": "Alí Calabrés"
     },
     {
-      "id": "evgueni_golovin",
+      "id": "AU_Evgueni_Golovin",
       "nombre": "Evgueni Golovín"
     },
     {
-      "id": "los_refractarios",
+      "id": "AU_Los_Refractarios",
       "nombre": "Los Refractarios"
     },
     {
-      "id": "el_nieto_de_orsini",
+      "id": "AU_El_Nieto_De_Orsini",
       "nombre": "El Nieto de Orsini"
     },
     {
-      "id": "la_negra_judia_la_sola",
+      "id": "AU_La_Negra_Judia_La_Sola",
       "nombre": "La Negra Judía. La Sola"
     },
     {
-      "id": "coronel_azar",
+      "id": "AU_Coronel_Azar",
       "nombre": "Coronel Azar"
     },
     {
-      "id": "alexander_duguin",
+      "id": "AU_Alexander_Duguin",
       "nombre": "Alexander Duguin"
     },
     {
-      "id": "javier_memba",
+      "id": "AU_Javier_Memba",
       "nombre": "Javier Memba"
     },
     {
-      "id": "pedro_g_romero",
+      "id": "AU_Pedro_G_Romero",
       "nombre": "Pedro G. Romero"
     },
     {
-      "id": "koldo_artieda",
+      "id": "AU_Koldo_Artieda",
       "nombre": "Koldo Artieda"
     },
     {
-      "id": "donald_k",
+      "id": "AU_Donald_K",
       "nombre": "Donald K."
     },
     {
-      "id": "ricardo_flores_magon",
+      "id": "AU_Ricardo_Flores_Magon",
       "nombre": "Ricardo Flores Magón"
     },
     {
-      "id": "zrz",
+      "id": "AU_ZRZ",
       "nombre": "ZRZ"
     },
     {
@@ -98,7 +98,7 @@
       "nombre": "Víctor Nero y La Redacción"
     },
     {
-      "id": "AU_LOLA_DIAZ",
+      "id": "AU_Lola_Diaz",
       "nombre": "Lola Díaz"
     },
     {
@@ -118,7 +118,7 @@
       "nombre": "Casto Escópico"
     },
     {
-      "id": "AU_GRUPO_DE_LOS_ANARCO_FUTURISTAS",
+      "id": "AU_Grupo_De_Los_Anarco_Futuristas",
       "nombre": "Grupo de los Anarco-Futuristas"
     },
     {
@@ -126,7 +126,7 @@
       "nombre": "Rafael Barrett"
     },
     {
-      "id": "AU_Paco_Almazan_y_Pepe_Rubio",
+      "id": "AU_Paco_Almazan_Y_Pepe_Rubio",
       "nombre": "Paco Almazán y Pepe Rubio"
     },
     {
@@ -150,23 +150,23 @@
       "nombre": "Michele Pontolillo"
     },
     {
-      "id": "AU_SOLE",
+      "id": "AU_Sole",
       "nombre": "SOLE"
     },
     {
-      "id": "AU_ALGUNAS_ANIMAS_ARDIENTES",
+      "id": "AU_Algunas_Animas_Ardientes",
       "nombre": "ALGUNAS ÁNIMAS ARDIENTES"
     },
     {
-      "id": "AU_XOSE_TARRIO",
+      "id": "AU_Xose_Tarrio",
       "nombre": "Xosé Tarrio"
     },
     {
-      "id": "AU_Gabriel_Pombo_da_Silva",
+      "id": "AU_Gabriel_Pombo_Da_Silva",
       "nombre": "Gabriel Pombo da Silva"
     },
     {
-      "id": "AU_El_Caballero_M_SEM",
+      "id": "AU_El_Caballero_M_Sem",
       "nombre": "El Caballero M. SEM"
     }
   ],
@@ -206,20 +206,20 @@
       "paginas_procesadas": 6,
       "articulos_extraidos": 16,
       "autores_ids": [
-        "ali_calabres",
-        "evgueni_golovin",
-        "los_refractarios",
-        "alexei_tsvetkov",
-        "el_nieto_de_orsini",
-        "la_negra_judia_la_sola",
-        "coronel_azar",
-        "alexander_duguin",
-        "javier_memba",
-        "pedro_g_romero",
-        "koldo_artieda",
-        "donald_k",
-        "ricardo_flores_magon",
-        "zrz"
+        "AU_Ali_Calabres",
+        "AU_Evgueni_Golovin",
+        "AU_Los_Refractarios",
+        "AU_Alexei_Tsvetkov",
+        "AU_El_Nieto_De_Orsini",
+        "AU_La_Negra_Judia_La_Sola",
+        "AU_Coronel_Azar",
+        "AU_Alexander_Duguin",
+        "AU_Javier_Memba",
+        "AU_Pedro_G_Romero",
+        "AU_Koldo_Artieda",
+        "AU_Donald_K",
+        "AU_Ricardo_Flores_Magon",
+        "AU_ZRZ"
       ],
       "fecha_publicacion": "3 de junio de 1998",
       "precio": "400 pts.",
@@ -262,13 +262,13 @@
       "autores_ids": [
         "AU_Victor_Nero",
         "AU_Luis_Falcon",
-        "alexander_duguin",
+        "AU_Alexander_Duguin",
         "AU_Mercurio_Rojo",
         "AU_KAX1013",
-        "ali_calabres",
+        "AU_Ali_Calabres",
         "AU_Casto_Escopico",
         "AU_Juanito_Almoneda",
-        "AU_GRUPO_DE_LOS_ANARCO_FUTURISTAS"
+        "AU_Grupo_De_Los_Anarco_Futuristas"
       ],
       "fecha_publicacion": "abril de 1998",
       "precio": "400 pts.",
@@ -302,9 +302,9 @@
       "articulos_extraidos": 6,
       "autores_ids": [
         "AU_Victor_Nero_Y_La_Redaccion",
-        "alexei_tsvetkov",
-        "AU_LOLA_DIAZ",
-        "los_refractarios",
+        "AU_Alexei_Tsvetkov",
+        "AU_Lola_Diaz",
+        "AU_Los_Refractarios",
         "AU_Juanito_Almoneda"
       ],
       "fecha_publicacion": "4 de diciembre de 1998",
@@ -332,17 +332,17 @@
       "autores_ids": [
         "AU_Rafael_Barrett",
         "AU_Luis_Falcon",
-        "AU_Paco_Almazan_y_Pepe_Rubio",
+        "AU_Paco_Almazan_Y_Pepe_Rubio",
         "AU_Alberto_Donis",
         "AU_Steven_Wishnia",
         "AU_A_Kronstadt",
         "AU_Ali_K",
         "AU_Michele_Pontolillo",
-        "AU_SOLE",
-        "AU_ALGUNAS_ANIMAS_ARDIENTES",
-        "AU_XOSE_TARRIO",
-        "AU_Gabriel_Pombo_da_Silva",
-        "AU_El_Caballero_M_SEM"
+        "AU_Sole",
+        "AU_Algunas_Animas_Ardientes",
+        "AU_Xose_Tarrio",
+        "AU_Gabriel_Pombo_Da_Silva",
+        "AU_El_Caballero_M_Sem"
       ],
       "fecha_publicacion": "Enero de 1999",
       "precio": "400 pts.",

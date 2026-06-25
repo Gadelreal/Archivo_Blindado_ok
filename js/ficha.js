@@ -310,8 +310,7 @@ function renderArticulos(allArticles, ejemplar, strNum, titleText, pubData, view
                         signatureHtml += '<p class="art-signature-intro">por los refractarios,</p>';
                     }
                     if (authorName) {
-                        const nameDot = authorName.endsWith('.') ? '' : '.';
-                        signatureHtml += `<p class="art-signature-name"><strong>${authorName}${nameDot}</strong></p>`;
+                        signatureHtml += `<p class="art-signature-name"><strong>${authorName}</strong></p>`;
                     }
                     if (place && date) {
                         signatureHtml += `<p class="art-signature-date">${place}. ${date}</p>`;
