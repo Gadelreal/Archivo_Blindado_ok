@@ -201,6 +201,31 @@
       ]
     },
     {
+      "id": "N_Refractor_02",
+      "numero": "02",
+      "paginas_procesadas": 2,
+      "articulos_extraidos": 1,
+      "autores_ids": [
+        "AU_KAX1013"
+      ],
+      "fecha_publicacion": "Marzo de 1998",
+      "precio": "",
+      "tirada": "",
+      "tamaño": "60 x 40 cm.",
+      "peso_pdf": "13.36 MB",
+      "peso_pdf_texto": "",
+      "lista_paginas": [
+        {
+          "id": "P_R_02_01",
+          "pagina": 1
+        },
+        {
+          "id": "P_R_02_02",
+          "pagina": 2
+        }
+      ]
+    },
+    {
       "id": "N_Refractor_04-05",
       "numero": "04-05",
       "paginas_procesadas": 6,
