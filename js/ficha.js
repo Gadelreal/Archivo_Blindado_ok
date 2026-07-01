@@ -327,7 +327,7 @@ function renderArticulos(allArticles, ejemplar, strNum, titleText, pubData, view
                 // Extraer subtítulo si está marcado con asteriscos en la primera línea
                 const paragraphs = bodyContent.split('\n\n').filter(p => p.trim());
                 if (paragraphs.length > 0 && paragraphs[0].startsWith('*') && paragraphs[0].endsWith('*')) {
-                    const subtitleText = paragraphs.shift().replace(/^\*|\*$/g, '');
+                    const subtitleText = paragraphs.shift().replace(/^\*+|\*+$/g, '');
                     subtitleHtml = `<h4 class="art-subtitle">${subtitleText}</h4>`;
                     bodyContent = paragraphs.join('\n\n');
                 }

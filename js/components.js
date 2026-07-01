@@ -299,8 +299,9 @@ class DownloadDropdown extends HTMLElement {
             // Function to parse basic markdown
             const parseMD = (text) => {
                 if (!text) return '';
-                // Asterisks to italic
-                let parsed = text.replace(/\*(.*?)\*/g, '<i>$1</i>');
+                // Double asterisks to bold, then single to italics/em
+                let parsed = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                                 .replace(/\*(.*?)\*/g, '<em>$1</em>');
                 // Double newline to paragraphs
                 parsed = '<p>' + parsed.replace(/\n\n/g, '</p><p>') + '</p>';
                 // Single newline to br
