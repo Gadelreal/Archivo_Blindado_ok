@@ -1189,10 +1189,10 @@ issue-selector {
 }
 
 .issue-item {
-  justify-content: center;
+  justify-content: flex-start;
   font-weight: 600;
   color: var(--bg-black);
-  padding: 4px 0 !important;
+  padding: 4px 16px !important;
 }
 
 .issue-item:hover {
