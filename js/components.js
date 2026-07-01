@@ -508,6 +508,19 @@ class AppQuote extends HTMLElement {
 }
 
 class IssueSelector extends HTMLElement {
+    static get observedAttributes() {
+        return ['current'];
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+        if (name === 'current') {
+            const span = this.querySelector('#issueBtn span');
+            if (span) {
+                span.textContent = newValue;
+            }
+        }
+    }
+
     connectedCallback() {
         const current = this.getAttribute('current') || '01';
         const issues = ["01", "02", "03", "04-05", "06", "07"];

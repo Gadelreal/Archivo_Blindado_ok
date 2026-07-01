@@ -1201,6 +1201,7 @@ issue-selector {
   font-weight: 600;
   color: var(--bg-black);
   padding: 4px 16px !important;
+  white-space: nowrap;
 }
 
 .issue-item:hover {
