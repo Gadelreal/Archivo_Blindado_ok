@@ -3,13 +3,79 @@
  * Fuente de verdad: data/publicacion.json y data/articulos.json
  */
 
-document.addEventListener('DOMContentLoaded', async () => {
+let pubData = null;
+let artData = null;
+
+async function switchIssue(targetId, updateHistory = true) {
+    const mural = document.querySelector('.mural-wrapper');
+    if (mural) {
+        mural.classList.add('fade-out');
+        await new Promise(resolve => setTimeout(resolve, 150));
+    }
+
+    const ejemplar = pubData.ejemplares.find(e => e.id === targetId);
+    if (!ejemplar) {
+        console.error('Ejemplar no encontrado:', targetId);
+        if (mural) mural.classList.remove('fade-out');
+        return;
+    }
+
+    const strNum = ejemplar.numero.toString().split('-').map(n => n.padStart(2, '0')).join('-');
+    const thumbnailPath = `./images/Miniaturas_Refractor/N_Refractor_${strNum}.jpg?v=2`;
+    const titleText = `REFRACTOR ${strNum}`;
     const viewer = document.querySelector('pdf-viewer');
+
+    renderFicha(ejemplar, strNum, thumbnailPath, titleText, viewer);
+    renderArticulos(artData, ejemplar, strNum, titleText, pubData, viewer);
+
+    // Configurar botones Anterior y Siguiente
+    const orderedEjemplares = [...pubData.ejemplares].sort((a, b) => a.numero.localeCompare(b.numero));
+    const currentIndex = orderedEjemplares.findIndex(e => e.id === ejemplar.id);
+    const prevEjemplar = currentIndex > 0 ? orderedEjemplares[currentIndex - 1] : null;
+    const nextEjemplar = currentIndex < orderedEjemplares.length - 1 ? orderedEjemplares[currentIndex + 1] : null;
+
+    document.querySelectorAll('.hero-nav-group').forEach(group => {
+        const buttons = group.querySelectorAll('.hero-nav-btn');
+        if (buttons.length >= 2) {
+            const prevBtn = buttons[0];
+            const nextBtn = buttons[1];
+
+            if (prevEjemplar) {
+                prevBtn.removeAttribute('disabled');
+                prevBtn.onclick = () => switchIssue(prevEjemplar.id);
+            } else {
+                prevBtn.setAttribute('disabled', 'true');
+                prevBtn.onclick = null;
+            }
+
+            if (nextEjemplar) {
+                nextBtn.removeAttribute('disabled');
+                nextBtn.onclick = () => switchIssue(nextEjemplar.id);
+            } else {
+                nextBtn.setAttribute('disabled', 'true');
+                nextBtn.onclick = null;
+            }
+        }
+    });
+
+    if (updateHistory) {
+        const newUrl = `${window.location.pathname}?id=${targetId}`;
+        window.history.pushState({ id: targetId }, '', newUrl);
+    }
+
+    if (mural) {
+        mural.classList.remove('fade-out');
+    }
+}
+
+// Exponer globalmente para interceptación
+window.switchIssue = switchIssue;
+
+document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
     let targetId = urlParams.get('id');
     const issueNum = urlParams.get('numero');
     
-    // Soporte para ambos parámetros para mayor robustez
     if (!targetId && issueNum) {
         const formattedNum = issueNum.toString().split('-').map(n => n.padStart(2, '0')).join('-');
         targetId = `N_Refractor_${formattedNum}`;
@@ -24,60 +90,38 @@ document.addEventListener('DOMContentLoaded', async () => {
             fetch('./data/articulos.json')
         ]);
 
-        const pubData = await pubResponse.json();
-        const artData = await artResponse.json();
+        pubData = await pubResponse.json();
+        artData = await artResponse.json();
 
-        const ejemplar = pubData.ejemplares.find(e => e.id === targetId);
-        if (!ejemplar) {
-            console.error('Ejemplar no encontrado:', targetId);
-            const titleEl = document.getElementById('fichaTitle');
-            if (titleEl) titleEl.textContent = 'Publicación no encontrada';
-            return;
-        }
-
-        const strNum = ejemplar.numero.toString().split('-').map(n => n.padStart(2, '0')).join('-');
-        const thumbnailPath = `./images/Miniaturas_Refractor/N_Refractor_${strNum}.jpg?v=2`;
-        const titleText = `REFRACTOR ${strNum}`;
-
-        renderFicha(ejemplar, strNum, thumbnailPath, titleText, viewer);
-        renderArticulos(artData, ejemplar, strNum, titleText, pubData, viewer);
-
-        // Configurar botones Anterior y Siguiente
-        const orderedEjemplares = [...pubData.ejemplares].sort((a, b) => a.numero.localeCompare(b.numero));
-        const currentIndex = orderedEjemplares.findIndex(e => e.id === ejemplar.id);
-        const prevEjemplar = currentIndex > 0 ? orderedEjemplares[currentIndex - 1] : null;
-        const nextEjemplar = currentIndex < orderedEjemplares.length - 1 ? orderedEjemplares[currentIndex + 1] : null;
-
-        document.querySelectorAll('.hero-nav-group').forEach(group => {
-            const buttons = group.querySelectorAll('.hero-nav-btn');
-            if (buttons.length >= 2) {
-                const prevBtn = buttons[0];
-                const nextBtn = buttons[1];
-
-                if (prevEjemplar) {
-                    prevBtn.removeAttribute('disabled');
-                    prevBtn.onclick = () => window.location.href = `./ficha_numero.html?id=${prevEjemplar.id}`;
-                } else {
-                    prevBtn.setAttribute('disabled', 'true');
-                    prevBtn.onclick = null;
-                }
-
-                if (nextEjemplar) {
-                    nextBtn.removeAttribute('disabled');
-                    nextBtn.onclick = () => window.location.href = `./ficha_numero.html?id=${nextEjemplar.id}`;
-                } else {
-                    nextBtn.setAttribute('disabled', 'true');
-                    nextBtn.onclick = null;
-                }
-            }
-        });
+        // Carga inicial
+        await switchIssue(targetId, false);
         
     } catch (error) {
         console.error('Error cargando los datos de la publicación:', error);
         const titleEl = document.getElementById('fichaTitle');
         if (titleEl) titleEl.textContent = 'Error al cargar';
-        const subtitleEl = document.getElementById('fichaSubtitle');
-        if (subtitleEl) subtitleEl.textContent = 'Verifique la consola para más detalles.';
+    }
+});
+
+// Manejar botón atrás/adelante del navegador
+window.addEventListener('popstate', (e) => {
+    const state = e.state;
+    const targetId = (state && state.id) || new URLSearchParams(window.location.search).get('id') || 'N_Refractor_01';
+    if (pubData) {
+        switchIssue(targetId, false);
+    }
+});
+
+// Interceptar clics en el selector de números para usar SPA
+document.addEventListener('click', (e) => {
+    const item = e.target.closest('.issue-item');
+    if (item) {
+        e.preventDefault();
+        const url = new URL(item.href, window.location.href);
+        const nextId = url.searchParams.get('id');
+        if (nextId && pubData) {
+            switchIssue(nextId);
+        }
     }
 });
 
