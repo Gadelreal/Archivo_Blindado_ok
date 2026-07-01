@@ -1287,11 +1287,13 @@ issue-selector {
   box-shadow: none;
   /* Shadow removed as requested */
   cursor: pointer;
+  aspect-ratio: 2 / 3; /* Prevents height collapse while transitioning/loading */
 }
 
 .pub-cover-ficha {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   display: block;
   border: 1px solid #D5D7DA;
   border-radius: 0;
