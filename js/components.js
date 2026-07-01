@@ -269,24 +269,32 @@ class DownloadDropdown extends HTMLElement {
     async generateTextPdf() {
         const urlParams = new URLSearchParams(window.location.search);
         const pubId = urlParams.get('id'); // Ej: N_Refractor_01
-        if (!pubId) return;
-
-        const numParts = pubId.split('_');
-        const numStr = numParts[numParts.length - 1]; // "01" or "04-05"
-        if (!numStr) return;
-
+        
         try {
             // 1. Fetch articles data
             const response = await fetch('./data/articulos.json');
             const allArticles = await response.json();
-            const articles = allArticles.filter(a => a.numero === numStr);
+            
+            let articles = [];
+            let title = '';
+            let isGlobal = false;
 
-            if (articles.length === 0) {
-                alert('No se encontraron artículos para este número.');
-                return;
+            if (pubId) {
+                const numParts = pubId.split('_');
+                const numStr = numParts[numParts.length - 1]; // "01" or "04-05"
+                if (!numStr) return;
+                articles = allArticles.filter(a => a.numero === numStr);
+                title = document.getElementById('fichaTitle')?.textContent || `Refractor ${numStr}`;
+            } else {
+                articles = allArticles;
+                title = "Refractor";
+                isGlobal = true;
             }
 
-            const title = document.getElementById('fichaTitle')?.textContent || `Refractor ${numStr}`;
+            if (articles.length === 0) {
+                alert('No se encontraron artículos.');
+                return;
+            }
 
             // Function to parse basic markdown
             const parseMD = (text) => {
@@ -302,6 +310,58 @@ class DownloadDropdown extends HTMLElement {
 
             // 2. Build HTML Content for the Print Window
             const baseHref = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1);
+            
+            let bodyArticlesHtml = '';
+            if (isGlobal) {
+                // Group by issue number
+                const sortedArticles = [...articles].sort((a, b) => {
+                    const numComp = a.numero.localeCompare(b.numero);
+                    if (numComp !== 0) return numComp;
+                    return (parseInt(a.pagina) || 0) - (parseInt(b.pagina) || 0);
+                });
+
+                const issuesMap = {};
+                sortedArticles.forEach(art => {
+                    if (!issuesMap[art.numero]) {
+                        issuesMap[art.numero] = [];
+                    }
+                    issuesMap[art.numero].push(art);
+                });
+
+                Object.keys(issuesMap).forEach((numStr, index) => {
+                    bodyArticlesHtml += `
+                        <div class="issue-section" style="${index > 0 ? 'page-break-before: always;' : ''} margin-top: 40px; margin-bottom: 60px;">
+                            <h1 style="color: #e63946; font-family: 'Open Sans', sans-serif; font-size: 32pt; font-weight: 800; border-bottom: 4px solid #e63946; padding-bottom: 8px; margin-bottom: 30px; text-transform: uppercase; -webkit-print-color-adjust: exact; print-color-adjust: exact;">REFRACTOR ${numStr}</h1>
+                        </div>
+                    `;
+                    issuesMap[numStr].forEach(art => {
+                        bodyArticlesHtml += `
+                            <div class="article" style="page-break-inside: avoid; margin-bottom: 50px;">
+                                <div class="art-header" style="border-bottom: 2px solid black; margin-bottom: 15px; padding-bottom: 5px;">
+                                    <h2 class="art-title" style="font-family: 'Open Sans', sans-serif; font-size: 22pt; font-weight: 800; text-transform: uppercase; color: black; margin: 0; line-height: 1.1;">${art.titulo}</h2>
+                                    <div class="art-subtitle" style="font-family: 'Open Sans', sans-serif; font-size: 11pt; font-weight: bold; color: #444; margin-top: 5px;">${art.autor}${art.lugar_fecha_publicacion ? ' &bull; ' + art.lugar_fecha_publicacion : ''}</div>
+                                </div>
+                                <div class="art-content" style="font-size: 12pt; text-align: justify;">
+                                    ${parseMD(art.contenido)}
+                                </div>
+                            </div>
+                        `;
+                    });
+                });
+            } else {
+                bodyArticlesHtml = articles.map(art => `
+                    <div class="article" style="page-break-inside: avoid; margin-bottom: 50px; padding-top: 20px;">
+                        <div class="art-header" style="border-bottom: 2px solid black; margin-bottom: 15px; padding-bottom: 5px;">
+                            <h2 class="art-title" style="font-family: 'Open Sans', sans-serif; font-size: 22pt; font-weight: 800; text-transform: uppercase; color: black; margin: 0; line-height: 1.1;">${art.titulo}</h2>
+                            <div class="art-subtitle" style="font-family: 'Open Sans', sans-serif; font-size: 11pt; font-weight: bold; color: #444; margin-top: 5px;">${art.autor}${art.lugar_fecha_publicacion ? ' &bull; ' + art.lugar_fecha_publicacion : ''}</div>
+                        </div>
+                        <div class="art-content" style="font-size: 12pt; text-align: justify;">
+                            ${parseMD(art.contenido)}
+                        </div>
+                    </div>
+                `).join('');
+            }
+
             const htmlContent = `
 <!DOCTYPE html>
 <html lang="es">
@@ -353,7 +413,6 @@ class DownloadDropdown extends HTMLElement {
             text-transform: uppercase; 
             margin: 0; 
             line-height: 1; 
-            /* Force exact colors in print */
             -webkit-print-color-adjust: exact; 
             print-color-adjust: exact; 
         }
@@ -364,42 +423,9 @@ class DownloadDropdown extends HTMLElement {
             color: #666; 
             margin-top: 20px; 
         }
-        .article { 
-            page-break-inside: avoid; 
-            margin-bottom: 50px; 
-            padding-top: 20px;
-        }
-        .art-header { 
-            border-bottom: 2px solid black; 
-            margin-bottom: 15px; 
-            padding-bottom: 5px; 
-        }
-        .art-title { 
-            font-family: 'Open Sans', sans-serif; 
-            font-size: 22pt; 
-            font-weight: 800; 
-            text-transform: uppercase; 
-            color: black; 
-            margin: 0; 
-            line-height: 1.1;
-        }
-        .art-subtitle { 
-            font-family: 'Open Sans', sans-serif; 
-            font-size: 11pt; 
-            font-weight: bold; 
-            color: #444; 
-            margin-top: 5px; 
-        }
-        .art-content { 
-            font-size: 12pt; 
-            text-align: justify; 
-        }
-        .art-content p {
-            margin: 0 0 1em 0;
-        }
         @media print {
             @page { 
-                margin: 25mm; /* Safe margins for standard A4 */
+                margin: 25mm; 
             }
             body { 
                 -webkit-print-color-adjust: exact; 
@@ -411,31 +437,18 @@ class DownloadDropdown extends HTMLElement {
 <body>
     <div class="cover">
         <h1>${title}</h1>
-        <p>ARCHIVO BLINDADO</p>
+        <p>${isGlobal ? 'RECOPILACIÓN DE ARTÍCULOS' : 'ARCHIVO BLINDADO'}</p>
     </div>
     
-    ${articles.map(art => `
-        <div class="article">
-            <div class="art-header">
-                <h2 class="art-title">${art.titulo}</h2>
-                <div class="art-subtitle">${art.autor}${art.lugar_fecha_publicacion ? ' &bull; ' + art.lugar_fecha_publicacion : ''}</div>
-            </div>
-            <div class="art-content">
-                ${parseMD(art.contenido)}
-            </div>
-        </div>
-    `).join('')}
+    ${bodyArticlesHtml}
 
     <script>
-        // Wait for fonts to load before printing
         window.onload = () => {
             setTimeout(() => {
                 window.print();
-                // Opcional: cerrar la ventana tras imprimir
-                // setTimeout(() => window.close(), 1000); 
-            }, 500); // Give the browser a moment to render
+            }, 500);
         };
-    </script>
+    <\/script>
 </body>
 </html>
             `;
