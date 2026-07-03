@@ -33,8 +33,8 @@ class AppHeader extends HTMLElement {
                     <span class="dot">•</span>
                     <a href="./archivo_blindado.html" class="${isActive('archivo_blindado.html')}">ARCHIVO BLINDADO</a>
                 </nav>
-                <button class="menu-btn">
-                    <img src="./images/ico_menu.svg" alt="Menú" class="menu-img">
+                <button class="menu-btn" aria-expanded="false" aria-controls="mobileMenu" aria-label="Abrir menú">
+                    <img src="./images/ico_menu.svg" alt="" class="menu-img">
                 </button>
             </div>
         </header>
@@ -63,6 +63,7 @@ class AppHeader extends HTMLElement {
 
         menuBtn.addEventListener('click', () => {
             const isOpen = this.classList.toggle('is-menu-open');
+            menuBtn.setAttribute('aria-expanded', isOpen);
             menuImg.src = isOpen ? './images/ico_close.svg' : './images/ico_menu.svg';
             
             // Prevent scrolling when menu is open without breaking position: sticky in Safari
@@ -179,7 +180,7 @@ class ArtefactCard extends HTMLElement {
         const pdfUrl = this.getAttribute('pdf-url') || './pdf/Artefactos_Refractor/Orsini.pdf';
 
         this.innerHTML = `
-            <div class="pub-card artefact-card-link" style="cursor: pointer;">
+            <div class="pub-card artefact-card-link" style="cursor: pointer;" tabindex="0" role="button">
                 <div class="pub-cover-wrapper">
                     <img src="${image}" alt="${title}" class="pub-cover" loading="lazy">
                     <img src="./images/Onmouse_3.svg" alt="" class="pub-hover-icon" loading="lazy">
@@ -191,12 +192,16 @@ class ArtefactCard extends HTMLElement {
             </div>
         `;
 
-        this.addEventListener('click', () => {
+        const handler = (e) => {
+            if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return;
+            if (e.type === 'keydown') e.preventDefault();
             const viewer = document.querySelector('pdf-viewer');
             if (viewer) {
                 viewer.open(pdfUrl);
             }
-        });
+        };
+        this.addEventListener('click', handler);
+        this.addEventListener('keydown', handler);
     }
 }
 
@@ -222,7 +227,7 @@ class DownloadDropdown extends HTMLElement {
 
         this.innerHTML = `
         <div class="download-wrapper" id="downloadWrapper">
-            <button class="${btnClass}" id="downloadBtn">
+            <button class="${btnClass}" id="downloadBtn" aria-expanded="false" aria-haspopup="true">
                 ${text}
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chevron-icon">
                     <polyline points="6 9 12 15 18 9"></polyline>
@@ -248,10 +253,12 @@ class DownloadDropdown extends HTMLElement {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 wrapper.classList.toggle('is-open');
+                btn.setAttribute('aria-expanded', wrapper.classList.contains('is-open'));
             });
 
             document.addEventListener('click', () => {
                 wrapper.classList.remove('is-open');
+                btn.setAttribute('aria-expanded', 'false');
             });
 
             // Handle Text PDF Generation
@@ -545,7 +552,7 @@ class IssueSelector extends HTMLElement {
 
         this.innerHTML = `
         <div class="download-wrapper issue-selector-wrapper" id="issueWrapper">
-            <div class="hero-nav-selector hero-nav-item" id="issueBtn">
+            <div class="hero-nav-selector hero-nav-item" id="issueBtn" tabindex="0" role="button" aria-expanded="false" aria-haspopup="listbox">
                 <span>${current}</span>
                 <img src="./images/ico_chevron-down.svg" alt="" class="hero-nav-chevron">
             </div>
@@ -558,13 +565,19 @@ class IssueSelector extends HTMLElement {
         const btn = this.querySelector('#issueBtn');
         const wrapper = this.querySelector('#issueWrapper');
         
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
+        const toggleMenu = (e) => {
+            if (e && e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return;
+            if (e && e.type === 'keydown') e.preventDefault();
+            if (e) e.stopPropagation();
             wrapper.classList.toggle('is-open');
-        });
+            btn.setAttribute('aria-expanded', wrapper.classList.contains('is-open'));
+        };
+        btn.addEventListener('click', toggleMenu);
+        btn.addEventListener('keydown', toggleMenu);
 
         document.addEventListener('click', () => {
             wrapper.classList.remove('is-open');
+            btn.setAttribute('aria-expanded', 'false');
         });
     }
 }
@@ -576,7 +589,7 @@ class AppAccordion extends HTMLElement {
         
         this.innerHTML = `
         <div class="accordion-wrapper is-open">
-            <div class="accordion-trigger">
+            <div class="accordion-trigger" tabindex="0" role="button" aria-expanded="true">
                 <span class="accordion-trigger-text">${title}</span>
                 <div class="accordion-icon-box">
                     <img src="./images/ico_arrow-narrow-down.svg" class="accordion-arrow" alt="">
@@ -591,9 +604,14 @@ class AppAccordion extends HTMLElement {
         const trigger = this.querySelector('.accordion-trigger');
         const wrapper = this.querySelector('.accordion-wrapper');
         
-        trigger.addEventListener('click', () => {
+        const toggleAccordion = (e) => {
+            if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return;
+            if (e.type === 'keydown') e.preventDefault();
             wrapper.classList.toggle('is-open');
-        });
+            trigger.setAttribute('aria-expanded', wrapper.classList.contains('is-open'));
+        };
+        trigger.addEventListener('click', toggleAccordion);
+        trigger.addEventListener('keydown', toggleAccordion);
     }
 }
 
@@ -620,7 +638,7 @@ class PdfViewer extends HTMLElement {
 
     connectedCallback() {
         this.innerHTML = `
-            <div class="pdf-modal-overlay" id="pdfModal">
+            <div class="pdf-modal-overlay" id="pdfModal" role="dialog" aria-modal="true" aria-label="Visor PDF">
                 
                 <button id="top_close_pdf" class="pdf-top-close-btn" aria-label="Cerrar visor" data-tooltip="Cerrar visor">
                     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -700,7 +718,28 @@ class PdfViewer extends HTMLElement {
         
         this._keyHandler = (e) => {
             if (!this.modal.classList.contains('is-open')) return;
-            if (e.key === 'Escape') this.close();
+            if (e.key === 'Escape') {
+                this.close();
+                return;
+            }
+            if (e.key === 'Tab') {
+                const focusableElements = this.modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                if (focusableElements.length === 0) return;
+                const firstElement = focusableElements[0];
+                const lastElement = focusableElements[focusableElements.length - 1];
+
+                if (e.shiftKey) {
+                    if (document.activeElement === firstElement) {
+                        lastElement.focus();
+                        e.preventDefault();
+                    }
+                } else {
+                    if (document.activeElement === lastElement) {
+                        firstElement.focus();
+                        e.preventDefault();
+                    }
+                }
+            }
         };
 
         // --- Drag to Scroll (Manita) ---
@@ -1015,6 +1054,11 @@ class PdfViewer extends HTMLElement {
         this.errorContainer.style.display = 'none';
         this.pagesContainer.style.display = 'flex';
         this.initialScaleCalculated = false;
+        
+        setTimeout(() => {
+            const focusable = this.modal.querySelector('button');
+            if (focusable) focusable.focus();
+        }, 100);
 
         window.addEventListener('keydown', this._keyHandler);
 

@@ -41,7 +41,7 @@
     <div class="site-wrapper page-firmas">
         <app-header></app-header>
 
-        <div class="site-content">
+        <main class="site-content">
             <!-- HERO -->
             <section class="hero-firmas">
                 <div class="container">
@@ -62,7 +62,7 @@
                                     <img src="./images/ico_search.svg" class="search-icon-left" alt="">
                                     <input type="text" class="search-input" id="authorInput" aria-label="Buscar firma" placeholder="Buscar autor...">
                                 </div>
-                                <div class="dropdown-menu search-dropdown" id="authorDropdown">
+                                <div class="dropdown-menu search-dropdown" id="authorDropdown" role="listbox">
                                     <!-- Options injected here -->
                                 </div>
                             </div>
@@ -72,12 +72,12 @@
                         <div class="filter-group">
                             <label class="filter-label">Selecciona número</label>
                             <div class="custom-dropdown-container download-wrapper" id="issueDropdownWrapper">
-                                <div class="selector-trigger" id="issueTrigger">
+                                <div class="selector-trigger" id="issueTrigger" tabindex="0" role="button" aria-expanded="false" aria-haspopup="listbox">
                                     <span id="issueTriggerText">Todos</span>
                                     <img src="./images/ico_chevron-down.svg" class="chevron" alt="">
                                 </div>
-                                <div class="dropdown-menu issue-dropdown" id="issueDropdown">
-                                    <div class="dropdown-item option-issue" data-value="todos">Todos</div>
+                                <div class="dropdown-menu issue-dropdown" id="issueDropdown" role="listbox">
+                                    <div class="dropdown-item option-issue" data-value="todos" tabindex="0" role="option">Todos</div>
                                     <!-- Numbers injected here -->
                                 </div>
                             </div>
@@ -106,7 +106,7 @@
                     No se han encontrado artículos para la selección actual.
                 </div>
             </section>
-        </div>
+        </main>
 
         <app-quote></app-quote>
 
@@ -177,8 +177,16 @@
                     div.className = 'dropdown-item dropdown-option';
                     div.dataset.id = author.id;
                     div.dataset.name = author.nombre;
+                    div.tabIndex = 0;
+                    div.setAttribute('role', 'option');
                     div.innerHTML = `${author.nombre} <span class="option-count">${author.count}</span>`;
-                    div.onclick = () => selectAuthor(author.id, author.nombre);
+                    const onSelect = (e) => {
+                        if (e && e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return;
+                        if (e && e.type === 'keydown') e.preventDefault();
+                        selectAuthor(author.id, author.nombre);
+                    };
+                    div.onclick = onSelect;
+                    div.onkeydown = onSelect;
                     authorDropdown.appendChild(div);
                 });
             }
@@ -191,7 +199,8 @@
                 todosDiv.className = 'dropdown-item option-issue';
                 todosDiv.dataset.value = 'todos';
                 todosDiv.textContent = 'Todos';
-                todosDiv.onclick = () => selectIssue('todos');
+                todosDiv.onclick = (e) => { if(e.type === 'keydown' && e.key!=='Enter' && e.key!==' ') return; if(e.type==='keydown') e.preventDefault(); selectIssue('todos'); };
+                todosDiv.onkeydown = todosDiv.onclick;
                 if (selectedIssue === 'todos') todosDiv.classList.add('selected');
                 issueDropdown.appendChild(todosDiv);
 
@@ -206,7 +215,15 @@
                     div.className = 'dropdown-item option-issue';
                     div.dataset.value = n;
                     div.textContent = n;
-                    div.onclick = () => selectIssue(n);
+                    div.tabIndex = 0;
+                    div.setAttribute('role', 'option');
+                    const onSelect = (e) => {
+                        if (e && e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return;
+                        if (e && e.type === 'keydown') e.preventDefault();
+                        selectIssue(n);
+                    };
+                    div.onclick = onSelect;
+                    div.onkeydown = onSelect;
                     if (selectedIssue === n) div.classList.add('selected');
                     issueDropdown.appendChild(div);
                 });
@@ -233,8 +250,16 @@
                 topAuthors.forEach(author => {
                     const pill = document.createElement('div');
                     pill.className = 'firma-pill';
+                    pill.tabIndex = 0;
+                    pill.setAttribute('role', 'button');
                     pill.innerHTML = `${author.nombre} <span>${author.count}</span>`;
-                    pill.onclick = () => selectAuthor(author.id, author.nombre, true);
+                    const onSelect = (e) => {
+                        if (e && e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return;
+                        if (e && e.type === 'keydown') e.preventDefault();
+                        selectAuthor(author.id, author.nombre, true);
+                    };
+                    pill.onclick = onSelect;
+                    pill.onkeydown = onSelect;
                     featuredFirmas.appendChild(pill);
                 });
             }
@@ -276,11 +301,16 @@
                 }
             };
 
-            issueTrigger.onclick = (e) => {
+            const toggleIssueDropdown = (e) => {
+                if (e && e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return;
+                if (e && e.type === 'keydown') e.preventDefault();
                 e.stopPropagation();
                 issueDropdownWrapper.classList.toggle('is-open');
                 authorSearchWrapper.classList.remove('is-open');
+                issueTrigger.setAttribute('aria-expanded', issueDropdownWrapper.classList.contains('is-open'));
             };
+            issueTrigger.onclick = toggleIssueDropdown;
+            issueTrigger.onkeydown = toggleIssueDropdown;
 
             document.addEventListener('click', (e) => {
                 if (!authorSearchWrapper.contains(e.target)) {
