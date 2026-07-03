@@ -2,7 +2,7 @@
 
 > **"¡Contra el óxido mental, blindaje espectral!"**
 
-**Archivo Blindado** es un búnker digital estático, soberano y de alto impacto visual, diseñado originalmente para rescatar, preservar y difundir de forma libre el boletín anarquista histórico **Refractor (1998 - 2000)**, en primera instancia y con el objetivo de alojar otras publicaciones.
+**Archivo Blindado** es un búnker digital creado originalmente para rescatar, preservar y difundir de forma libre el boletín anarquista histórico **Refractor (1998 - 1999)**, en primera instancia y con el objetivo de alojar otras publicaciones.
 
 Este repositorio ha sido liberado públicamente no solo como un acto de preservación de la memoria histórica, sino también como una **plantilla web soberana y de código abierto** para que cualquier colectivo, colectivo editorial o activista pueda desplegar su propio archivo digital independiente, seguro y libre de rastreo.
 
@@ -13,7 +13,7 @@ Este repositorio ha sido liberado públicamente no solo como un acto de preserva
 * **Privacidad Absoluta (Stateless & Cookie-free)**: Cero cookies, cero analíticas invasivas. Soberanía total de datos. Para registrar estadísticas de acceso mínimas y respetuosas con la privacidad, se utiliza de forma opcional la analítica ética, descentralizada y cookieless de GoatCounter, la cual no rastrea identidad ni perfiles de usuarios.
 * **Sin Dependencias Externas (Offline-First)**: El búnker está diseñado de forma totalmente autónoma. Las fuentes, iconos, librerías JS (incluyendo el visor de PDF.js) y estilos se sirven de manera local, garantizando que el sitio funcione completamente sin conexión a internet. El script opcional de telemetría ética de GoatCounter requiere conexión, pero su bloqueo o ausencia en modo sin conexión no interfiere en absoluto con la funcionalidad del sitio.
 * **Componentes Web Nativos (Vanilla Web Components)**: Modularidad sin frameworks pesados (React/Vue/Angular). Estructura pura con HTML5, CSS3 y JavaScript nativo.
-* **Optimización SEO y Accesibilidad (a11y)**: Estructura semántica completa, descripciones jerárquicas con encabezados visualmente ocultos para lectores de pantalla y buscadores, y mapas de sitio (`sitemap.xml`) y `robots.txt` listos para indexación en frío.
+* **Optimización SEO y Accesibilidad Universal (a11y)**: Estructura semántica completa (etiquetas `<main>`, `<button>`, etc.), soporte riguroso para navegación por teclado, gestión inteligente del foco en ventanas modales (Focus Traps) y uso de atributos ARIA para asegurar que la web sea inclusiva y utilizable mediante lectores de pantalla. Incluye además mapas de sitio (`sitemap.xml`) y `robots.txt` listos para indexación en frío.
 
 ---
 
@@ -41,12 +41,14 @@ El proyecto está estructurado de manera modular para que sea extremadamente sen
 
 ### 1. Estructura de Carpetas Clave
 
-* `index.html`, `archivo_blindado.html`, `firmas.html`, `artefactos.html`: Páginas HTML estáticas optimizadas.
-* `styles.css`: El núcleo de diseño estético del búnker (paleta de colores, tipografías y adaptabilidad móvil).
+* `index.html`, `archivo_blindado.html`, `firmas.html`, `artefactos.html`, `ficha_numero.html`: Páginas HTML estáticas optimizadas.
+* `styles.css`: El núcleo de diseño estético del búnker (paleta de colores, tipografías, indicadores de foco accesibles y adaptabilidad móvil).
 * `data/`: La base de datos sin servidor (*Serverless Database*) en formato JSON:
   * `data/publicacion.json`: Contiene la lista de autores, ejemplares (números) y frases destacadas.
   * `data/articulos.json`: Contiene el índice de artículos completos con su respectivo contenido en texto, páginas y firmas asociadas.
-* `js/components.js`: Define los componentes interactivos reutilizables (la cabecera `<app-header>`, la barra de citas `<app-quote>`, el acordeón `<app-accordion>`, etc.).
+* `js/`: Lógica e interactividad de la interfaz.
+  * `js/components.js`: Define los componentes interactivos accesibles (cabecera `<app-header>`, visor `<pdf-viewer>`, acordeones, etc.).
+  * `js/ficha.js`: Lógica específica para la visualización detallada de un ejemplar.
 * `pdf/`: Carpeta donde se almacenan las réplicas en PDF de los boletines o revistas.
 * `images/`: Recursos visuales, faviconos y gráficos del sitio.
 
@@ -88,6 +90,8 @@ Si quieres cambiar el tono de color (por ejemplo, pasar del clásico rojo/charco
   --font-base: 'Outfit', sans-serif;
 }
 ```
+
+> **Nota de Accesibilidad:** Si decides modificar los componentes interactivos o el código HTML, asegúrate de mantener intactos los atributos `aria-*`, los `tabindex` y las etiquetas `<main>`, para conservar la navegación accesible por teclado y el soporte para lectores de pantalla.
 
 ---
 
