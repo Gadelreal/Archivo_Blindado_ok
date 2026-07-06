@@ -61,6 +61,7 @@ async function switchIssue(targetId, updateHistory = true) {
     if (updateHistory) {
         const newUrl = `${window.location.pathname}?id=${targetId}`;
         window.history.pushState({ id: targetId }, '', newUrl);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     if (mural) {
