@@ -547,7 +547,7 @@ class IssueSelector extends HTMLElement {
         const issues = ["01", "02", "03", "04-05", "06", "07"];
         let options = '';
         issues.forEach(num => {
-            options += `<a href="#" onclick="event.preventDefault(); window.switchIssue && window.switchIssue('N_Refractor_${num}')" class="dropdown-item issue-item">${num}</a>`;
+            options += `<a href="#" data-issue="N_Refractor_${num}" class="dropdown-item issue-item">${num}</a>`;
         });
 
         this.innerHTML = `
@@ -574,6 +574,17 @@ class IssueSelector extends HTMLElement {
         };
         btn.addEventListener('click', toggleMenu);
         btn.addEventListener('keydown', toggleMenu);
+
+        this.querySelectorAll('.issue-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (window.switchIssue) {
+                    window.switchIssue(item.getAttribute('data-issue'));
+                } else {
+                    window.location.href = `./ficha_numero.html?id=${item.getAttribute('data-issue')}`;
+                }
+            });
+        });
 
         document.addEventListener('click', () => {
             wrapper.classList.remove('is-open');
